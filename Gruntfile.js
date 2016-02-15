@@ -19,7 +19,7 @@ module.exports = function (grunt) {
 		concurrent: {
 			// одновременный запуска shell'a и watcher'a https://www.npmjs.com/package/grunt-concurrent
             target: {
-                tasks: ['shell:dev', 'fest'],
+                tasks: ['shell:dev', 'watch'],
                 options: {
 				    logConcurrentOutput: true
 			    }
