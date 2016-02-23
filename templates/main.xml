@@ -1,2 +1,8 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
+    <h1>Main view</h1>
+    <ul>
+        <li><a href="/#login">Login view</a></li>
+        <li><a href="/#game">Game view</a></li>
+        <li><a href="/#scoreboard">Scoreboard view</a></li>
+    </ul>
 </fest:template>

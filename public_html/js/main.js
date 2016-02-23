@@ -17,12 +17,6 @@ require.config({
     }
 });
 
-define([
-    'backbone',
-    'router'
-], function(
-    Backbone,
-    router
-){
+define(['backbone', 'router'], function(Backbone) {
     Backbone.history.start();
 });
