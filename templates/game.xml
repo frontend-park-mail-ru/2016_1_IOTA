@@ -1,4 +1,4 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
     <br/>
-    <a type="button" class="btn btn-danger" style="margin:10px" href="/">Back</a>
+    <a type="button" class="btn btn-danger" style="margin:10px" href="/#">Back</a>
 </fest:template>
