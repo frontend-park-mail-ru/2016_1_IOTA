@@ -1,8 +1,23 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
-    <h1>Scoreboard view</h1>
-    <ul>
-        <li><a href="/">Main view</a></li>
-        <li><a href="/#login">Login view</a></li>
-        <li><a href="/#game">Game view</a></li>
-    </ul>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4 jumbotron">
+            <p><h2 class="form-signin-heading" style="text-align:center">Score Board</h2></p>
+            <table class="table table-hover">
+                <thead>
+                    <td>#</td>
+                    <td>Name</td>
+                    <td>Score</td>
+                </thead>
+                <tr>
+                    <td>1</td>
+                    <td>John</td>
+                    <td>100500</td>
+                </tr>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br></br>
+    <a type="button" class="btn btn-danger" style="margin:10px" href="/">Back</a>
 </fest:template>

@@ -1,8 +1,4 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
-    <h1>Game view</h1>
-    <ul>
-        <li><a href="/">Main view</a></li>
-        <li><a href="/#login">Login view</a></li>
-        <li><a href="/#scoreboard">Scoreboard view</a></li>
-    </ul>
+    <br/>
+    <a type="button" class="btn btn-danger" style="margin:10px" href="/">Back</a>
 </fest:template>
