@@ -8,17 +8,17 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
         <script src="js/lib/require.js" data-main="js/main"></script>
     </head>
-    <body id="game">
-        <div class="container-fluid">
+    <body>
+        <div id="header" class="container-fluid">
             <div class="row page-header">
                 <div class="col-md-4 col-md-offset-4" style="text-align:center">
                     <h1>IOTA</h1>
                 </div>
             </div>
-            <div id="page"></div>
-            <script>
-                require(['main'], function () { });
-            </script>
         </div>
+        <div id="page"></div>
+        <script>
+            require(['main'], function () { });
+        </script>
     </body>
 </html>

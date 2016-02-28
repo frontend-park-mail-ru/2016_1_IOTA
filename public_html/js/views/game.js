@@ -2,7 +2,7 @@ define(['backbone', 'tmpl/game'], function(Backbone, tmpl){
 
     var View = Backbone.View.extend({
 
-        el: '#game',
+        el: '#page',
         template: tmpl,
         initialize: function () {
             // TODO
