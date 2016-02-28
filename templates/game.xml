@@ -1,4 +1,6 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
-    <br/>
-    <a type="button" class="btn btn-danger" style="margin:10px" href="/#">Back</a>
+    <canvas id="canvas"></canvas>
+    <script>
+        require(['game/app'], function (Game) { Game(); });
+    </script>
 </fest:template>
