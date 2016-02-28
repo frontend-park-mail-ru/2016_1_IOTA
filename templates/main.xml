@@ -9,9 +9,4 @@
             </div>
         </div>
     </div>
-    <script>
-        require(['jquery'], function ($) {
-            $('#header').show();
-        });
-    </script>
 </fest:template>

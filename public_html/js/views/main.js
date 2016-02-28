@@ -9,6 +9,8 @@ define(['backbone', 'tmpl/main'], function(Backbone, tmpl) {
         },
         render: function () {
             this.$el.html(this.template);
+            $('#header').show();
+            $('body').css('overflow', 'visible');
         },
         show: function () {
             this.render();

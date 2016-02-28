@@ -1,4 +1,4 @@
-define(['backbone', 'tmpl/game'], function(Backbone, tmpl){
+define(['backbone', 'tmpl/game', 'game/app'], function(Backbone, tmpl, game){
 
     var View = Backbone.View.extend({
 
@@ -9,6 +9,9 @@ define(['backbone', 'tmpl/game'], function(Backbone, tmpl){
         },
         render: function () {
             this.$el.html(this.template);
+            $('#header').hide();
+            game();
+            $('body').css('overflow', 'hidden');
         },
         show: function () {
             this.render();

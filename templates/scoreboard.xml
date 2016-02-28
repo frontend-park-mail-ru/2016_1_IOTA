@@ -8,12 +8,7 @@
                     <td>Name</td>
                     <td>Score</td>
                 </thead>
-                <tr>
-                    <td>1</td>
-                    <td>John</td>
-                    <td>100500</td>
-                </tr>
-                <tbody>
+                <tbody id="table">
                 </tbody>
             </table>
         </div>
