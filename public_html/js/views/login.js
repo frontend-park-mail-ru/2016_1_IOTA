@@ -1,4 +1,10 @@
-define(['backbone', 'tmpl/login'], function(Backbone, tmpl) {
+define([
+    'backbone',
+    'tmpl/login'
+], function(
+    Backbone,
+    tmpl
+) {
 
     var View = Backbone.View.extend({
 
@@ -9,6 +15,7 @@ define(['backbone', 'tmpl/login'], function(Backbone, tmpl) {
         },
         render: function () {
             this.$el.html(this.template);
+            this.$el.css('overflow', 'visible');
         },
         show: function () {
             this.render();

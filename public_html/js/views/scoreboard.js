@@ -1,14 +1,16 @@
-define(['backbone',
-        'tmpl/scoreboard',
-        'models/score',
-        'collections/scores',
-        './scoreboard_item'],
-        function(
-            Backbone,
-            tmpl,
-            ScoreModel,
-            ScoreCollection,
-            ScoreboardItem) {
+define([
+    'backbone',
+    'tmpl/scoreboard',
+    'models/score',
+    'collections/scores',
+    './scoreboard_item'
+], function(
+    Backbone,
+    tmpl,
+    ScoreModel,
+    ScoreCollection,
+    ScoreboardItemView
+) {
 
     var View = Backbone.View.extend({
 
@@ -46,15 +48,14 @@ define(['backbone',
         },
         render: function () {
             this.$el.html(this.template);
+            this.$el.css('overflow', 'visible');
             this.$('#table').html('');
             var count = 1;
             this.scores.each(function(model) {
-                var view = new ScoreboardItem({model: model});
+                var view = new ScoreboardItemView({model: model});
                 this.$('#table').append(view.render({count: count}).el);
                 count++;
             });
-
-
         },
         show: function () {
             this.render();

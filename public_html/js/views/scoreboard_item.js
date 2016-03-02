@@ -1,4 +1,10 @@
-define(['backbone', 'tmpl/scoreboard_item'], function(Backbone, tmpl) {
+define([
+    'backbone',
+    'tmpl/scoreboard_item'
+], function(
+    Backbone,
+    tmpl
+) {
 
         var View = Backbone.View.extend({
 
