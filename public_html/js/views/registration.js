@@ -16,12 +16,20 @@ define([
         render: function () {
             this.$el.html(this.template);
             this.$el.css('overflow', 'visible');
+            $('.js-submit').on('submit', this.register);
         },
         show: function () {
             this.render();
         },
         hide: function () {
             // TODO
+        },
+        register: function (event) {
+            event.preventDefault();
+            alert("Email: " + this.email.value +
+                "\nName: " + this.name.value +
+                "\nPassword: " + this.password.value +
+                "\nConfirm Password: " + this.confirm_password.value);
         }
 
     });
