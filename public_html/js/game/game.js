@@ -1,4 +1,17 @@
-define(function () {
+define([
+    './off_screen_renderer',
+    './screen_renderer',
+    './camera',
+    './table',
+    './hand'
+], function (
+    OffScreenRenderer,
+    ScreenRenderer,
+    Camera,
+    Table,
+    Hand
+) {
+    /*
     var __extends = (this && this.__extends) || function (d, b) {
             for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
             function __() {
@@ -176,12 +189,18 @@ define(function () {
         };
         return Hand;
     }(Renderer));
+    */
 
     return function () {
-        var table = document.createElement('canvas'), offScreenRenderer = new OffScreenRenderer(table, 3400, 3400), mainRenderer = new ScreenRenderer(document.getElementById('canvas'), new Camera(table, 0, 0, window.innerWidth, window.innerHeight), window.innerWidth, window.innerHeight);
+        var table = document.createElement('canvas'),
+            offScreenRenderer = new OffScreenRenderer(table, 3400, 3400),
+            screenRenderer = new ScreenRenderer(document.getElementById('canvas'),
+                new Camera(table, 0, 0, window.innerWidth, window.innerHeight), window.innerWidth, window.innerHeight);
+
         offScreenRenderer.addDrawable(new Table(34, 34, 100, 100));
         offScreenRenderer.render();
-        mainRenderer.addDrawable(new Hand());
-        mainRenderer.render();
+
+        screenRenderer.addDrawable(new Hand());
+        screenRenderer.render();
     };
 });

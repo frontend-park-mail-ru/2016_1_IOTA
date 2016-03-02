@@ -1,12 +1,12 @@
 define([
     'backbone',
     'tmpl/game',
-    'game/app'
+    '../game/game'
 ], function(
     Backbone,
     tmpl,
     game
-){
+) {
 
     var View = Backbone.View.extend({
 
