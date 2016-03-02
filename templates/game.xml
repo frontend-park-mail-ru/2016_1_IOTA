@@ -1,3 +1,3 @@
-<fest:template xmlns:fest="http://fest.mail.ru">
-    <div id="game"></div>
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
+    <canvas id="canvas"></canvas>
 </fest:template>

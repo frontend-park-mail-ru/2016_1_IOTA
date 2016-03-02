@@ -1,20 +1,16 @@
 <!DOCTYPE  html>
-<html><head>
-    <meta charset="utf-8" />
-    <title><!-- TODO --></title>
-    <link rel="stylesheet" href="/css/main.css" />
-    <script src="/js/lib/jquery.js"></script>
-    <script src="/js/tmpl/main.js"></script>
-    <script src="/js/tmpl/scoreboard.js"></script>
-    <script src="/js/tmpl/game.js"></script>
-    <script src="/js/tmpl/login.js"></script>
-    <script src="/js/index.js"></script>
-</head><body>
-    <div id="page">
-        <h1>Hello world!</h1>
-    </div>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>IOTA</title>
+        <link rel="stylesheet" href="css/main.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+        <script src="js/lib/require.js" data-main="js/main"></script>
+    </head>
+    <body id="page">
+    </body>
     <script>
-        var $page = $('#page');
-        showMainScreen();
+        require(['main'], function () { });
     </script>
-</body></html>
+</html>

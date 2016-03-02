@@ -1,0 +1,36 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
+    <fest:include src="./header.xml"/>
+    <div class="row">
+        <div class = "col-md-4 col-md-offset-4 jumbotron" style="padding:10px">
+            <p><h2 class="form-signin-heading" style="text-align:center; margin-bottom:20px">Registration</h2></p>
+            <form action="#" method="post" class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="mail">Email</label>
+                    <div class="col-sm-9">
+                        <input required="" type="email" class="form-control" name="second_name" id="email" placeholder="Email"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="name">Name</label>
+                    <div class="col-sm-9">
+                        <input required="" type="text" class="form-control" name="second_name" id="name" placeholder="Name"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="passwd">Password</label>
+                    <div class="col-sm-9">
+                        <input required="" type="password" class="form-control" name="passwd" id="passwd" placeholder="Password"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="confpasswd" style="padding-top:0;">Confim Password</label>
+                    <div class="col-sm-9">
+                        <input required="" type="password" class="form-control" name="confpasswd" id="confpasswd" placeholder="Confim password"></input>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success btn-block" style="text-area:center">Submit</button>
+                <a type="button" class="btn btn-danger btn-block" style="margin-top:10px" href="#">Back</a>
+            </form>
+        </div>
+    </div>
+</fest:template>
