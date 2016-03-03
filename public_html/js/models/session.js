@@ -10,8 +10,10 @@ define([
 
     var SessionModel = Backbone.Model.extend({
         sessionUrl: '/api/session/',
+        isAuthenticated: false,
         userUrl: '/api/user/',
         login: function(login, password) {
+            var self = this;
             $.ajax({
                 method: 'PUT',
                 url: this.sessionUrl,
@@ -24,6 +26,9 @@ define([
                 success: function (data) {
                     if (data.status === 0) {
                         messagingCenter.trigger('loginOk');
+                        // TODO
+                        console.log(self);
+                        self.isAuthenticated = true;
                     } else {
                         messagingCenter.trigger('loginError', data.message);
                     }

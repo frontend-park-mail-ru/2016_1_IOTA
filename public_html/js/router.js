@@ -27,6 +27,7 @@ define([
             '*default': 'defaultActions'
         },
         initialize: function () {
+            console.log("init");
             this.session = new SessionModel();
 
             this.game = new GameView(this.session);
