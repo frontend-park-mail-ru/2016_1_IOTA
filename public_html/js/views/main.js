@@ -10,8 +10,8 @@ define([
 
         el: '#page',
         template: tmpl,
-        initialize: function () {
-            // TODO
+        initialize: function (session) {
+            this.session = session;
         },
         render: function () {
             this.$el.html(this.template);

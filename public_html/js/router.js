@@ -4,14 +4,18 @@ define([
     'views/login',
     'views/main',
     'views/scoreboard',
-    'views/registration'
+    'views/registration',
+    'models/session',
+    'messaging_center'
 ], function(
     Backbone,
     GameView,
     LoginView,
     MainView,
     ScoreboardView,
-    RegistrationView
+    RegistrationView,
+    SessionModel,
+    messagingCenter
 ) {
 
     var Router = Backbone.Router.extend({
@@ -23,11 +27,15 @@ define([
             '*default': 'defaultActions'
         },
         initialize: function () {
-            this.game = new GameView();
-            this.login = new LoginView();
-            this.main = new MainView();
-            this.scoreboard = new ScoreboardView();
-            this.registration = new RegistrationView();
+            this.session = new SessionModel();
+
+            this.game = new GameView(this.session);
+            this.login = new LoginView(this.session);
+            this.main = new MainView(this.session);
+            this.scoreboard = new ScoreboardView(this.session);
+            this.registration = new RegistrationView(this.session);
+
+            this.listenTo(messagingCenter, 'loginOk', this.defaultActions)
         },
         defaultActions: function () {
             this.main.show();

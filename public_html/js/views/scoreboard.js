@@ -16,7 +16,8 @@ define([
 
         el: '#page',
         template: tmpl,
-        initialize: function () {
+        initialize: function (session) {
+            this.session = session;
             this.scores = new ScoreCollection();
             this.scores.comparator = function(model1, model2) {
                 var score1 = model1.get('score'),

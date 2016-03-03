@@ -1,22 +1,26 @@
 define([
     'backbone',
-    'tmpl/login'
+    'tmpl/login',
+    'messaging_center'
 ], function(
     Backbone,
-    tmpl
+    tmpl,
+    messagingCenter
 ) {
 
     var View = Backbone.View.extend({
 
         el: '#page',
         template: tmpl,
-        initialize: function () {
-            // TODO
+        initialize: function (session) {
+            this.session = session;
+            this.listenTo(messagingCenter, 'loginError', this.loginError)
         },
         render: function () {
             this.$el.html(this.template);
             this.$el.css('overflow', 'visible');
-            $('.js-submit').on('submit', this.login);
+            this.$alert = $('.js-alert');
+            $('.js-submit').on('submit', {session: this.session, alert: this.$alert}, this.login);
         },
         show: function () {
             this.render();
@@ -26,9 +30,18 @@ define([
         },
         login: function (event) {
             event.preventDefault();
-            alert("Email: " + this.email.value + "\nPassword: " + this.password.value);
-        }
+            event.data.alert.html('');
 
+            if (this.password.value.length < 6) {
+                event.data.alert.html('Пароль не должен быть короче 6 символов');
+                return;
+            }
+
+            event.data.session.login(this.email.value, this.password.value);
+        },
+        loginError: function (errorMsg) {
+            this.$alert.html(errorMsg);
+        }
     });
 
     return View;

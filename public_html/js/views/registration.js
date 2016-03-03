@@ -10,13 +10,13 @@ define([
 
         el: '#page',
         template: tmpl,
-        initialize: function () {
-            // TODO
+        initialize: function (session) {
+            this.session = session;
         },
         render: function () {
             this.$el.html(this.template);
             this.$el.css('overflow', 'visible');
-            $('.js-submit').on('submit', this.register);
+            $('.js-submit').on('submit', this.session, this.register);
         },
         show: function () {
             this.render();
