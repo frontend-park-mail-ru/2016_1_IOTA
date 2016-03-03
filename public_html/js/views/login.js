@@ -14,7 +14,7 @@ define([
         template: tmpl,
         initialize: function (session) {
             this.session = session;
-            this.listenTo(messagingCenter, 'loginError', this.loginError)
+            this.listenTo(messagingCenter, 'loginError', this.loginError);
         },
         render: function () {
             this.$el.html(this.template);

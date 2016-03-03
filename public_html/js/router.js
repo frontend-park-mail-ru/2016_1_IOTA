@@ -35,9 +35,11 @@ define([
             this.scoreboard = new ScoreboardView(this.session);
             this.registration = new RegistrationView(this.session);
 
-            this.listenTo(messagingCenter, 'loginOk', this.defaultActions)
+            this.listenTo(messagingCenter, 'loginOk', this.defaultActions);
+            this.listenTo(messagingCenter, 'registerOk', this.defaultActions);
         },
         defaultActions: function () {
+            this.navigate('/#');
             this.main.show();
         },
         scoreboardAction: function () {

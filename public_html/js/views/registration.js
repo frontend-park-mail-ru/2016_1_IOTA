@@ -1,9 +1,11 @@
 define([
     'backbone',
-    'tmpl/registration'
+    'tmpl/registration',
+    'messaging_center'
 ], function(
     Backbone,
-    tmpl
+    tmpl,
+    messagingCenter
 ) {
 
     var View = Backbone.View.extend({
@@ -12,11 +14,13 @@ define([
         template: tmpl,
         initialize: function (session) {
             this.session = session;
+            this.listenTo(messagingCenter, 'registerError', this.registerError)
         },
         render: function () {
             this.$el.html(this.template);
             this.$el.css('overflow', 'visible');
-            $('.js-submit').on('submit', this.session, this.register);
+            this.$alert = $('.js-alert');
+            $('.js-submit').on('submit', {session: this.session, alert: this.$alert}, this.register);
         },
         show: function () {
             this.render();
@@ -26,10 +30,17 @@ define([
         },
         register: function (event) {
             event.preventDefault();
-            alert("Email: " + this.email.value +
-                "\nName: " + this.name.value +
-                "\nPassword: " + this.password.value +
-                "\nConfirm Password: " + this.confirm_password.value);
+            event.data.alert.html('');
+
+            if (this.password.value !== this.confirm_password.value) {
+                event.data.alert.html('Пароли не совпадают');
+                return;
+            }
+
+            event.data.session.register(this.name.value, this.password.value, this.email.value);
+        },
+        registerError: function (errorMsg) {
+            this.$alert.html(errorMsg);
         }
 
     });

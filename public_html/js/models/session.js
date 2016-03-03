@@ -9,16 +9,18 @@ define([
 ) {
 
     var SessionModel = Backbone.Model.extend({
-        sessionUrl: '/api/v1/session/',
-        userUrl: '/api/v1/user/',
+        sessionUrl: '/api/session/',
+        userUrl: '/api/user/',
         login: function(login, password) {
             $.ajax({
                 method: 'PUT',
                 url: this.sessionUrl,
-                data: {
+                data: JSON.stringify({
                     'login': login,
                     'password': password
-                },
+                }),
+                dataType: 'json',
+                contentType: 'application/json',
                 success: function (data) {
                     if (data.status === 0) {
                         messagingCenter.trigger('loginOk');
@@ -27,7 +29,7 @@ define([
                     }
                 },
                 error: function (data) {
-                    messagingCenter.trigger('loginError', data.message);
+                    messagingCenter.trigger('loginError', 'Неизвестная ошибка');
                 }
             });
         },
@@ -43,34 +45,26 @@ define([
                 }
             });
         },
-        /*
-        getSession: function() {
-            $.ajax({
-                method: 'GET',
-                url: this.sessionUrl,
-                success: function () {
-                    alert("Successfull logout");
-                },
-                error: function () {
-                    alert("Logout failed");
-                }
-            });
-        },
-        */
         register: function(login, password, email) {
             $.ajax({
                 method: 'POST',
                 url: this.userUrl,
-                data: {
+                data: JSON.stringify({
                     'login': login,
                     'password': password,
                     'email': email
-                },
-                success: function () {
-                    alert("Successfull login");
+                }),
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (data) {
+                    if (data.status === 0) {
+                        messagingCenter.trigger('registerOk');
+                    } else {
+                        messagingCenter.trigger('registerError', data.message);
+                    }
                 },
                 error: function () {
-                    alert("Login failed");
+                    messagingCenter.trigger('registerError', 'Неизвестная ошибка');
                 }
             });
         }
