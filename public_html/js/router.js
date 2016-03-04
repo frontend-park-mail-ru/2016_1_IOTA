@@ -6,7 +6,8 @@ define([
     'views/scoreboard',
     'views/registration',
     'models/session',
-    'messaging_center'
+    'messaging_center',
+    'models/user'
 ], function(
     Backbone,
     GameView,
@@ -15,7 +16,8 @@ define([
     ScoreboardView,
     RegistrationView,
     SessionModel,
-    messagingCenter
+    messagingCenter,
+    UserModel
 ) {
 
     var Router = Backbone.Router.extend({
@@ -27,20 +29,21 @@ define([
             'logout': 'logoutAction',
             '*default': 'defaultActions'
         },
-        initialize: function () {
-            console.log("init");
-            this.session = new SessionModel();
+        initialize: function (session) {
+            this.session = session;
+            this.user = new UserModel();
 
-            this.game = new GameView(this.session);
-            this.login = new LoginView(this.session);
-            this.main = new MainView(this.session);
-            this.scoreboard = new ScoreboardView(this.session);
-            this.registration = new RegistrationView(this.session);
+            this.game = new GameView(this.session, this.user);
+            this.login = new LoginView(this.session, this.user);
+            this.main = new MainView(this.session, this.user);
+            this.scoreboard = new ScoreboardView(this.session, this.user);
+            this.registration = new RegistrationView(this.session, this.user);
 
             this.listenTo(messagingCenter, 'loginOk', this.defaultActions);
             this.listenTo(messagingCenter, 'registerOk', this.defaultActions);
         },
         defaultActions: function () {
+            console.log("Second: " + this.session.isAuth);
             this.navigate('/#');
             this.main.show();
         },
@@ -62,5 +65,5 @@ define([
         }
     });
 
-    return new Router();
+    return Router;
 });

@@ -14,9 +14,8 @@ define([
             this.session = session;
         },
         render: function () {
-            // TODO
-            console.log(this.session.isAuthenticated);
-            this.$el.html(this.template({isAuthenticated: this.session.isAuthenticated}));
+            console.log("Third: " + this.session.isAuth);
+            this.$el.html(this.template({isAuth: this.session.isAuth}));
             this.$el.css('overflow', 'visible');
         },
         show: function () {

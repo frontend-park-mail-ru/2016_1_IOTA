@@ -10,9 +10,12 @@ define([
 
     var SessionModel = Backbone.Model.extend({
         sessionUrl: '/api/session/',
-        isAuthenticated: false,
-        userUrl: '/api/user/',
-        login: function(login, password) {
+        default: {
+            isAuth: false
+        },
+        isAuth: false,
+        //userUrl: '/api/user/',
+        login: function (login, password) {
             var self = this;
             $.ajax({
                 method: 'PUT',
@@ -25,7 +28,7 @@ define([
                 contentType: 'application/json',
                 success: function (data) {
                     if (data.status === 0) {
-                        self.isAuthenticated = true;
+                        self.isAuth = true;
                         messagingCenter.trigger('loginOk');
                         // TODO
                         console.log(self);
@@ -42,35 +45,29 @@ define([
             $.ajax({
                 method: 'DELETE',
                 url: this.sessionUrl,
-                success: function () {
-                    self.isAuthenticated = false;
-                    alert("Successfull logout");
+                success: function (data) {
+                    self.isAuth = false;
+                    console.log(data);
                 },
-                error: function() {
-                    alert("Logout failed");
+                error: function(data) {
+                    console.log(data);
                 }
             });
         },
-        register: function(login, password, email) {
+        get: function () {
+            var self = this;
             $.ajax({
-                method: 'POST',
-                url: this.userUrl,
-                data: JSON.stringify({
-                    'login': login,
-                    'password': password,
-                    'email': email
-                }),
-                dataType: 'json',
-                contentType: 'application/json',
+                method: 'GET',
+                url: this.sessionUrl,
                 success: function (data) {
-                    if (data.status === 0) {
-                        messagingCenter.trigger('registerOk');
-                    } else {
-                        messagingCenter.trigger('registerError', data.message);
-                    }
+                    self.isAuth = true;
+                    console.log(data);
+                    console.log("First: " + self.isAuth);
+                    messagingCenter.trigger('authChecked', 'Вход выполнен');
                 },
-                error: function () {
-                    messagingCenter.trigger('registerError', 'Неизвестная ошибка');
+                error: function (data) {
+                    console.log(data);
+                    messagingCenter.trigger('authChecked', 'Необходимо выполненить вход');
                 }
             });
         }
