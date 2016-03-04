@@ -39,6 +39,11 @@ define(function (require) {
                 return;
             }
 
+            if (this.password.value.length < 6) {
+                event.data.alert.html('Пароль не должен быть короче 6 символов');
+                return;
+            }
+
             event.data.user.create(this.login.value, this.password.value, this.email.value);
         },
 
