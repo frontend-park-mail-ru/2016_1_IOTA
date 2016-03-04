@@ -1,13 +1,13 @@
 define(function (require) {
 
     var Backbone = require('backbone');
-    var Template = require('tmpl/main');
+    var tmpl = require('tmpl/main');
 
     //noinspection UnnecessaryLocalVariableJS
     var View = Backbone.View.extend({
 
         el: '#page',
-        template: Template,
+        template: tmpl,
 
         initialize: function (session) {
             this.session = session;

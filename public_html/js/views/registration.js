@@ -44,7 +44,7 @@ define(function (require) {
                 return;
             }
 
-            event.data.user.create(this.login.value, this.password.value, this.email.value);
+            event.data.user.create(this.login.value, this.password.value.trim(), this.email.value.trim());
         },
 
         registerError: function (errorMsg) {
