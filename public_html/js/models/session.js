@@ -38,15 +38,18 @@ define([
             });
         },
         logout: function () {
+            var self = this;
             $.ajax({
                 method: 'DELETE',
                 url: this.sessionUrl,
                 success: function (data) {
                     self.isAuth = false;
                     console.log(data);
+                    messagingCenter.trigger('logoutOk');
                 },
                 error: function(data) {
                     console.log(data);
+                    messagingCenter.trigger('logoutError');
                 }
             });
         },
