@@ -34,7 +34,13 @@ define(function (require) {
             event.preventDefault();
             event.data.alert.html('');
 
-            // TODO: Проверка ввода на пробельные символы
+            var regExp = /^[a-z0-9]+$/i;
+
+            if (!regExp.test(this.login.value) || !regExp.test(this.password.value)) {
+                event.data.alert.html('Логин и пароль должны содержать только цифры и латинские буквы');
+                return;
+            }
+
             if (this.password.value !== this.confirm_password.value) {
                 event.data.alert.html('Пароли не совпадают');
                 return;

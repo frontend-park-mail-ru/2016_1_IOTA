@@ -34,7 +34,13 @@ define(function (require) {
             event.preventDefault();
             event.data.alert.html('');
 
-            // TODO: Проверка ввода на пробельные символы
+            var regExp = /^[a-z0-9]+$/i;
+
+            if (!regExp.test(this.login.value) || !regExp.test(this.password.value)) {
+                event.data.alert.html('Логин и пароль должны содержать только цифры и латинские буквы');
+                return;
+            }
+
             if (this.password.value.length < 6) {
                 event.data.alert.html('Пароль не должен быть короче 6 символов');
                 return;
