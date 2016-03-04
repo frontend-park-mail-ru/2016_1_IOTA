@@ -9,6 +9,7 @@ define(function (require) {
     var SessionModel = require('models/session');
     var messagingCenter = require('messaging_center');
     var UserModel = require('models/user');
+    var LogoutView = require('views/logout');
 
 
     //noinspection UnnecessaryLocalVariableJS
@@ -31,9 +32,12 @@ define(function (require) {
             this.main = new MainView(this.session, this.user);
             this.scoreboard = new ScoreboardView(this.session, this.user);
             this.registration = new RegistrationView(this.session, this.user);
+            this.logout = new LogoutView(this.session, this.user);
 
             this.listenTo(messagingCenter, 'loginOk', this.defaultActions);
             this.listenTo(messagingCenter, 'registerOk', this.defaultActions);
+            this.listenTo(messagingCenter, 'logoutOk', this.defaultActions);
+            this.listenTo(messagingCenter, 'logoutError', this.defaultActions);
         },
 
         defaultActions: function () {
@@ -59,8 +63,7 @@ define(function (require) {
         },
 
         logoutAction: function () {
-            this.session.logout();
-            this.defaultActions();
+            this.logout.show();
         }
 
     });
