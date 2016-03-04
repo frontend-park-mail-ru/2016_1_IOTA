@@ -1,3 +1,7 @@
+@import "title/__text/title__text.css";
+@import "title/__text/title__text_block.css";
+@import "block/__form/block__form.css";
+
 body {
     margin: 0;
     padding: 0;
