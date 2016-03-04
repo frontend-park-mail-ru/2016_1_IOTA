@@ -1,10 +1,8 @@
-define([
-    './extends'
-], function (
-    __extends
-) {
+define(function () {
 
+    //noinspection UnnecessaryLocalVariableJS
     var Renderer = (function () {
+
         function Renderer() {
             this.drawables = [];
         }
@@ -14,10 +12,13 @@ define([
                 this.drawables[i].draw(canvas);
             }
         };
+
         Renderer.prototype.addDrawable = function (drawable) {
             this.drawables.push(drawable);
         };
+
         return Renderer;
+
     }());
 
     return Renderer;

@@ -1,15 +1,14 @@
-define([
-    './extends',
-    './renderer',
-    './card'
-], function (
-    __extends,
-    Renderer,
-    Card
-) {
+define(function (require) {
 
+    var __extends = require('./extends'),
+        Renderer = require( './renderer'),
+        Card = require('./card');
+
+    //noinspection UnnecessaryLocalVariableJS
     var Hand = (function (_super) {
+
         __extends(Hand, _super);
+
         function Hand() {
             _super.apply(this, arguments);
         }
@@ -21,7 +20,9 @@ define([
             new Card(canvas.width / 2 + 130, canvas.height - 150, 100, 100).draw(canvas);
             new Card(canvas.width / 2 + 10, canvas.height - 150, 100, 100).draw(canvas);
         };
+
         return Hand;
+
     }(Renderer));
 
     return Hand;

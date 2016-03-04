@@ -1,13 +1,13 @@
-define([
-    './extends',
-    './renderer'
-], function (
-    __extends,
-    Renderer
-) {
+define(function (require) {
 
+    var __extends = require('./extends'),
+        Renderer = require('./renderer');
+
+    //noinspection UnnecessaryLocalVariableJS
     var ScreenRenderer = (function (_super) {
+
         __extends(ScreenRenderer, _super);
+
         function ScreenRenderer(canvas, camera, width, height) {
             var _this = this;
             _super.call(this);
@@ -38,11 +38,14 @@ define([
         ScreenRenderer.prototype.render = function () {
             _super.prototype.draw.call(this, this.canvas);
         };
+
         ScreenRenderer.prototype.clear = function () {
             var context = this.canvas.getContext('2d');
             context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         };
+
         return ScreenRenderer;
+
     }(Renderer));
 
     return ScreenRenderer;
