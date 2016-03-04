@@ -2,6 +2,7 @@ define(function (require) {
 
     var Backbone = require('backbone'),
         tmpl = require('tmpl/login'),
+        tmplAuth = require('tmpl/login_auth'),
         messagingCenter = require('messaging_center');
 
     //noinspection UnnecessaryLocalVariableJS
@@ -9,6 +10,7 @@ define(function (require) {
 
         el: '#page',
         template: tmpl,
+        templateAuth: tmplAuth,
 
         initialize: function (session) {
             this.session = session;
@@ -16,6 +18,11 @@ define(function (require) {
         },
 
         render: function () {
+            if (this.session.isAuth) {
+                this.$el.html(this.templateAuth);
+                return;
+            }
+
             this.$el.html(this.template);
             this.$el.css('overflow', 'visible');
             this.$alert = $('.js-alert');

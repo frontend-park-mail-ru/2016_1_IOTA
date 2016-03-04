@@ -7,8 +7,10 @@
                     <a type="button" class="btn btn-success" style="margin:10px" href="/#game">Start Game</a>
                 </fest:if>
                 <a type="button" class="btn btn-primary" style="margin:10px" href="/#scoreboard">Score Board</a>
-                <a type="button" class="btn btn-primary" style="margin:10px" href="/#login">Log In</a>
-                <a type="button" class="btn btn-primary" style="margin:10px" href="/#registration">Registration</a>
+                <fest:if test="!json.isAuth">
+                    <a type="button" class="btn btn-primary" style="margin:10px" href="/#login">Log In</a>
+                    <a type="button" class="btn btn-primary" style="margin:10px" href="/#registration">Registration</a>
+                </fest:if>
                 <fest:if test="json.isAuth">
                     <a type="button" class="btn btn-success" style="margin:10px" href="/#logout">Logout</a>
                 </fest:if>
