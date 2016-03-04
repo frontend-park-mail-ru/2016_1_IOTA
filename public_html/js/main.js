@@ -17,17 +17,12 @@ require.config({
     }
 });
 
-define([
-    'backbone',
-    'router',
-    'models/session',
-    'messaging_center'
-], function(
-    Backbone,
-    Router,
-    SessionModel,
-    messagingCenter
-) {
+define(function (require) {
+
+    var Backbone = require('backbone'),
+        Router = require('router'),
+        SessionModel = require('models/session'),
+        messagingCenter = require('messaging_center');
 
     var session = new SessionModel();
     session.get();

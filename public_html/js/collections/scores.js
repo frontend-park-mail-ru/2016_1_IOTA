@@ -1,12 +1,10 @@
-define([
-    'backbone',
-    'models/score'
-], function(
-    Backbone,
-    ScoreModel
-){
+define(function (require) {
 
-    var Collection = Backbone.Collection.extend({
+    var Backbone = require('backbone'),
+        ScoreModel = require('models/score');
+
+    //noinspection UnnecessaryLocalVariableJS
+    var ScoreCollection = Backbone.Collection.extend({
         model: ScoreModel,
         comparator: function(model1, model2) {
             var score1 = model1.get('score'),
@@ -22,5 +20,6 @@ define([
         }
     });
 
-    return Collection;
+    return ScoreCollection;
+    
 });

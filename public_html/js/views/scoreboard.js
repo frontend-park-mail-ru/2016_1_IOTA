@@ -1,21 +1,17 @@
-define([
-    'backbone',
-    'tmpl/scoreboard',
-    'models/score',
-    'collections/scores',
-    './scoreboard_item'
-], function(
-    Backbone,
-    tmpl,
-    ScoreModel,
-    ScoreCollection,
-    ScoreboardItemView
-) {
+define(function (require) {
 
-    var View = Backbone.View.extend({
+    var Backbone = require('backbone'),
+        ScoreModel = require('models/score'),
+        tmpl = require('tmpl/scoreboard'),
+        ScoreCollection = require('collections/scores'),
+        ScoreboardItemView = require('./scoreboard_item');
+
+    //noinspection UnnecessaryLocalVariableJS
+    var ScoreboardView = Backbone.View.extend({
 
         el: '#page',
         template: tmpl,
+
         initialize: function (session) {
             this.session = session;
             this.scores = new ScoreCollection();
@@ -37,6 +33,7 @@ define([
                 this.scores.add(new ScoreModel({name: names[i], score: Math.round(Math.random() * 1000)}));
             }
         },
+
         render: function () {
             this.$el.html(this.template);
             this.$el.css('overflow', 'visible');
@@ -51,14 +48,17 @@ define([
                 count++;
             });
         },
+
         show: function () {
             this.render();
         },
+
         hide: function () {
             // TODO
         }
 
     });
 
-    return View;
+    return ScoreboardView;
+
 });
