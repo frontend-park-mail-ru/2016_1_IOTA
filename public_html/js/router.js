@@ -8,6 +8,8 @@ define(function (require) {
     var RegistrationView = require('views/registration');
     var SessionModel = require('models/session');
     var messagingCenter = require('messaging_center');
+    var UserModel = require('models/user');
+
 
     //noinspection UnnecessaryLocalVariableJS
     var Router = Backbone.Router.extend({
@@ -20,22 +22,22 @@ define(function (require) {
             'logout': 'logoutAction',
             '*default': 'defaultActions'
         },
+        initialize: function (session) {
+            this.session = session;
+            this.user = new UserModel();
 
-        initialize: function () {
-            console.log("init");
-            this.session = new SessionModel();
-
-            this.game = new GameView(this.session);
-            this.login = new LoginView(this.session);
-            this.main = new MainView(this.session);
-            this.scoreboard = new ScoreboardView(this.session);
-            this.registration = new RegistrationView(this.session);
+            this.game = new GameView(this.session, this.user);
+            this.login = new LoginView(this.session, this.user);
+            this.main = new MainView(this.session, this.user);
+            this.scoreboard = new ScoreboardView(this.session, this.user);
+            this.registration = new RegistrationView(this.session, this.user);
 
             this.listenTo(messagingCenter, 'loginOk', this.defaultActions);
             this.listenTo(messagingCenter, 'registerOk', this.defaultActions);
         },
 
         defaultActions: function () {
+            console.log("Second: " + this.session.isAuth);
             this.navigate('/#');
             this.main.show();
         },

@@ -9,9 +9,9 @@ define(function (require) {
 
         el: '#page',
         template: tmpl,
-
-        initialize: function (session) {
+        initialize: function (session, user) {
             this.session = session;
+            this.user = user;
             this.listenTo(messagingCenter, 'registerError', this.registerError)
         },
 
@@ -19,7 +19,7 @@ define(function (require) {
             this.$el.html(this.template);
             this.$el.css('overflow', 'visible');
             this.$alert = $('.js-alert');
-            $('.js-submit').on('submit', {session: this.session, alert: this.$alert}, this.register);
+            $('.js-submit').on('submit', {user: this.user, alert: this.$alert}, this.register);
         },
 
         show: function () {
@@ -39,7 +39,7 @@ define(function (require) {
                 return;
             }
 
-            event.data.session.register(this.login.value.trim(), this.password.value.trim(), this.email.value.trim());
+            event.data.user.create(this.login.value, this.password.value, this.email.value);
         },
 
         registerError: function (errorMsg) {
