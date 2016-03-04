@@ -17,6 +17,11 @@ require.config({
     }
 });
 
-define(['backbone', 'router'], function(Backbone) {
+define(function (require) {
+
+    var Backbone = require('backbone');
+    var Router = require('router');
+
     Backbone.history.start();
+
 });

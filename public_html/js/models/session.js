@@ -1,18 +1,17 @@
-define([
-    'backbone',
-    'jquery',
-    'messaging_center'
-], function (
-    Backbone,
-    $,
-    messagingCenter
-) {
+define(function (require) {
 
+    var Backbone = require('backbone');
+    var $ = require('jquery');
+    var messagingCenter = require('messaging_center');
+
+    //noinspection UnnecessaryLocalVariableJS
     var SessionModel = Backbone.Model.extend({
+
         sessionUrl: '/api/session/',
         isAuthenticated: false,
         userUrl: '/api/user/',
-        login: function(login, password) {
+
+        login: function (login, password) {
             var self = this;
             $.ajax({
                 method: 'PUT',
@@ -38,6 +37,7 @@ define([
                 }
             });
         },
+
         logout: function () {
             $.ajax({
                 method: 'DELETE',
@@ -46,12 +46,13 @@ define([
                     self.isAuthenticated = false;
                     alert("Successfull logout");
                 },
-                error: function() {
+                error: function () {
                     alert("Logout failed");
                 }
             });
         },
-        register: function(login, password, email) {
+
+        register: function (login, password, email) {
             $.ajax({
                 method: 'POST',
                 url: this.userUrl,
@@ -74,6 +75,7 @@ define([
                 }
             });
         }
+
     });
 
     return SessionModel;

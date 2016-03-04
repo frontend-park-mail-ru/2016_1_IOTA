@@ -7,4 +7,5 @@ define(function () {
     _.extend(messagingCenter, Backbone.Events);
 
     return messagingCenter;
+
 });
