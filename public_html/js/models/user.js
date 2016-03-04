@@ -10,32 +10,15 @@ define([
 
     var UserModel = Backbone.Model.extend({
         userUrl: '/api/user/',
-        /*
-        id: '',
-        login: '',
-        email: '',
-        */
         get: function (id) {
-            var self = this;
             $.ajax({
                 method: 'GET',
                 url: this.userUrl + id,
                 success: function (data) {
                     console.log(data);
-                    /*
-                    if (data.status === 0) {
-                        self.isAuth = true;
-                        messagingCenter.trigger('loginOk');
-                        // TODO
-                        console.log(self);
-                    } else {
-                        messagingCenter.trigger('loginError', data.message);
-                    }
-                    */
                 },
                 error: function (data) {
                     console.log(data);
-                    //messagingCenter.trigger('loginError', 'Неизвестная ошибка');
                 }
             });
         },
@@ -87,18 +70,8 @@ define([
                 contentType: 'application/json',
                 success: function (data) {
                     console.log(data);
-                    /*
-                    if (data.status === 0) {
-                        messagingCenter.trigger('registerOk');
-                    } else {
-                        messagingCenter.trigger('registerError', data.message);
-                    }
-                    */
                 },
                 error: function (data) {
-                    /*
-                    messagingCenter.trigger('registerError', 'Неизвестная ошибка');
-                    */
                     console.log(data);
                 }
             });

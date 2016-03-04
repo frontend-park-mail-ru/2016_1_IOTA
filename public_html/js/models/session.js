@@ -10,11 +10,7 @@ define([
 
     var SessionModel = Backbone.Model.extend({
         sessionUrl: '/api/session/',
-        default: {
-            isAuth: false
-        },
         isAuth: false,
-        //userUrl: '/api/user/',
         login: function (login, password) {
             var self = this;
             $.ajax({
