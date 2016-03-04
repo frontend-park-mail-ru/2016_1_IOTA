@@ -1,16 +1,10 @@
-define([
-    './off_screen_renderer',
-    './screen_renderer',
-    './camera',
-    './table',
-    './hand'
-], function (
-    OffScreenRenderer,
-    ScreenRenderer,
-    Camera,
-    Table,
-    Hand
-) {
+define(function (require) {
+
+    var OffScreenRenderer = require('./off_screen_renderer'),
+        ScreenRenderer = require('./screen_renderer'),
+        Camera = require('./camera'),
+        Table = require('./table'),
+        Hand = require('./hand');
 
     return function () {
         var table = document.createElement('canvas'),

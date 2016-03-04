@@ -17,6 +17,20 @@ require.config({
     }
 });
 
-define(['backbone', 'router'], function(Backbone) {
-    Backbone.history.start();
+define(function (require) {
+
+    var Backbone = require('backbone'),
+        Router = require('router'),
+        SessionModel = require('models/session'),
+        messagingCenter = require('messaging_center');
+
+    var session = new SessionModel();
+    session.get();
+
+    session.listenTo(messagingCenter, 'authChecked', function (message) {
+        console.log(message);
+        var router = new Router(session);
+        Backbone.history.start();
+    });
+
 });

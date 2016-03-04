@@ -1,30 +1,34 @@
-define([
-    'backbone',
-    'tmpl/main'
-], function(
-    Backbone,
-    tmpl
-) {
+define(function (require) {
 
-    var View = Backbone.View.extend({
+    var Backbone = require('backbone'),
+        tmpl = require('tmpl/main');
+
+    //noinspection UnnecessaryLocalVariableJS
+    var MainView = Backbone.View.extend({
 
         el: '#page',
         template: tmpl,
-        initialize: function () {
-            // TODO
+
+        initialize: function (session) {
+            this.session = session;
         },
+
         render: function () {
-            this.$el.html(this.template);
+            console.log("Third: " + this.session.isAuth);
+            this.$el.html(this.template({isAuth: this.session.isAuth}));
             this.$el.css('overflow', 'visible');
         },
+
         show: function () {
             this.render();
         },
+
         hide: function () {
             // TODO
         }
 
     });
 
-    return View;
+    return MainView;
+
 });

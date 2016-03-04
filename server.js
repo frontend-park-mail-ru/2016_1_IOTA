@@ -25,10 +25,10 @@ app.listen(PORT, function () {
     console.log("Simple static server showing %s listening at http://%s:%s", PUBLIC_DIR, HOSTNAME, PORT);
 });
 
-
-app.use('/proxy', proxy('http://vk.com', {
+app.use('/api', proxy('http://localhost:8081/', {
     forwardPath: function (req, res) {
-        console.log(1234);
-        return require('url').parse(req.url).path;
+        var url = '/api' + require('url').parse(req.url).path;
+        console.log('Proxy: ' + url);
+        return url;
     }
 }));
