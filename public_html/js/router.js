@@ -26,6 +26,7 @@ define(function (require) {
             this.session = session;
             this.user = new UserModel();
 
+            // TODO: To Key-Value storage and create view manager
             this.game = new GameView(this.session, this.user);
             this.login = new LoginView(this.session, this.user);
             this.main = new MainView(this.session, this.user);
@@ -33,6 +34,7 @@ define(function (require) {
             this.registration = new RegistrationView(this.session, this.user);
             this.logout = new LogoutView(this.session, this.user);
 
+            // TODO: To single listenTo
             this.listenTo(messagingCenter, 'loginOk', this.defaultActions);
             this.listenTo(messagingCenter, 'registerOk', this.defaultActions);
             this.listenTo(messagingCenter, 'logoutOk', this.defaultActions);

@@ -1,3 +1,4 @@
+// TODO: Use Backbone.Events instead
 define(function (require) {
 
     var Backbone = require('backbone'),

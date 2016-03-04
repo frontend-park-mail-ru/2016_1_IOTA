@@ -10,6 +10,7 @@ define(function (require) {
         sessionUrl: '/api/session/',
         isAuth: false,
 
+        // TODO: Use internal model requests
         login: function (login, password) {
             var self = this;
             $.ajax({
