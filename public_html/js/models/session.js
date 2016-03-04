@@ -25,10 +25,10 @@ define([
                 contentType: 'application/json',
                 success: function (data) {
                     if (data.status === 0) {
+                        self.isAuthenticated = true;
                         messagingCenter.trigger('loginOk');
                         // TODO
                         console.log(self);
-                        self.isAuthenticated = true;
                     } else {
                         messagingCenter.trigger('loginError', data.message);
                     }
@@ -43,6 +43,7 @@ define([
                 method: 'DELETE',
                 url: this.sessionUrl,
                 success: function () {
+                    self.isAuthenticated = false;
                     alert("Successfull logout");
                 },
                 error: function() {

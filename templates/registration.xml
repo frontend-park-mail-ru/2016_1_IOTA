@@ -6,15 +6,15 @@
             <form class="js-submit form-horizontal">
                 <div class="js-alert"></div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="mail">Email</label>
+                    <label class="col-sm-3 control-label" for="name">Login</label>
                     <div class="col-sm-9">
-                        <input required="" type="email" class="form-control" name="email" id="email" placeholder="Email"/>
+                        <input required="" type="text" class="form-control" name="login" id="name" placeholder="Name"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="name">Name</label>
+                    <label class="col-sm-3 control-label" for="mail">Email</label>
                     <div class="col-sm-9">
-                        <input required="" type="text" class="form-control" name="name" id="name" placeholder="Name"/>
+                        <input required="" type="email" class="form-control" name="email" id="email" placeholder="Email"/>
                     </div>
                 </div>
                 <div class="form-group">

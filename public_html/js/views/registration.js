@@ -37,7 +37,7 @@ define([
                 return;
             }
 
-            event.data.session.register(this.name.value, this.password.value, this.email.value);
+            event.data.session.register(this.login.value, this.password.value, this.email.value);
         },
         registerError: function (errorMsg) {
             this.$alert.html(errorMsg);

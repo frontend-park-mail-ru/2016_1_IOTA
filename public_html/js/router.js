@@ -24,6 +24,7 @@ define([
             'game': 'gameAction',
             'login': 'loginAction',
             'registration': 'regAction',
+            'logout': 'logoutAction',
             '*default': 'defaultActions'
         },
         initialize: function () {
@@ -54,6 +55,10 @@ define([
         },
         regAction: function () {
             this.registration.show();
+        },
+        logoutAction: function () {
+            this.session.logout();
+            this.defaultActions();
         }
     });
 
