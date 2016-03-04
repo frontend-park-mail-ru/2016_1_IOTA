@@ -1,15 +1,14 @@
-define([
-    './extends',
-    './renderer',
-    './tile'
-], function (
-    __extends,
-    Renderer,
-    Tile
-) {
+define(function (require) {
 
+    var __extends = require('./extends'),
+        Renderer = require('./renderer'),
+        Tile = require('./tile');
+
+    //noinspection UnnecessaryLocalVariableJS
     var Table = (function (_super) {
+
         __extends(Table, _super);
+
         function Table(rows, columns, tileWidth, tileHeight) {
             _super.call(this);
             for (var i = 0; i < rows; i++) {
@@ -24,7 +23,9 @@ define([
                 this.drawables[i].draw(canvas);
             }
         };
+
         return Table;
+
     }(Renderer));
 
     return Table;

@@ -1,12 +1,16 @@
 // QUnit.config.autostart = false;
 require.config({
+
     urlArgs: "_=" + (new Date()).getTime(),
+
     baseUrl: "../js",
+
     paths: {
         jquery: "lib/jquery",
         underscore: "lib/underscore",
         backbone: "lib/backbone"
     },
+
     shim: {
         'backbone': {
             deps: ['underscore', 'jquery'],
@@ -16,10 +20,12 @@ require.config({
             exports: '_'
         }
     }
+
 });
 
 var tests = [
-    'models/score.test'
+    'models/score.test',
+    'collections/scores.test'
 ];
 
 require(tests, function () {

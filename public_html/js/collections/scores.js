@@ -1,14 +1,25 @@
-define([
-    'backbone',
-    'models/score'
-], function(
-    Backbone,
-    ScoreModel
-){
+define(function (require) {
 
-    var Collection = Backbone.Collection.extend({
-        model: ScoreModel
+    var Backbone = require('backbone'),
+        ScoreModel = require('models/score');
+
+    //noinspection UnnecessaryLocalVariableJS
+    var ScoreCollection = Backbone.Collection.extend({
+        model: ScoreModel,
+        comparator: function(model1, model2) {
+            var score1 = model1.get('score'),
+                score2 = model2.get('score');
+
+            if (score1 > score2) {
+                return -1;
+            } else if (score1 < score2) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
     });
 
-    return Collection;
+    return ScoreCollection;
+    
 });
