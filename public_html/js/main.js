@@ -21,7 +21,9 @@ define(function (require) {
 
     var Backbone = require('backbone');
     var Router = require('router');
-    
+    var SessionModel = require('models/session');
+    var messagingCenter = require('messaging_center');
+
     var session = new SessionModel();
     session.get();
 
