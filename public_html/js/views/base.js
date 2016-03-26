@@ -3,22 +3,19 @@ define(function (require) {
     var Backbone = require('backbone');
 
     //noinspection UnnecessaryLocalVariableJS
-    var LogoutView = Backbone.View.extend({
+    var BaseView = Backbone.View.extend({
 
-        initialize: function (session, user) {
-            this.session = session;
-            this.user = user;
+        initialize: function () {
             this.render();
         },
 
         render: function () {
-            this.$el.html('');
+            this.$el.html(this.template);
         },
 
         show: function () {
             this.trigger('show', this);
             this.$el.show();
-            this.session.logout();
         },
 
         hide: function () {
@@ -27,6 +24,6 @@ define(function (require) {
 
     });
 
-    return LogoutView;
+    return BaseView;
 
 });

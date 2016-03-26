@@ -7,8 +7,8 @@ define(function (require) {
         ScoreboardView = require('views/scoreboard'),
         RegistrationView = require('views/registration'),
         UserModel = require('models/user'),
-        LogoutView = require('views/logout'),
-        Manager = require('views/manager');
+        Manager = require('views/manager'),
+        MainAuthView = require('views/main_auth');
 
     //noinspection UnnecessaryLocalVariableJS
     var Router = Backbone.Router.extend({
@@ -33,7 +33,7 @@ define(function (require) {
                 main: new MainView(this.session, this.user),
                 scoreboard: new ScoreboardView(this.session, this.user),
                 registration: new RegistrationView(this.session, this.user),
-                logout: new LogoutView(this.session, this.user)
+                mainAuth: new MainAuthView()
             };
 
             for (var view in this.views) {
@@ -58,7 +58,11 @@ define(function (require) {
             //console.log("Second: " + this.session.isAuth);
             this.navigate('/#');
             //this.main.show();
-            this.views['main'].show();
+            if (this.session.isAuth) {
+                this.views['mainAuth'].show();
+            } else {
+                this.views['main'].show();
+            }
         },
 
         scoreboardAction: function () {
@@ -83,7 +87,8 @@ define(function (require) {
 
         logoutAction: function () {
             //this.logout.show();
-            this.views['logout'].show();
+            //this.views['logout'].show();
+            this.session.logout();
         }
 
     });
