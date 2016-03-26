@@ -6,8 +6,6 @@ define(function (require) {
     //noinspection UnnecessaryLocalVariableJS
     var MainView = Backbone.View.extend({
 
-        // TODO: Remove el from all views
-        //el: '#page',
         template: tmpl,
 
         initialize: function (session) {
@@ -23,7 +21,6 @@ define(function (require) {
         },
 
         show: function () {
-            //this.render();
             this.trigger('show', this);
             this.$el.show();
         },

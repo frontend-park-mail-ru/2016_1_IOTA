@@ -7,25 +7,26 @@ define(function (require) {
     //noinspection UnnecessaryLocalVariableJS
     var GameView = Backbone.View.extend({
 
-        el: '#page',
         template: tmpl,
 
         initialize: function (session) {
             this.session = session;
+            this.render();
         },
 
         render: function () {
             this.$el.html(this.template);
             this.$el.css('overflow', 'hidden');
-            game();
+            //game();
         },
 
         show: function () {
-            this.render();
+            this.trigger('show', this);
+            this.$el.show();
         },
 
         hide: function () {
-            // TODO
+            this.$el.hide();
         }
 
     });

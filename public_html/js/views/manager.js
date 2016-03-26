@@ -23,4 +23,5 @@ define(function (require) {
     });
 
     return Manager;
+
 });

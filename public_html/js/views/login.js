@@ -7,7 +7,6 @@ define(function (require) {
     //noinspection UnnecessaryLocalVariableJS
     var LoginView = Backbone.View.extend({
 
-        //el: '#page',
         template: tmpl,
         templateAuth: tmplAuth,
 
@@ -30,7 +29,6 @@ define(function (require) {
         },
 
         show: function () {
-            //this.render();
             this.trigger('show', this);
             this.$el.show();
         },

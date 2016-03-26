@@ -5,8 +5,6 @@ define(function (require) {
     //noinspection UnnecessaryLocalVariableJS
     var LogoutView = Backbone.View.extend({
 
-        //el: '#page',
-
         initialize: function (session, user) {
             this.session = session;
             this.user = user;
@@ -15,12 +13,12 @@ define(function (require) {
 
         render: function () {
             this.$el.html('');
-            this.session.logout();
         },
 
         show: function () {
-            //this.render();
             this.trigger('show', this);
+            this.$el.show();
+            this.session.logout();
         },
 
         hide: function () {
