@@ -6,7 +6,6 @@ define(function (require) {
         MainView = require('views/main'),
         ScoreboardView = require('views/scoreboard'),
         RegistrationView = require('views/registration'),
-        messagingCenter = require('messaging_center'),
         UserModel = require('models/user'),
         LogoutView = require('views/logout');
 
@@ -34,11 +33,7 @@ define(function (require) {
             this.registration = new RegistrationView(this.session, this.user);
             this.logout = new LogoutView(this.session, this.user);
 
-            // TODO: To single listenTo
-            this.listenTo(messagingCenter, 'loginOk', this.defaultActions);
-            this.listenTo(messagingCenter, 'registerOk', this.defaultActions);
-            this.listenTo(messagingCenter, 'logoutOk', this.defaultActions);
-            this.listenTo(messagingCenter, 'logoutError', this.defaultActions);
+            this.listenTo(Backbone.Events, 'loginOk registerOk logoutOk logoutError', this.defaultActions);
         },
 
         defaultActions: function () {

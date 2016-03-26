@@ -2,8 +2,7 @@ define(function (require) {
 
     var Backbone = require('backbone'),
         tmpl = require('tmpl/login'),
-        tmplAuth = require('tmpl/login_auth'),
-        messagingCenter = require('messaging_center');
+        tmplAuth = require('tmpl/login_auth');
 
     //noinspection UnnecessaryLocalVariableJS
     var LoginView = Backbone.View.extend({
@@ -14,7 +13,7 @@ define(function (require) {
 
         initialize: function (session) {
             this.session = session;
-            this.listenTo(messagingCenter, 'loginError', this.loginError);
+            this.listenTo(Backbone.Events, 'loginError', this.loginError);
         },
 
         render: function () {
