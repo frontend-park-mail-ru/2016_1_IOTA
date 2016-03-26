@@ -1,40 +1,24 @@
 define(function (require) {
 
     var Backbone = require('backbone'),
+        BaseView = require('views/base'),
         tmpl = require('tmpl/login'),
-        tmplAuth = require('tmpl/login_auth');
+        session = require('models/session');
 
     //noinspection UnnecessaryLocalVariableJS
-    var LoginView = Backbone.View.extend({
+    var LoginView = BaseView.extend({
 
         template: tmpl,
-        templateAuth: tmplAuth,
 
-        initialize: function (session) {
-            this.session = session;
+        initialize: function () {
             this.listenTo(Backbone.Events, 'loginError', this.loginError);
             this.render();
         },
 
         render: function () {
-            if (this.session.isAuth) {
-                this.$el.html(this.templateAuth);
-                return;
-            }
-
             this.$el.html(this.template);
-            this.$el.css('overflow', 'visible');
             this.$alert = this.$('.js-alert');
-            this.$('.js-submit').on('submit', {session: this.session, alert: this.$alert}, this.login);
-        },
-
-        show: function () {
-            this.trigger('show', this);
-            this.$el.show();
-        },
-
-        hide: function () {
-            this.$el.hide();
+            this.$('.js-submit').on('submit', {alert: this.$alert}, this.login);
         },
 
         login: function (event) {
@@ -53,7 +37,7 @@ define(function (require) {
                 return;
             }
 
-            event.data.session.login(this.login.value, this.password.value);
+            session.login(this.login.value, this.password.value);
         },
 
         loginError: function (errorMsg) {

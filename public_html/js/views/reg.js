@@ -1,42 +1,24 @@
 define(function (require) {
 
     var Backbone = require('backbone'),
+        BaseView = require('views/base'),
         tmpl = require('tmpl/registration'),
-        tmplAuth = require('tmpl/registration_auth');
+        user = require('models/user');
 
     //noinspection UnnecessaryLocalVariableJS
-    var RegistrationView = Backbone.View.extend({
+    var RegistrationView = BaseView.extend({
 
         template: tmpl,
-        templateAuth: tmplAuth,
 
-        initialize: function (session, user) {
-            this.session = session;
-            this.user = user;
+        initialize: function () {
             this.listenTo(Backbone.Events, 'registerError', this.registerError);
             this.render();
         },
 
         render: function () {
-            if (this.session.isAuth) {
-                this.$el.html(this.templateAuth);
-                return;
-            }
-
             this.$el.html(this.template);
-            this.$el.css('overflow', 'visible');
             this.$alert = this.$('.js-alert');
-            this.$('.js-submit').on('submit', {user: this.user, alert: this.$alert}, this.register);
-        },
-
-        show: function () {
-            this.trigger('show', this);
-            this.$el.show();
-
-        },
-
-        hide: function () {
-            this.$el.hide();
+            this.$('.js-submit').on('submit', {alert: this.$alert}, this.register);
         },
 
         register: function (event) {
@@ -60,7 +42,7 @@ define(function (require) {
                 return;
             }
 
-            event.data.user.create(this.login.value, this.password.value, this.email.value);
+            user.create(this.login.value, this.password.value, this.email.value);
         },
 
         registerError: function (errorMsg) {

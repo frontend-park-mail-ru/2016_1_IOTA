@@ -11,7 +11,6 @@ define(function (require) {
 
         // TODO: Use internal model requests
         login: function (login, password) {
-            console.log(login, password);
             var self = this;
             $.ajax({
                 method: 'PUT',
@@ -75,6 +74,6 @@ define(function (require) {
 
     });
 
-    return SessionModel;
+    return new SessionModel();
 
 });
