@@ -7,14 +7,15 @@ define(function (require) {
     //noinspection UnnecessaryLocalVariableJS
     var RegistrationView = Backbone.View.extend({
 
-        el: '#page',
+        //el: '#page',
         template: tmpl,
         templateAuth: tmplAuth,
 
         initialize: function (session, user) {
             this.session = session;
             this.user = user;
-            this.listenTo(Backbone.Events, 'registerError', this.registerError)
+            this.listenTo(Backbone.Events, 'registerError', this.registerError);
+            this.render();
         },
 
         render: function () {
@@ -25,16 +26,19 @@ define(function (require) {
 
             this.$el.html(this.template);
             this.$el.css('overflow', 'visible');
-            this.$alert = $('.js-alert');
-            $('.js-submit').on('submit', {user: this.user, alert: this.$alert}, this.register);
+            this.$alert = this.$('.js-alert');
+            this.$('.js-submit').on('submit', {user: this.user, alert: this.$alert}, this.register);
         },
 
         show: function () {
-            this.render();
+            //this.render();
+            this.trigger('show', this);
+            this.$el.show();
+
         },
 
         hide: function () {
-            // TODO
+            this.$el.hide();
         },
 
         register: function (event) {

@@ -9,7 +9,7 @@ define(function (require) {
     //noinspection UnnecessaryLocalVariableJS
     var ScoreboardView = Backbone.View.extend({
 
-        el: '#page',
+        //el: '#page',
         template: tmpl,
 
         initialize: function (session) {
@@ -32,12 +32,15 @@ define(function (require) {
             for (var i = 0; i < names.length; i++) {
                 this.scores.add(new ScoreModel({name: names[i], score: Math.round(Math.random() * 1000)}));
             }
+
+            this.render();
         },
 
         render: function () {
+            console.log("RENDER SCOREBOARD");
             this.$el.html(this.template);
             this.$el.css('overflow', 'visible');
-            this.$table = $('#table').html('');
+            this.$table = this.$('#table').html('');
 
             var count = 1,
                 self = this;
@@ -50,11 +53,13 @@ define(function (require) {
         },
 
         show: function () {
-            this.render();
+            //this.render();
+            this.trigger('show', this);
+            this.$el.show();
         },
 
         hide: function () {
-            // TODO
+            this.$el.hide();
         }
 
     });

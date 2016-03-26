@@ -7,11 +7,12 @@ define(function (require) {
     var MainView = Backbone.View.extend({
 
         // TODO: Remove el from all views
-        el: '#page',
+        //el: '#page',
         template: tmpl,
 
         initialize: function (session) {
             this.session = session;
+            this.render();
         },
 
         render: function () {
@@ -22,11 +23,13 @@ define(function (require) {
         },
 
         show: function () {
-            this.render();
+            //this.render();
+            this.trigger('show', this);
+            this.$el.show();
         },
 
         hide: function () {
-            // TODO
+            this.$el.hide();
         }
 
     });

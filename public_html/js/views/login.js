@@ -7,13 +7,14 @@ define(function (require) {
     //noinspection UnnecessaryLocalVariableJS
     var LoginView = Backbone.View.extend({
 
-        el: '#page',
+        //el: '#page',
         template: tmpl,
         templateAuth: tmplAuth,
 
         initialize: function (session) {
             this.session = session;
             this.listenTo(Backbone.Events, 'loginError', this.loginError);
+            this.render();
         },
 
         render: function () {
@@ -24,16 +25,18 @@ define(function (require) {
 
             this.$el.html(this.template);
             this.$el.css('overflow', 'visible');
-            this.$alert = $('.js-alert');
-            $('.js-submit').on('submit', {session: this.session, alert: this.$alert}, this.login);
+            this.$alert = this.$('.js-alert');
+            this.$('.js-submit').on('submit', {session: this.session, alert: this.$alert}, this.login);
         },
 
         show: function () {
-            this.render();
+            //this.render();
+            this.trigger('show', this);
+            this.$el.show();
         },
 
         hide: function () {
-            // TODO
+            this.$el.hide();
         },
 
         login: function (event) {
