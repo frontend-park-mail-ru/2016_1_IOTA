@@ -31,6 +31,7 @@ define(function (require) {
         },
 
         initialize: function () {
+            this.hideViews();
             for (var view in this.views) {
                 //noinspection JSUnfilteredForInLoop
                 this.$el.append(this.views[view].el);
