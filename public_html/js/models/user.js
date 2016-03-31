@@ -1,8 +1,7 @@
 define(function (require) {
 
     var Backbone = require('backbone'),
-        $ = require('jquery'),
-        messagingCenter = require('messaging_center');
+        $ = require('jquery');
 
     //noinspection UnnecessaryLocalVariableJS
     var UserModel = Backbone.Model.extend({
@@ -36,6 +35,7 @@ define(function (require) {
         },
 
         create: function (login, password, email) {
+            var self = this;
             $.ajax({
                 method: 'POST',
                 url: this.userUrl,
@@ -48,13 +48,13 @@ define(function (require) {
                 contentType: 'application/json',
                 success: function (data) {
                     if (data.status === 0) {
-                        messagingCenter.trigger('registerOk');
+                        self.trigger('registerOk');
                     } else {
-                        messagingCenter.trigger('registerError', data.message);
+                        self.trigger('registerError', data.message);
                     }
                 },
                 error: function () {
-                    messagingCenter.trigger('registerError', 'Неизвестная ошибка');
+                    self.trigger('registerError', 'Неизвестная ошибка');
                 }
             });
         },
@@ -81,6 +81,6 @@ define(function (require) {
 
     });
 
-    return UserModel;
+    return new UserModel();
 
 });

@@ -1,15 +1,15 @@
 define(function (require) {
 
     var BaseView = require('views/base'),
-        tmpl = require('tmpl/main');
+        tmpl = require('tmpl/reg_auth');
 
     //noinspection UnnecessaryLocalVariableJS
-    var MainView = BaseView.extend({
+    var RegAuthView = BaseView.extend({
 
         template: tmpl
 
     });
 
-    return MainView;
+    return RegAuthView;
 
 });

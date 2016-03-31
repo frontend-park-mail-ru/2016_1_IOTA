@@ -1,15 +1,16 @@
 define(function (require) {
 
     var Backbone = require('backbone'),
-        $ = require('jquery'),
-        messagingCenter = require('messaging_center');
+        $ = require('jquery');
 
     //noinspection UnnecessaryLocalVariableJS
     var SessionModel = Backbone.Model.extend({
 
         sessionUrl: '/api/session/',
+
         isAuth: false,
 
+        // TODO: Use internal model requests
         login: function (login, password) {
             var self = this;
             $.ajax({
@@ -22,17 +23,17 @@ define(function (require) {
                 dataType: 'json',
                 contentType: 'application/json',
                 success: function (data) {
+                    console.log(data);
                     if (data.status === 0) {
                         self.isAuth = true;
-                        messagingCenter.trigger('loginOk');
-                        // TODO
-                        console.log(self);
+                        self.trigger('loginOk');
                     } else {
-                        messagingCenter.trigger('loginError', data.message);
+                        self.trigger('loginError', data.message);
                     }
                 },
                 error: function (data) {
-                    messagingCenter.trigger('loginError', 'Неизвестная ошибка');
+                    console.log(data);
+                    self.trigger('loginError', 'Неизвестная ошибка');
                 }
             });
         },
@@ -45,11 +46,11 @@ define(function (require) {
                 success: function (data) {
                     self.isAuth = false;
                     console.log(data);
-                    messagingCenter.trigger('logoutOk');
+                    self.trigger('logoutOk');
                 },
                 error: function(data) {
                     console.log(data);
-                    messagingCenter.trigger('logoutError');
+                    self.trigger('logoutError');
                 }
             });
         },
@@ -60,21 +61,20 @@ define(function (require) {
                 method: 'GET',
                 url: this.sessionUrl,
                 success: function (data) {
-                    self.isAuth = true;
                     console.log(data);
-                    console.log("First: " + self.isAuth);
-                    messagingCenter.trigger('authChecked', 'Вход выполнен');
+                    self.isAuth = true;
+                    self.trigger('authChecked', 'Вход выполнен');
                 },
                 
                 error: function (data) {
                     console.log(data);
-                    messagingCenter.trigger('authChecked', 'Необходимо выполненить вход');
+                    self.trigger('authChecked', 'Необходимо выполненить вход');
                 }
             });
         }
 
     });
 
-    return SessionModel;
+    return new SessionModel();
 
 });

@@ -7,6 +7,7 @@ define(function (require) {
     var ScoreboardItemView = Backbone.View.extend({
 
         tagName: 'tr',
+
         template: tmpl,
 
         initialize: function () {
@@ -15,6 +16,7 @@ define(function (require) {
 
         render: function (json) {
             for (var attr in json) {
+                //noinspection JSUnfilteredForInLoop
                 this.model.set(attr, json[attr]);
             }
             this.$el.html(this.template(this.model.toJSON()));

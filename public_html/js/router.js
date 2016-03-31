@@ -1,14 +1,9 @@
 define(function (require) {
 
     var Backbone = require('backbone'),
-        GameView = require('views/game'),
-        LoginView = require('views/login'),
-        MainView = require('views/main'),
-        ScoreboardView = require('views/scoreboard'),
-        RegistrationView = require('views/registration'),
-        messagingCenter = require('messaging_center'),
-        UserModel = require('models/user'),
-        LogoutView = require('views/logout');
+        session = require('models/session'),
+        user = require('models/user'),
+        viewManager = require('views/manager');
 
     //noinspection UnnecessaryLocalVariableJS
     var Router = Backbone.Router.extend({
@@ -22,47 +17,34 @@ define(function (require) {
             '*default': 'defaultActions'
         },
 
-        initialize: function (session) {
-            this.session = session;
-            this.user = new UserModel();
-
-            this.game = new GameView(this.session, this.user);
-            this.login = new LoginView(this.session, this.user);
-            this.main = new MainView(this.session, this.user);
-            this.scoreboard = new ScoreboardView(this.session, this.user);
-            this.registration = new RegistrationView(this.session, this.user);
-            this.logout = new LogoutView(this.session, this.user);
-
-            this.listenTo(messagingCenter, 'loginOk', this.defaultActions);
-            this.listenTo(messagingCenter, 'registerOk', this.defaultActions);
-            this.listenTo(messagingCenter, 'logoutOk', this.defaultActions);
-            this.listenTo(messagingCenter, 'logoutError', this.defaultActions);
+        initialize: function () {
+            this.listenTo(session, 'loginOk logoutOk logoutError', this.defaultActions);
+            this.listenTo(user, 'registerOk', this.defaultActions);
         },
 
         defaultActions: function () {
-            console.log("Second: " + this.session.isAuth);
             this.navigate('/#');
-            this.main.show();
+            viewManager.show('main');
         },
 
         scoreboardAction: function () {
-            this.scoreboard.show();
+            viewManager.show('scoreboard');
         },
 
         gameAction: function () {
-            this.game.show();
+            viewManager.show('game');
         },
 
         loginAction: function () {
-            this.login.show();
+            viewManager.show('login');
         },
 
         regAction: function () {
-            this.registration.show();
+            viewManager.show('reg');
         },
 
         logoutAction: function () {
-            this.logout.show();
+            viewManager.show('logout');
         }
 
     });

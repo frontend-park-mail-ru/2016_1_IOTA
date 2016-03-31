@@ -1,15 +1,15 @@
 define(function (require) {
 
     var BaseView = require('views/base'),
-        tmpl = require('tmpl/main');
+        tmpl = require('tmpl/game_auth');
 
     //noinspection UnnecessaryLocalVariableJS
-    var MainView = BaseView.extend({
+    var GameAuthView = BaseView.extend({
 
         template: tmpl
 
     });
 
-    return MainView;
+    return GameAuthView;
 
 });

@@ -2,20 +2,20 @@ define(function (require) {
 
     var Backbone = require('backbone'),
         BaseView = require('views/base'),
-        tmpl = require('tmpl/login'),
-        session = require('models/session');
+        tmpl = require('tmpl/registration'),
+        user = require('models/user');
 
     //noinspection UnnecessaryLocalVariableJS
-    var LoginView = BaseView.extend({
+    var RegistrationView = BaseView.extend({
 
         template: tmpl,
 
         events: {
-            'submit .js-submit': 'login'
+            'submit .js-submit': 'register'
         },
 
         initialize: function () {
-            this.listenTo(Backbone.Events, 'loginError', this.loginError);
+            this.listenTo(Backbone.Events, 'registerError', this.registerError);
             this.render();
         },
 
@@ -24,7 +24,7 @@ define(function (require) {
             this.$alert = this.$('.js-alert');
         },
 
-        login: function (event) {
+        register: function (event) {
             event.preventDefault();
             this.$alert.html('');
 
@@ -35,20 +35,25 @@ define(function (require) {
                 return;
             }
 
+            if (event.target.password.value !== event.target.confirm_password.value) {
+                this.$alert.html('Пароли не совпадают');
+                return;
+            }
+
             if (event.target.password.value.length < 6) {
                 this.$alert.html('Пароль не должен быть короче 6 символов');
                 return;
             }
 
-            session.login(event.target.login.value, event.target.password.value);
+            user.create(event.target.login.value, event.target.password.value, event.target.email.value);
         },
 
-        loginError: function (errorMsg) {
+        registerError: function (errorMsg) {
             this.$alert.html(errorMsg);
         }
 
     });
 
-    return LoginView;
+    return RegistrationView;
 
 });
