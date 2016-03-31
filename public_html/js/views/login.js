@@ -10,6 +10,10 @@ define(function (require) {
 
         template: tmpl,
 
+        events: {
+            'submit .js-submit': 'login'
+        },
+
         initialize: function () {
             this.listenTo(Backbone.Events, 'loginError', this.loginError);
             this.render();
@@ -18,26 +22,25 @@ define(function (require) {
         render: function () {
             this.$el.html(this.template);
             this.$alert = this.$('.js-alert');
-            this.$('.js-submit').on('submit', {alert: this.$alert}, this.login);
         },
 
         login: function (event) {
             event.preventDefault();
-            event.data.alert.html('');
+            this.$alert.html('');
 
             var regExp = /^[a-z0-9]+$/i;
 
-            if (!regExp.test(this.login.value) || !regExp.test(this.password.value)) {
-                event.data.alert.html('Логин и пароль должны содержать только цифры и латинские буквы');
+            if (!regExp.test(event.target.login.value) || !regExp.test(event.target.password.value)) {
+                this.$alert.html('Логин и пароль должны содержать только цифры и латинские буквы');
                 return;
             }
 
-            if (this.password.value.length < 6) {
-                event.data.alert.html('Пароль не должен быть короче 6 символов');
+            if (event.target.password.value.length < 6) {
+                this.$alert.html('Пароль не должен быть короче 6 символов');
                 return;
             }
 
-            session.login(this.login.value, this.password.value);
+            session.login(event.target.login.value, event.target.password.value);
         },
 
         loginError: function (errorMsg) {

@@ -7,6 +7,7 @@ define(function (require) {
     var ScoreboardItemView = Backbone.View.extend({
 
         tagName: 'tr',
+
         template: tmpl,
 
         initialize: function () {
