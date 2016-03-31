@@ -7,6 +7,7 @@ define(function (require) {
     var SessionModel = Backbone.Model.extend({
 
         sessionUrl: '/api/session/',
+
         isAuth: false,
 
         // TODO: Use internal model requests
@@ -25,14 +26,14 @@ define(function (require) {
                     console.log(data);
                     if (data.status === 0) {
                         self.isAuth = true;
-                        Backbone.Events.trigger('loginOk');
+                        self.trigger('loginOk');
                     } else {
-                        Backbone.Events.trigger('loginError', data.message);
+                        self.trigger('loginError', data.message);
                     }
                 },
                 error: function (data) {
                     console.log(data);
-                    Backbone.Events.trigger('loginError', 'Неизвестная ошибка');
+                    self.trigger('loginError', 'Неизвестная ошибка');
                 }
             });
         },
@@ -45,11 +46,11 @@ define(function (require) {
                 success: function (data) {
                     self.isAuth = false;
                     console.log(data);
-                    Backbone.Events.trigger('logoutOk');
+                    self.trigger('logoutOk');
                 },
                 error: function(data) {
                     console.log(data);
-                    Backbone.Events.trigger('logoutError');
+                    self.trigger('logoutError');
                 }
             });
         },
@@ -62,12 +63,12 @@ define(function (require) {
                 success: function (data) {
                     console.log(data);
                     self.isAuth = true;
-                    Backbone.Events.trigger('authChecked', 'Вход выполнен');
+                    self.trigger('authChecked', 'Вход выполнен');
                 },
                 
                 error: function (data) {
                     console.log(data);
-                    Backbone.Events.trigger('authChecked', 'Необходимо выполненить вход');
+                    self.trigger('authChecked', 'Необходимо выполненить вход');
                 }
             });
         }

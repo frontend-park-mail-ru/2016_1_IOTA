@@ -25,7 +25,7 @@ define(function (require) {
 
     session.get();
 
-    session.listenTo(Backbone.Events, 'authChecked', function () {
+    session.listenTo(session, 'authChecked', function () {
         var router = new Router();
         Backbone.history.start();
     });

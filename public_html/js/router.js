@@ -1,6 +1,8 @@
 define(function (require) {
 
     var Backbone = require('backbone'),
+        session = require('models/session'),
+        user = require('models/user'),
         viewManager = require('views/manager');
 
     //noinspection UnnecessaryLocalVariableJS
@@ -16,7 +18,8 @@ define(function (require) {
         },
 
         initialize: function () {
-            this.listenTo(Backbone.Events, 'loginOk registerOk logoutOk logoutError', this.defaultActions);
+            this.listenTo(session, 'loginOk logoutOk logoutError', this.defaultActions);
+            this.listenTo(user, 'registerOk', this.defaultActions);
         },
 
         defaultActions: function () {

@@ -35,6 +35,7 @@ define(function (require) {
         },
 
         create: function (login, password, email) {
+            var self = this;
             $.ajax({
                 method: 'POST',
                 url: this.userUrl,
@@ -47,13 +48,13 @@ define(function (require) {
                 contentType: 'application/json',
                 success: function (data) {
                     if (data.status === 0) {
-                        Backbone.Events.trigger('registerOk');
+                        self.trigger('registerOk');
                     } else {
-                        Backbone.Events.trigger('registerError', data.message);
+                        self.trigger('registerError', data.message);
                     }
                 },
                 error: function () {
-                    Backbone.Events.trigger('registerError', 'Неизвестная ошибка');
+                    self.trigger('registerError', 'Неизвестная ошибка');
                 }
             });
         },
