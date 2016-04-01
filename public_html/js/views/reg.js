@@ -15,7 +15,7 @@ define(function (require) {
         },
 
         initialize: function () {
-            this.listenTo(Backbone.Events, 'registerError', this.registerError);
+            this.listenTo(user, 'registerError', this.registerError);
             this.render();
         },
 

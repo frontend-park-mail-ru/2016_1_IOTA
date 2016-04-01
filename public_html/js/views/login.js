@@ -15,7 +15,7 @@ define(function (require) {
         },
 
         initialize: function () {
-            this.listenTo(Backbone.Events, 'loginError', this.loginError);
+            this.listenTo(session, 'loginError', this.loginError);
             this.render();
         },
 
