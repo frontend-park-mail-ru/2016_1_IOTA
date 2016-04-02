@@ -45,7 +45,7 @@ define(function (require) {
             });
         },
 
-        check: function () {
+        read: function () {
             this.fetch({
                 success: function (model, response) {
                     console.log(response);
