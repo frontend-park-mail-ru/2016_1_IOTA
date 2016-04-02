@@ -10,6 +10,9 @@ define(function (require) {
 
         function Tile(x, y, width, height) {
             _super.call(this, x, y, width, height);
+            this.validNumbers = [1];
+            this.validColors = [2];
+            this.validShapes = [4];
         }
 
         Tile.prototype.draw = function (canvas) {
@@ -18,8 +21,29 @@ define(function (require) {
             }
             else {
                 var context = canvas.getContext('2d');
-                context.strokeRect(this.x, this.y, this.width, this.height);
             }
+        };
+
+        Tile.prototype.setContent = function (card) {
+            card.setX(this.x);
+            card.setY(this.y);
+            this.content = card;
+        };
+
+        Tile.prototype.canContain = function (card) {
+            if (this.validNumbers.indexOf(card.getNumber()) > -1 && this.validColors.indexOf(card.getColor()) > -1
+                && this.validShapes.indexOf(card.getShape()) > -1) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        };
+
+        Tile.prototype.setValid = function (numbers, colors, shapes) {
+            this.validColors = colors;
+            this.validNumbers = numbers;
+            this.validShapes = shapes;
         };
 
         return Tile;

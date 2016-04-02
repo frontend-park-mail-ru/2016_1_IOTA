@@ -20,7 +20,7 @@ define(function (require) {
         views: {
             scoreboard: new ScoreboardView(),
             scoreboardAuth: new ScoreboardView(),
-            game: new GameView(),
+            game: new GameAuthView(),
             gameAuth: new GameAuthView(),
             login: new LoginView(),
             loginAuth: new LoginAuthView(),
