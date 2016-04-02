@@ -6,16 +6,22 @@ define(function (require) {
     //noinspection UnnecessaryLocalVariableJS
     var SessionModel = Backbone.Model.extend({
 
-        sessionUrl: '/api/session/',
+        url: '/api/session/',
 
+        defaults: {
+            // Otherwise requests will be not sent
+            id: -1
+        },
+        // TODO
         isAuth: false,
 
         // TODO: Use internal model requests
         login: function (login, password) {
+            /*
             var self = this;
             $.ajax({
                 method: 'PUT',
-                url: this.sessionUrl,
+                url: this.url,
                 data: JSON.stringify({
                     'login': login,
                     'password': password
@@ -36,13 +42,34 @@ define(function (require) {
                     self.trigger('loginError', 'Неизвестная ошибка');
                 }
             });
+            */
+            this.save({login: login, password: password},{
+
+                success: function (model, response) {
+                    console.log(response);
+                    if (response.status === 0) {
+                        // TODO
+                        model.isAuth = true;
+                        model.trigger('loginOk');
+                    } else {
+                        model.trigger('loginError', response.message);
+                    }
+                },
+
+                error: function (model, response) {
+                    console.log(response);
+                    model.trigger('loginError', 'Неизвестная ошибка');
+                }
+
+            });
         },
 
         logout: function () {
+            /*
             var self = this;
             $.ajax({
                 method: 'DELETE',
-                url: this.sessionUrl,
+                url: this.url,
                 success: function (data) {
                     self.isAuth = false;
                     console.log(data);
@@ -53,13 +80,30 @@ define(function (require) {
                     self.trigger('logoutError');
                 }
             });
+            */
+            this.destroy({
+
+                success: function (model, response) {
+                    // TODO: model.set('isAuth', false);
+                    model.isAuth = false;
+                    console.log(response);
+                    model.trigger('logoutOk');
+                },
+
+                error: function(model, response) {
+                    console.log(response);
+                    model.trigger('logoutError');
+                }
+
+            });
         },
 
         get: function () {
+            /*
             var self = this;
             $.ajax({
                 method: 'GET',
-                url: this.sessionUrl,
+                url: this.url,
                 success: function (data) {
                     console.log(data);
                     self.isAuth = true;
@@ -70,6 +114,21 @@ define(function (require) {
                     console.log(data);
                     self.trigger('authChecked', 'Необходимо выполненить вход');
                 }
+            });
+            */
+            this.fetch({
+
+                success: function (model, response) {
+                    console.log(response);
+                    model.isAuth = true;
+                    model.trigger('authChecked', 'Вход выполнен');
+                },
+
+                error: function (model, response) {
+                    console.log(response);
+                    model.trigger('authChecked', 'Необходимо выполненить вход');
+                }
+
             });
         }
 
