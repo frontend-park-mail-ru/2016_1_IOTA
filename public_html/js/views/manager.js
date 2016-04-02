@@ -52,7 +52,7 @@ define(function (require) {
                 session.logout();
                 return;
             }
-            if (session.isAuth) {
+            if (session.get('isAuth')) {
                 viewName += 'Auth';
             }
             this.views[viewName].show();

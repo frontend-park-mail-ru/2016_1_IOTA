@@ -23,7 +23,7 @@ define(function (require) {
         Router = require('router'),
         session = require('models/session');
 
-    session.get();
+    session.check();
 
     session.listenTo(session, 'authChecked', function () {
         var router = new Router();
