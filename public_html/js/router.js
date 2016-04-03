@@ -1,12 +1,34 @@
 define(function (require) {
 
     var Backbone = require('backbone'),
+        ScoreboardView = require('views/scoreboard'),
+        GameView = require('views/game'),
+        GameAuthView = require('views/game_auth'),
+        LoginView = require('views/login'),
+        LoginAuthView = require('views/login_auth'),
+        RegView = require('views/reg'),
+        RegAuthView = require('views/reg_auth'),
+        MainView = require('views/main'),
+        MainAuthView = require('views/main_auth'),
+        ViewManager = require('views/manager'),
         session = require('models/session'),
-        user = require('models/user'),
-        viewManager = require('views/manager');
+        user = require('models/user');
 
     //noinspection UnnecessaryLocalVariableJS
     var Router = Backbone.Router.extend({
+
+        views: {
+            scoreboard: new ScoreboardView(),
+            scoreboardAuth: new ScoreboardView(),
+            game: new GameAuthView(),
+            gameAuth: new GameAuthView(),
+            login: new LoginView(),
+            loginAuth: new LoginAuthView(),
+            reg: new RegView(),
+            regAuth: new RegAuthView(),
+            main: new MainView(),
+            mainAuth: new MainAuthView()
+        },
 
         routes: {
             'scoreboard': 'scoreboardAction',
@@ -18,33 +40,34 @@ define(function (require) {
         },
 
         initialize: function () {
+            this.viewManager = new ViewManager(this.views);
             this.listenTo(session, 'loginOk logoutOk logoutError', this.defaultActions);
             this.listenTo(user, 'registerOk', this.defaultActions);
         },
 
         defaultActions: function () {
             this.navigate('/#');
-            viewManager.show('main');
+            this.viewManager.show(session.get('isAuth') ? 'mainAuth' : 'main');
         },
 
         scoreboardAction: function () {
-            viewManager.show('scoreboard');
+            this.viewManager.show('scoreboard');
         },
 
         gameAction: function () {
-            viewManager.show('game');
+            this.viewManager.show(session.get('isAuth') ? 'gameAuth' : 'game');
         },
 
         loginAction: function () {
-            viewManager.show('login');
+            this.viewManager.show(session.get('isAuth') ? 'loginAuth' : 'login');
         },
 
         regAction: function () {
-            viewManager.show('reg');
+            this.viewManager.show(session.get('isAuth') ? 'regAuth' : 'reg');
         },
 
         logoutAction: function () {
-            viewManager.show('logout');
+            session.logout();
         }
 
     });
