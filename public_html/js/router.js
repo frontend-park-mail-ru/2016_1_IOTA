@@ -20,7 +20,7 @@ define(function (require) {
         views: {
             scoreboard: new ScoreboardView(),
             scoreboardAuth: new ScoreboardView(),
-            game: new GameAuthView(),
+            game: new GameView(),
             gameAuth: new GameAuthView(),
             login: new LoginView(),
             loginAuth: new LoginAuthView(),
@@ -36,6 +36,7 @@ define(function (require) {
             'login': 'loginAction',
             'registration': 'regAction',
             'logout': 'logoutAction',
+            'backdoor': 'backdoor',
             '*default': 'defaultActions'
         },
 
@@ -68,6 +69,10 @@ define(function (require) {
 
         logoutAction: function () {
             session.logout();
+        },
+
+        backdoor: function () {
+            this.views['gameAuth'].show();
         },
 
         show: function (viewName) {
