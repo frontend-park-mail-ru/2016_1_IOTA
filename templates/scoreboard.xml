@@ -1,9 +1,9 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
     <fest:include src="./header.xml"/>
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4 jumbotron block">
-            <p><h2 class="form-signin-heading title-__text_block">Score Board</h2></p>
-            <table class="table table-hover">
+    <div class="grid__row">
+        <div class="grid__col grid__col_4 grid__col-offset_4 block__jumbotron">
+            <p><h2 class="title__text title__text_block">Score Board</h2></p>
+            <table class="table table_hover">
                 <thead>
                     <td>#</td>
                     <td>Name</td>
@@ -12,7 +12,7 @@
                 <tbody id="table">
                 </tbody>
             </table>
-            <a type="button" class="btn btn-danger btn-block button__menu" href="#">Back</a>
+            <a type="button" class="button button_danger button_block button__menu" href="#">Back</a>
         </div>
     </div>
 </fest:template>
