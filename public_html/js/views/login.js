@@ -1,59 +1,46 @@
 define(function (require) {
 
     var Backbone = require('backbone'),
+        BaseView = require('views/base'),
         tmpl = require('tmpl/login'),
-        tmplAuth = require('tmpl/login_auth'),
-        messagingCenter = require('messaging_center');
+        session = require('models/session');
 
     //noinspection UnnecessaryLocalVariableJS
-    var LoginView = Backbone.View.extend({
+    var LoginView = BaseView.extend({
 
-        el: '#page',
         template: tmpl,
-        templateAuth: tmplAuth,
 
-        initialize: function (session) {
-            this.session = session;
-            this.listenTo(messagingCenter, 'loginError', this.loginError);
+        events: {
+            'submit .js-submit': 'login'
         },
 
-        render: function () {
-            if (this.session.isAuth) {
-                this.$el.html(this.templateAuth);
-                return;
-            }
-
-            this.$el.html(this.template);
-            this.$el.css('overflow', 'visible');
-            this.$alert = $('.js-alert');
-            $('.js-submit').on('submit', {session: this.session, alert: this.$alert}, this.login);
-        },
-
-        show: function () {
+        initialize: function () {
+            this.listenTo(session, 'loginError', this.loginError);
             this.render();
         },
 
-        hide: function () {
-            // TODO
+        render: function () {
+            this.$el.html(this.template);
+            this.$alert = this.$('.js-alert');
         },
 
         login: function (event) {
             event.preventDefault();
-            event.data.alert.html('');
+            this.$alert.html('');
 
             var regExp = /^[a-z0-9]+$/i;
 
-            if (!regExp.test(this.login.value) || !regExp.test(this.password.value)) {
-                event.data.alert.html('Логин и пароль должны содержать только цифры и латинские буквы');
+            if (!regExp.test(event.target.login.value) || !regExp.test(event.target.password.value)) {
+                this.$alert.html('Логин и пароль должны содержать только цифры и латинские буквы');
                 return;
             }
 
-            if (this.password.value.length < 6) {
-                event.data.alert.html('Пароль не должен быть короче 6 символов');
+            if (event.target.password.value.length < 6) {
+                this.$alert.html('Пароль не должен быть короче 6 символов');
                 return;
             }
 
-            event.data.session.login(this.login.value, this.password.value);
+            session.login(event.target.login.value, event.target.password.value);
         },
 
         loginError: function (errorMsg) {

@@ -1,3 +1,11 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
-    <canvas id="canvas"></canvas>
+<fest:include src="./header.xml"/>
+<div class="row">
+    <div class="col-md-4 col-md-offset-4 jumbotron" style="padding:10px">
+        Перед началом игры необходимо
+        <fest:space/><a href="/#logout">войти</a><fest:space/>
+        или
+        <fest:space/><a href="/#registration">зарегистрироваться</a>.
+    </div>
+</div>
 </fest:template>

@@ -1,80 +1,66 @@
 define(function (require) {
 
-    var Backbone = require('backbone'),
-        $ = require('jquery'),
-        messagingCenter = require('messaging_center');
+    var Backbone = require('backbone');
 
     //noinspection UnnecessaryLocalVariableJS
     var SessionModel = Backbone.Model.extend({
 
-        sessionUrl: '/api/session/',
-        isAuth: false,
+        url: '/api/session/',
+
+        defaults: {
+            // Otherwise requests will be not sent
+            id: -1,
+            isAuth: false
+        },
 
         login: function (login, password) {
-            var self = this;
-            $.ajax({
-                method: 'PUT',
-                url: this.sessionUrl,
-                data: JSON.stringify({
-                    'login': login,
-                    'password': password
-                }),
-                dataType: 'json',
-                contentType: 'application/json',
-                success: function (data) {
-                    if (data.status === 0) {
-                        self.isAuth = true;
-                        messagingCenter.trigger('loginOk');
-                        // TODO
-                        console.log(self);
+            this.save({login: login, password: password},{
+                success: function (model, response) {
+                    console.log(response);
+                    if (response.status === 0) {
+                        model.set('isAuth', true);
+                        model.trigger('loginOk');
                     } else {
-                        messagingCenter.trigger('loginError', data.message);
+                        model.trigger('loginError', response.message);
                     }
                 },
-                error: function (data) {
-                    messagingCenter.trigger('loginError', 'Неизвестная ошибка');
+                error: function (model, response) {
+                    console.log(response);
+                    model.trigger('loginError', 'Неизвестная ошибка');
                 }
             });
         },
 
         logout: function () {
-            var self = this;
-            $.ajax({
-                method: 'DELETE',
-                url: this.sessionUrl,
-                success: function (data) {
-                    self.isAuth = false;
-                    console.log(data);
-                    messagingCenter.trigger('logoutOk');
+            this.destroy({
+                success: function (model, response) {
+                    model.set('isAuth', false);
+                    console.log(response);
+                    model.trigger('logoutOk');
                 },
-                error: function(data) {
-                    console.log(data);
-                    messagingCenter.trigger('logoutError');
+                error: function(model, response) {
+                    console.log(response);
+                    model.trigger('logoutError');
                 }
             });
         },
 
-        get: function () {
-            var self = this;
-            $.ajax({
-                method: 'GET',
-                url: this.sessionUrl,
-                success: function (data) {
-                    self.isAuth = true;
-                    console.log(data);
-                    console.log("First: " + self.isAuth);
-                    messagingCenter.trigger('authChecked', 'Вход выполнен');
+        read: function () {
+            this.fetch({
+                success: function (model, response) {
+                    console.log(response);
+                    model.set('isAuth', true);
+                    model.trigger('authChecked', 'Вход выполнен');
                 },
-                
-                error: function (data) {
-                    console.log(data);
-                    messagingCenter.trigger('authChecked', 'Необходимо выполненить вход');
+                error: function (model, response) {
+                    console.log(response);
+                    model.trigger('authChecked', 'Необходимо выполненить вход');
                 }
             });
         }
 
     });
 
-    return SessionModel;
+    return new SessionModel();
 
 });

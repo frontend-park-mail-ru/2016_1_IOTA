@@ -43,6 +43,10 @@ module.exports = function (grunt) {
                     }
                 }
             }
+        },
+
+        qunit: {
+            all: ['public_html/tests/*.html']
         }
 
     });
@@ -52,8 +56,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-concurrent');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-fest');
+    grunt.loadNpmTasks('grunt-contrib-qunit');
 
     // результат команды grunt
     grunt.registerTask('default', ['concurrent:target']);
-
+    grunt.registerTask('test', ['qunit']);
 };

@@ -21,15 +21,12 @@ define(function (require) {
 
     var Backbone = require('backbone'),
         Router = require('router'),
-        SessionModel = require('models/session'),
-        messagingCenter = require('messaging_center');
+        session = require('models/session');
 
-    var session = new SessionModel();
-    session.get();
+    session.read();
 
-    session.listenTo(messagingCenter, 'authChecked', function (message) {
-        console.log(message);
-        var router = new Router(session);
+    session.listenTo(session, 'authChecked', function () {
+        var router = new Router();
         Backbone.history.start();
     });
 

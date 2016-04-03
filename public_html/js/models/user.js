@@ -1,86 +1,71 @@
 define(function (require) {
 
-    var Backbone = require('backbone'),
-        $ = require('jquery'),
-        messagingCenter = require('messaging_center');
+    var Backbone = require('backbone');
 
     //noinspection UnnecessaryLocalVariableJS
     var UserModel = Backbone.Model.extend({
 
-        userUrl: '/api/user/',
+        url: '/api/user/',
 
-        get: function (id) {
-            $.ajax({
-                method: 'GET',
-                url: this.userUrl + id,
-                success: function (data) {
-                    console.log(data);
+        defaults: {
+            id: -1
+        },
+
+        read: function () {
+            this.fetch({
+                url: this.url + this.get('id'),
+                success: function (model, response) {
+                    console.log(response);
                 },
-                error: function (data) {
-                    console.log(data);
+                error: function (model, response) {
+                    console.log(response);
                 }
             });
         },
 
         delete: function (id) {
-            $.ajax({
-                method: 'DELETE',
-                url: this.userUrl + id,
-                success: function (data) {
-                    console.log(data);
+            this.destroy({
+                url: this.url + this.get('id'),
+                success: function (model, response) {
+                    console.log(response);
                 },
-                error: function () {
-                    console.log(data);
+                error: function (model, response) {
+                    console.log(response);
                 }
             });
         },
 
         create: function (login, password, email) {
-            $.ajax({
-                method: 'POST',
-                url: this.userUrl,
-                data: JSON.stringify({
-                    'login': login,
-                    'password': password,
-                    'email': email
-                }),
-                dataType: 'json',
-                contentType: 'application/json',
-                success: function (data) {
-                    if (data.status === 0) {
-                        messagingCenter.trigger('registerOk');
+            this.save({login: login, password: password, email: email},{
+                success: function (model, response) {
+                    console.log(response);
+                    if (response.status === 0) {
+                        model.trigger('registerOk');
                     } else {
-                        messagingCenter.trigger('registerError', data.message);
+                        model.trigger('registerError', response.message);
                     }
                 },
-                error: function () {
-                    messagingCenter.trigger('registerError', 'Неизвестная ошибка');
+                error: function (model, response) {
+                    console.log(response);
+                    model.trigger('registerError', 'Неизвестная ошибка');
                 }
             });
         },
 
         update: function (login, password, email) {
-            $.ajax({
-                method: 'POST',
-                url: this.userUrl + id,
-                data: JSON.stringify({
-                    'login': login,
-                    'password': password,
-                    'email': email
-                }),
-                dataType: 'json',
-                contentType: 'application/json',
-                success: function (data) {
-                    console.log(data);
+            this.save({login: login, password: password, email: email},{
+                url: this.url + this.get('id'),
+                success: function (model, response) {
+                    console.log(response);
                 },
-                error: function (data) {
-                    console.log(data);
+                error: function (model, response) {
+                    console.log(response);
                 }
             });
         }
 
     });
 
-    return UserModel;
+    return new UserModel();
 
 });
