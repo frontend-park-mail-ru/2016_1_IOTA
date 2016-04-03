@@ -23,10 +23,6 @@ define(function (require) {
                 //noinspection JSUnfilteredForInLoop
                 this.views[view].hide();
             }
-        },
-
-        show: function (viewName) {
-            this.views[viewName].show();
         }
 
     });

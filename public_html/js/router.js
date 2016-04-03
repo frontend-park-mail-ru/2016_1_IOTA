@@ -47,27 +47,34 @@ define(function (require) {
 
         defaultActions: function () {
             this.navigate('/#');
-            this.viewManager.show(session.get('isAuth') ? 'mainAuth' : 'main');
+            this.show('main');
         },
 
         scoreboardAction: function () {
-            this.viewManager.show('scoreboard');
+            this.show('scoreboard');
         },
 
         gameAction: function () {
-            this.viewManager.show(session.get('isAuth') ? 'gameAuth' : 'game');
+            this.show('game');
         },
 
         loginAction: function () {
-            this.viewManager.show(session.get('isAuth') ? 'loginAuth' : 'login');
+            this.show('login');
         },
 
         regAction: function () {
-            this.viewManager.show(session.get('isAuth') ? 'regAuth' : 'reg');
+            this.show('reg');
         },
 
         logoutAction: function () {
             session.logout();
+        },
+
+        show: function (viewName) {
+            if (session.get('isAuth')) {
+                viewName += 'Auth';
+            }
+            this.views[viewName].show();
         }
 
     });
