@@ -27,9 +27,7 @@ define(function (require) {
                 TABLE_SIZE / 2 - window.innerHeight / 2, window.innerWidth, window.innerHeight),
             table, offScreenRenderer, window.innerWidth, window.innerHeight);
 
-        setTimeout(function () {
-            offScreenRenderer.render();
-            screenRenderer.render();
-        }, 1000);
+        offScreenRenderer.render();
+        screenRenderer.render();
     };
 });

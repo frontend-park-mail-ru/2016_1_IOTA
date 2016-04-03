@@ -15,8 +15,7 @@ define(function (require) {
 
         var ViewManager = require('./manager'),
             LoginView = require('./login'),
-            RegView = require('./reg'),
-            $ = require('jquery');
+            RegView = require('./reg');
 
         var views = {
                 login: new LoginView(),

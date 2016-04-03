@@ -33,7 +33,6 @@ define(function (require) {
 
         Camera.prototype.draw = function (canvas) {
             var context = canvas.getContext('2d');
-            console.log(this.world, this.x, this.y, this.width, this.height, 0, 0, canvas.width, canvas.height);
             context.drawImage(this.world, this.x, this.y, this.width, this.height, 0, 0, canvas.width, canvas.height);
         };
 
