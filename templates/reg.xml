@@ -8,25 +8,25 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label" for="name">Login</label>
                     <div class="col-sm-9">
-                        <input required="" type="text" class="form-control" name="login" id="name" placeholder="Name"/>
+                        <input required="" type="text" class="js-login form-control" name="login" id="name" placeholder="Name"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label" for="mail">Email</label>
                     <div class="col-sm-9">
-                        <input required="" type="email" class="form-control" name="email" id="email" placeholder="Email"/>
+                        <input required="" type="email" class="js-email form-control" name="email" id="email" placeholder="Email"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label" for="passwd">Password</label>
                     <div class="col-sm-9">
-                        <input required="" type="password" class="form-control" name="password" id="passwd" placeholder="Password"/>
+                        <input required="" type="password" class="js-password form-control" name="password" id="passwd" placeholder="Password"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label" for="confpasswd" style="padding-top:0;">Confim Password</label>
                     <div class="col-sm-9">
-                        <input required="" type="password" class="form-control" name="confirm_password" id="confpasswd" placeholder="Confim password"/>
+                        <input required="" type="password" class="js-password2 form-control" name="confirm_password" id="confpasswd" placeholder="Confim password"/>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-success btn-block" style="text-area:center">Submit</button>
