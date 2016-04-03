@@ -5,8 +5,8 @@
             <form class="js-submit form-signin">
                 <div class="js-alert"></div>
                 <h2 class="form-signin-heading" style="text-align:center; margin-bottom:20px">Please sign in</h2>
-                <label for="inputEmail" class="sr-only">Login</label>
-                <input name="login" type="text" id="inputEmail" class="js-email form-control" placeholder="Login" required="" autofocus=""/>
+                <label for="inputLogin" class="sr-only">Login</label>
+                <input name="login" type="text" id="inputLogin" class="js-login form-control" placeholder="Login" required="" autofocus=""/>
                 <br/>
                 <label for="inputPassword" class="sr-only">Password</label>
                 <input name="password" type="password" id="inputPassword" class="js-password form-control" placeholder="Password" required=""/>
