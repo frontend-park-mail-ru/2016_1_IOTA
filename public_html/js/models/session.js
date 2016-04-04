@@ -1,74 +1,60 @@
 define(function (require) {
 
-    var Backbone = require('backbone'),
-        $ = require('jquery');
+    var Backbone = require('backbone');
 
     //noinspection UnnecessaryLocalVariableJS
     var SessionModel = Backbone.Model.extend({
 
-        sessionUrl: '/api/session/',
+        url: '/api/session/',
 
-        isAuth: false,
+        defaults: {
+            // Otherwise requests will be not sent
+            id: -1,
+            isAuth: false
+        },
 
-        // TODO: Use internal model requests
         login: function (login, password) {
-            var self = this;
-            $.ajax({
-                method: 'PUT',
-                url: this.sessionUrl,
-                data: JSON.stringify({
-                    'login': login,
-                    'password': password
-                }),
-                dataType: 'json',
-                contentType: 'application/json',
-                success: function (data) {
-                    console.log(data);
-                    if (data.status === 0) {
-                        self.isAuth = true;
-                        self.trigger('loginOk');
+            this.save({login: login, password: password},{
+                success: function (model, response) {
+                    console.log(response);
+                    if (response.status === 0) {
+                        model.set('isAuth', true);
+                        model.trigger('loginOk');
                     } else {
-                        self.trigger('loginError', data.message);
+                        model.trigger('loginError', response.message);
                     }
                 },
-                error: function (data) {
-                    console.log(data);
-                    self.trigger('loginError', 'Неизвестная ошибка');
+                error: function (model, response) {
+                    console.log(response);
+                    model.trigger('loginError', 'Неизвестная ошибка');
                 }
             });
         },
 
         logout: function () {
-            var self = this;
-            $.ajax({
-                method: 'DELETE',
-                url: this.sessionUrl,
-                success: function (data) {
-                    self.isAuth = false;
-                    console.log(data);
-                    self.trigger('logoutOk');
+            this.destroy({
+                success: function (model, response) {
+                    model.set('isAuth', false);
+                    console.log(response);
+                    model.trigger('logoutOk');
                 },
-                error: function(data) {
-                    console.log(data);
-                    self.trigger('logoutError');
+                error: function(model, response) {
+                    console.log(response);
+                    model.trigger('logoutError');
                 }
             });
         },
 
-        get: function () {
-            var self = this;
-            $.ajax({
-                method: 'GET',
-                url: this.sessionUrl,
-                success: function (data) {
-                    console.log(data);
-                    self.isAuth = true;
-                    self.trigger('authChecked', 'Вход выполнен');
+        read: function () {
+            this.fetch({
+                success: function (model, response) {
+                    console.log(response);
+                    model.set('isAuth', true);
+                    model.trigger('authChecked', 'Вход выполнен');
                 },
-                
-                error: function (data) {
-                    console.log(data);
-                    self.trigger('authChecked', 'Необходимо выполненить вход');
+                error: function (model, response) {
+                    console.log(response);
+                    model.trigger('authChecked', 'Необходимо выполненить вход');
                 }
             });
         }

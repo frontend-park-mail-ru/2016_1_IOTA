@@ -1,7 +1,6 @@
 define(function (require) {
 
-    var Backbone = require('backbone'),
-        BaseView = require('views/base'),
+    var BaseView = require('views/base'),
         tmpl = require('tmpl/login'),
         session = require('models/session');
 
@@ -15,13 +14,16 @@ define(function (require) {
         },
 
         initialize: function () {
-            this.listenTo(Backbone.Events, 'loginError', this.loginError);
+            this.listenTo(session, 'loginOk', this.loginOk);
+            this.listenTo(session, 'loginError', this.loginError);
             this.render();
         },
 
         render: function () {
             this.$el.html(this.template);
             this.$alert = this.$('.js-alert');
+            this.$login = this.$('.js-login');
+            this.$password = this.$('.js-password');
         },
 
         login: function (event) {
@@ -30,21 +32,26 @@ define(function (require) {
 
             var regExp = /^[a-z0-9]+$/i;
 
-            if (!regExp.test(event.target.login.value) || !regExp.test(event.target.password.value)) {
+            if (!regExp.test(this.$login.val()) || !regExp.test(this.$password.val())) {
                 this.$alert.html('Логин и пароль должны содержать только цифры и латинские буквы');
                 return;
             }
 
-            if (event.target.password.value.length < 6) {
+            if (this.$password.val().length < 6) {
                 this.$alert.html('Пароль не должен быть короче 6 символов');
                 return;
             }
 
-            session.login(event.target.login.value, event.target.password.value);
+            session.login(this.$login.val(), this.$password.val());
         },
 
         loginError: function (errorMsg) {
             this.$alert.html(errorMsg);
+        },
+
+        loginOk: function () {
+            this.$login.val('');
+            this.$password.val('');
         }
 
     });
