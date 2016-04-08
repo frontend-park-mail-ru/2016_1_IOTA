@@ -3,15 +3,17 @@ define(function (require) {
     var Backbone = require('backbone');
 
     //noinspection UnnecessaryLocalVariableJS
-    var ScoreModel = Backbone.Model.extend({
+    var TileModel = Backbone.Model.extend({
 
         defaults: {
-            name: '',
-            score: 0
+            image: '',
+            x: -1,
+            y: -1,
+            allowedImages: [],
         }
 
     });
 
-    return ScoreModel;
+    return TileModel;
 
 });

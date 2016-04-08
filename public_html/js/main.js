@@ -21,7 +21,12 @@ define(function (require) {
 
     var Backbone = require('backbone'),
         Router = require('router'),
-        session = require('models/session');
+        session = require('models/session'),
+        HandModel = require('models/hand');
+
+    var hand = new HandModel();
+    hand.read();
+    setTimeout(function () { hand.update(); }, 5000);
 
     session.read();
 
