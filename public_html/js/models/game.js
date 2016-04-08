@@ -3,9 +3,9 @@ define(function (require) {
     var Backbone = require('backbone');
 
     //noinspection UnnecessaryLocalVariableJS
-    var HandModel = Backbone.Model.extend({
+    var GameModel = Backbone.Model.extend({
 
-        url: '/hand/',
+        url: '/game/',
 
         read: function () {
             this.fetch({
@@ -31,6 +31,6 @@ define(function (require) {
 
     });
 
-    return HandModel;
+    return GameModel;
 
 });

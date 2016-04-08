@@ -27,7 +27,7 @@ app.listen(PORT, function () {
     console.log("Simple static server showing %s listening at http://%s:%s", PUBLIC_DIR, HOSTNAME, PORT);
 });
 
-app.get('/hand/', function (req, res, next) {
+app.get('/game/', function (req, res, next) {
     res.send({
         cards: [
             {image: 'img1'},
@@ -44,7 +44,7 @@ app.get('/hand/', function (req, res, next) {
     next();
 });
 
-app.post('/hand/', jsonParser, function (req, res, next) {
+app.post('/game/', jsonParser, function (req, res, next) {
     console.log(req.body);
     next();
 });

@@ -22,11 +22,11 @@ define(function (require) {
     var Backbone = require('backbone'),
         Router = require('router'),
         session = require('models/session'),
-        HandModel = require('models/hand');
+        GameModel = require('models/game');
 
-    var hand = new HandModel();
-    hand.read();
-    setTimeout(function () { hand.update(); }, 5000);
+    var game = new GameModel();
+    game.read();
+    setTimeout(function () { game.update(); }, 5000);
 
     session.read();
 
