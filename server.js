@@ -6,7 +6,7 @@ var express = require('express'),
     jsonParser = bodyParser.json();
 
 var HOSTNAME = 'localhost',
-    PORT = 8080,
+    PORT = 8000,
     PUBLIC_DIR = __dirname + '/public_html';
 
 var count = 0;
@@ -49,7 +49,7 @@ app.post('/game/', jsonParser, function (req, res, next) {
     next();
 });
 
-app.use('/api', proxy('http://localhost:8081/', {
+app.use('/api', proxy('http://localhost:8080/', {
     forwardPath: function (req, res) {
         var url = '/api' + require('url').parse(req.url).path;
         console.log('Proxy: ' + url);
