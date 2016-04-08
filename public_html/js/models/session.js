@@ -5,7 +5,7 @@ define(function (require) {
     //noinspection UnnecessaryLocalVariableJS
     var SessionModel = Backbone.Model.extend({
 
-        url: '/api/session/',
+        url: '/api/session',
 
         defaults: {
             // Otherwise requests will be not sent
@@ -54,7 +54,7 @@ define(function (require) {
                 },
                 error: function (model, response) {
                     console.log(response);
-                    model.trigger('authChecked', 'Необходимо выполненить вход');
+                    model.trigger('authChecked', 'Необходимо выполнить вход');
                 }
             });
         }
