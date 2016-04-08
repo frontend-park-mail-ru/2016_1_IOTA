@@ -22,9 +22,8 @@ define(function (require) {
     var Backbone = require('backbone'),
         Router = require('router'),
         session = require('models/session'),
-        GameModel = require('models/game');
+        game = require('models/game');
 
-    var game = new GameModel();
     game.read();
     setTimeout(function () { game.update(); }, 5000);
 

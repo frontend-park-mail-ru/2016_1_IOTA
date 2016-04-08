@@ -31,6 +31,6 @@ define(function (require) {
 
     });
 
-    return GameModel;
+    return new GameModel();
 
 });
