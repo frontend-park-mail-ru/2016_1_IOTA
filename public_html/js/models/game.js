@@ -5,7 +5,7 @@ define(function (require) {
     //noinspection UnnecessaryLocalVariableJS
     var GameModel = Backbone.Model.extend({
 
-        url: '/game/',
+        url: '/game',
 
         read: function () {
             this.fetch({

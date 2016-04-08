@@ -39,15 +39,11 @@ define(function (require) {
             this.save({login: login, password: password, email: email},{
                 success: function (model, response) {
                     console.log(response);
-                    if (response.status === 0) {
-                        model.trigger('registerOk');
-                    } else {
-                        model.trigger('registerError', response.message);
-                    }
+                    model.trigger('registerOk');
                 },
                 error: function (model, response) {
                     console.log(response);
-                    model.trigger('registerError', 'Неизвестная ошибка');
+                    model.trigger('registerError', 'Ошибка регистрации');
                 }
             });
         },
