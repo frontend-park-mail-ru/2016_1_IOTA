@@ -8,13 +8,14 @@ define(function (require) {
 
         __extends(Card, _super);
 
-        function Card(x, y, width, height, inHand, image) {
+        function Card(x, y, width, height, number, color, shape, inHand) {
             _super.call(this, x, y, width, height);
             this.inHand = inHand;
-            this.number = 1;
-            this.color = 2;
-            this.shape = 3;
-            this.image = image;
+            this.image = new Image();
+            this.image.src = '/images/' + color + shape + number + '.png';
+            this.number = number;
+            this.color = color;
+            this.shape = shape;
             this.highlightColor = "black";
         }
 

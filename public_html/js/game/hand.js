@@ -11,18 +11,7 @@ define(function (require) {
 
         function Hand(canvas) {
             _super.call(this);
-            var image = new Image();
-            image.src = '/images/rc1.png';
-            this.drawables.push(new Card(canvas.width / 2 - 230, canvas.height - 150, 100, 100, true, image));
-            image = new Image();
-            image.src = '/images/gt2.png';
-            this.drawables.push(new Card(canvas.width / 2 - 110, canvas.height - 150, 100, 100, true, image));
-            image = new Image();
-            image.src = '/images/yx3.png';
-            this.drawables.push(new Card(canvas.width / 2 + 130, canvas.height - 150, 100, 100, true, image));
-            image = new Image();
-            image.src = '/images/br4.png';
-            this.drawables.push(new Card(canvas.width / 2 + 10, canvas.height - 150, 100, 100, true, image));
+            this.canvas = canvas;
         }
 
         Hand.prototype.getCard = function (x, y) {
@@ -39,6 +28,19 @@ define(function (require) {
                 if (this.drawables[i].getInHand()) {
                     this.drawables[i].draw(canvas);
                 }
+            }
+        };
+
+        Hand.prototype.update = function (cards) {
+            var coord = [
+                [this.canvas.width / 2 - 230, this.canvas.height - 150],
+                [this.canvas.width / 2 - 110, this.canvas.height - 150],
+                [this.canvas.width / 2 + 130, this.canvas.height - 150],
+                [this.canvas.width / 2 + 10, this.canvas.height - 150]
+            ];
+            this.drawables = [];
+            for (var i = 0; i < cards.length; i++) {
+                this.drawables.push(new Card(coord[i][0], coord[i][1], 100, 100, cards[i].number, cards[i].color, cards[i].shape, true));
             }
         };
 

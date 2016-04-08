@@ -1,25 +1,22 @@
 define(function (require) {
 
     var __extends = require('./extends'),
-        Renderer = require('./renderer'),
-        Hand = require('./hand');
+        Renderer = require('./renderer');
 
     //noinspection UnnecessaryLocalVariableJS
     var ScreenRenderer = (function (_super) {
 
         __extends(ScreenRenderer, _super);
 
-        function ScreenRenderer(canvas, camera, table, offScreenRenderer, width, height) {
+        function ScreenRenderer(canvas, camera, table, offScreenRenderer, hand) {
             var _this = this;
             _super.call(this);
-            canvas.width = width;
-            canvas.height = height;
             this.table = table;
             this.offScreenRenderer = offScreenRenderer;
             this.canvas = canvas;
             this.drawables.push(camera);
             this.camera = camera;
-            this.hand = new Hand(canvas);
+            this.hand = hand;
             this.addDrawable(this.hand);
             canvas.onmousedown = function (event) {
                 _this.selectedCard = _this.hand.getCard(event.clientX, event.clientY);

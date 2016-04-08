@@ -2,7 +2,8 @@ define(function (require) {
 
     var __extends = require('./extends'),
         Renderer = require('./renderer'),
-        Tile = require('./tile');
+        Tile = require('./tile'),
+        Card = require('./card');
 
     //noinspection UnnecessaryLocalVariableJS
     var Table = (function (_super) {
@@ -60,6 +61,12 @@ define(function (require) {
 
         Table.prototype.getTile = function (index) {
             return this.drawables[index];
+        };
+
+        Table.prototype.update = function (cards) {
+            for (var i = 0; i < cards.length; i++) {
+                this.drawables[cards[i].x * 34 + cards[i].y].setContent(new Card(0, 0, 100, 100, cards[i].number, cards[i].color, cards[i].shape, false));
+            }
         };
 
         return Table;
