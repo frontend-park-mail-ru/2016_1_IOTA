@@ -42,8 +42,12 @@ define(function (require) {
 
         var screenRenderer = new ScreenRenderer(screenCanvas, new Camera(offScreenCanvas, TABLE_SIZE / 2 - window.innerWidth / 2, TABLE_SIZE / 2 - window.innerHeight / 2, window.innerWidth, window.innerHeight), table, offScreenRenderer, hand);
 
-        screenRenderer.addDrawable(new Score(10, 30, 100, 100, "Vasya", 10));
-        screenRenderer.addDrawable(new Score(10, 60, 100, 100, "Kolya", 10));
+        var score1 = new Score(10, 30, 100, 100, "", 0),
+            score2 = new Score(10, 60, 100, 100, "", 0),
+            scores = [0, 0];
+
+        screenRenderer.addDrawable(score1);
+        screenRenderer.addDrawable(score2);
 
         screenRenderer.render();
 
@@ -73,6 +77,11 @@ define(function (require) {
             var h = [];
             for (var k = 0; k < players.length; k++)
             {
+                if (k == 0) {
+                    score1.update(players[k].name, scores[k]);
+                } else {
+                    score2.update(players[k].name, scores[k]);
+                }
                 console.log(user_id + ' ' + players[k].id);
                 if (players[k].id == user_id) {
                     for (var j = 0; j < players[k]['cards'].length; j++) {
@@ -92,6 +101,6 @@ define(function (require) {
             gameModel.read();
             offScreenRenderer.render();
             screenRenderer.render();
-        }, 3000);
+        }, 1000);
     };
 });

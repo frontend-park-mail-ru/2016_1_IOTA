@@ -14,7 +14,8 @@ define(function (require) {
             this.score = score;
         }
 
-        Score.prototype.update = function (score) {
+        Score.prototype.update = function (name, score) {
+            this.name = name;
             this.score = score;
         };
 
