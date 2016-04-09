@@ -44,6 +44,10 @@ define(function (require) {
             }
         };
 
+        Hand.prototype.size = function () {
+            return this.drawables.length;
+        };
+
         return Hand;
 
     }(Renderer));

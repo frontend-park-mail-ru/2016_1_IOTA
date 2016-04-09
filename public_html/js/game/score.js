@@ -1,6 +1,7 @@
 define(function (require) {
 
-    var __extends = require('./extends');
+    var __extends = require('./extends'),
+        Sprite = require('./sprite');
 
     //noinspection UnnecessaryLocalVariableJS
     var Score = (function (_super) {

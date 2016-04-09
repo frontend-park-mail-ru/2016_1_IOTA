@@ -12,9 +12,16 @@ define(function (require) {
 
         function Table(rows, columns, tileWidth, tileHeight) {
             _super.call(this);
+
+            var validNums = [1, 2, 3, 4];
+            var validColors = ['y', 'r', 'g', 'b'];
+            var validShapes = ['r', 't', 'c', 'x'];
+
             for (var i = 0; i < rows; i++) {
                 for (var j = 0; j < columns; j++) {
-                    this.drawables.push(new Tile(i * tileWidth, j * tileHeight, tileWidth, tileHeight));
+                    var tile = new Tile(i * tileWidth, j * tileHeight, tileWidth, tileHeight);
+                    tile.setValid(validNums, validColors, validShapes);
+                    this.drawables.push(tile);
                 }
             }
         }
@@ -36,6 +43,15 @@ define(function (require) {
             if (tile != null) {
                 tile.setContent(card);
                 card.setInHand(false);
+                return {
+                    x: tile.getX() / 100,
+                    y: tile.getY() / 100,
+                    card: {
+                        value: +card.getNumber(),
+                        color: card.getColor(),
+                        shape: card.getShape()
+                    }
+                };
             }
         };
 

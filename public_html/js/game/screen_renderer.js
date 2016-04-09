@@ -34,11 +34,14 @@ define(function (require) {
                 _this.isScroll = false;
                 if (_this.isDrag) {
                     _this.isDrag = false;
-                    _this.table.placeCard(_this.selectedCard, _this.camera, _this.canvas);
+                    var update = _this.table.placeCard(_this.selectedCard, _this.camera, _this.canvas);
                     if (_this.selectedCard.getInHand()) {
                         _this.selectedCard.setX(_this.initX);
                         _this.selectedCard.setY(_this.initY);
                         _this.selectedCard.setHighlightColor("black");
+                    } else {
+                        console.log(update);
+                        document.dispatchEvent(new CustomEvent('cardPlaced', { detail: update}));
                     }
                     _this.offScreenRenderer.render();
                     _this.clear();

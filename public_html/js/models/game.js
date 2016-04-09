@@ -5,7 +5,7 @@ define(function (require) {
     //noinspection UnnecessaryLocalVariableJS
     var GameModel = Backbone.Model.extend({
 
-        url: '/game',
+        url: '/api/game',
 
         read: function () {
             this.fetch({
@@ -19,7 +19,7 @@ define(function (require) {
         },
 
         update: function () {
-            this.save({
+            this.save(null, {
                 success: function (collection, response) {
                     console.log(response);
                 },
