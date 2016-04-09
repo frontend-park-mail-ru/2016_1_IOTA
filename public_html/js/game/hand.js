@@ -45,7 +45,14 @@ define(function (require) {
         };
 
         Hand.prototype.size = function () {
-            return this.drawables.length;
+            var count = 0;
+            for (var i = 0; i < this.drawables.length; i++) {
+                if (this.drawables[i].getInHand()) {
+                    count++;
+                }
+
+            }
+            return count;
         };
 
         return Hand;
