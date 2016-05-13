@@ -12,8 +12,14 @@ module.exports = function (grunt) {
         watch: {
             // запуск watcher'a, который следит за изенениями файлов  templates/*.xml
             // и если они изменяются, то запускает таск сборки шаблонов (grunt fest)
-            files: 'templates/*.xml',
-            tasks: ['fest']
+            templates: {
+                files: 'templates/*.xml',
+                tasks: ['fest']
+            },
+            sassCss: {
+                files: 'public_html/css/sass/*.scss',
+                tasks: ['sass']
+            }
         },
 
         concurrent: {
@@ -47,6 +53,17 @@ module.exports = function (grunt) {
 
         qunit: {
             all: ['public_html/tests/*.html']
+        },
+
+        sass: { /* grunt-sass */
+            options: {
+                sourceMap: true
+            },
+            dist: {
+                files: {
+                    'public_html/css/sass.css': 'public_html/css/sass.scss'
+                }
+            }
         }
 
     });
@@ -57,6 +74,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-fest');
     grunt.loadNpmTasks('grunt-contrib-qunit');
+    grunt.loadNpmTasks('grunt-sass');
 
     // результат команды grunt
     grunt.registerTask('default', ['concurrent:target']);
