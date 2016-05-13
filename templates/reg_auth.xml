@@ -3,7 +3,8 @@
     <div class="grid__row">
         <div class="grid_col grid__col_4 grid__col-offset_4 block__jumbotron">
             Перед регистрацией нового пользователя необходимо сначала выполнить
-            <fest:space/><a href="/#logout">выход</a>.
+            <fest:space/>
+            <a href="/#logout">выход</a>.
         </div>
     </div>
 </fest:template>

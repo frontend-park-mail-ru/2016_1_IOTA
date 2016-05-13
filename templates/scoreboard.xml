@@ -2,7 +2,9 @@
     <fest:include src="./header.xml"/>
     <div class="grid__row">
         <div class="grid__col grid__col_4 grid__col-offset_4 block__jumbotron">
-            <p><h2 class="title__text title__text_block">Score Board</h2></p>
+            <p>
+                <h2 class="title__text title__text_block">Score Board</h2>
+            </p>
             <table class="table table_hover">
                 <thead>
                     <td>#</td>

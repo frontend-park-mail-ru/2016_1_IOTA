@@ -26,5 +26,5 @@ define(function (require) {
         QUnit.equal(score.get('name'), 'Artem', 'Имя установлено корректно');
         QUnit.equal(score.get('score'), 1337, 'Счёт установлен корректно');
     });
-    
+
 });
