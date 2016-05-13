@@ -1,0 +1,23 @@
+for $col in (1..12) {
+.grid__col_$col {
+  width: 100% / 12 * $col;
+}
+  &__col-offset({$col}) {
+  margin-left: 100% / 12 * $col;
+}
+}
+.grid {
+  &__container {
+    &_fluid {
+      padding-right: 15px;
+      padding-left: 15px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+
+  &__row {
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+}

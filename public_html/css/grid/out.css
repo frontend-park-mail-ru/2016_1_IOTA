@@ -1,0 +1,67 @@
+/*
+Error: Invalid CSS after ".grid__col:(": expected ")", was "{$col}) {"
+        on line 2 of grid.scss
+
+1: for $col in (1..12) {
+2: .grid__col:({$col}) {
+3:   width: 100% / 12 * $col;
+4: }
+5:   &__col-offset({$col}) {
+6:   margin-left: 100% / 12 * $col;
+7: }
+
+Backtrace:
+grid.scss:2
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:1189:in `expected'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/script/lexer.rb:229:in `expected!'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/script/parser.rb:711:in `assert_tok'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/script/parser.rb:642:in `paren'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/script/parser.rb:625:in `special_fun'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/script/parser.rb:619:in `raw'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/script/parser.rb:533:in `funcall'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/script/parser.rb:514:in `ident'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/script/parser.rb:309:in `unary_not'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/script/parser.rb:309:in `unary_div'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/script/parser.rb:309:in `unary_minus'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/script/parser.rb:309:in `unary_plus'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/script/parser.rb:286:in `times_div_or_mod'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/script/parser.rb:286:in `plus_or_minus'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/script/parser.rb:286:in `relational'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/script/parser.rb:286:in `eq_or_neq'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/script/parser.rb:286:in `and_expr'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/script/parser.rb:286:in `or_expr'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/script/parser.rb:488:in `space'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/script/parser.rb:434:in `interpolation'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/script/parser.rb:359:in `expr'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/script/parser.rb:702:in `assert_expr'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/script/parser.rb:75:in `parse'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:1051:in `sass_script'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:897:in `value!'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:769:in `block in try_declaration'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:1165:in `call'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:1165:in `rethrow'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:782:in `try_declaration'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:711:in `declaration_or_ruleset'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:676:in `block_child'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:665:in `block_contents'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:657:in `block'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:649:in `ruleset'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:675:in `block_child'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:665:in `block_contents'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:125:in `stylesheet'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:41:in `parse'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/engine.rb:406:in `_to_tree'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/engine.rb:381:in `_render_with_sourcemap'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/engine.rb:298:in `render_with_sourcemap'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/exec/sass_scss.rb:391:in `run'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/exec/sass_scss.rb:63:in `process_result'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/exec/base.rb:52:in `parse'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/lib/sass/exec/base.rb:19:in `parse!'
+/var/lib/gems/2.2.0/gems/sass-3.4.22/bin/sass:13:in `<top (required)>'
+/usr/local/bin/sass:23:in `load'
+/usr/local/bin/sass:23:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Invalid CSS after \".grid__col:(\": expected \")\", was \"{$col}) {\"\A         on line 2 of grid.scss\A \A 1: for $col in (1..12) {\A 2: .grid__col:({$col}) {\A 3:   width: 100% / 12 * $col;\A 4: }\A 5:   &__col-offset({$col}) {\A 6:   margin-left: 100% / 12 * $col;\A 7: }"; }
