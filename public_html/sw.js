@@ -4,8 +4,6 @@ var CACHE_NAME = 'iota-cache-v1';
 var urlsToCache = [
     '/',
     '/sw.js',
-    '/css/bootstrap-theme.min.css',
-    '/css/bootstrap.min.css',
     '/css/main.css',
     '/css/sass.css',
     '/images/bc1.png',
