@@ -14,7 +14,7 @@ define(function (require) {
         },
 
         login: function (login, password) {
-            this.save({login: login, password: password},{
+            this.save({login: login, password: password}, {
                 success: function (model, response) {
                     console.log(response);
                     if (response.status === 0) {
@@ -26,7 +26,11 @@ define(function (require) {
                 },
                 error: function (model, response) {
                     console.log(response);
-                    model.trigger('loginError', 'Неизвестная ошибка');
+                    if (response.status === 222) {
+                        model.trigger('loginError', 'Приложение оффлайн!');
+                    } else {
+                        model.trigger('loginError', 'Неизвестная ошибка');
+                    }
                 }
             });
         },
@@ -38,7 +42,7 @@ define(function (require) {
                     console.log(response);
                     model.trigger('logoutOk');
                 },
-                error: function(model, response) {
+                error: function (model, response) {
                     console.log(response);
                     model.trigger('logoutError');
                 }

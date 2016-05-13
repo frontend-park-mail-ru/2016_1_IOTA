@@ -36,7 +36,7 @@ define(function (require) {
         },
 
         create: function (login, password, email) {
-            this.save({login: login, password: password, email: email},{
+            this.save({login: login, password: password, email: email}, {
                 success: function (model, response) {
                     console.log(response);
                     if (response.status === 0) {
@@ -47,13 +47,17 @@ define(function (require) {
                 },
                 error: function (model, response) {
                     console.log(response);
-                    model.trigger('registerError', 'Неизвестная ошибка');
+                    if (response.status === 222) {
+                        model.trigger('registerError', 'Приложение оффлайн!');
+                    } else {
+                        model.trigger('registerError', 'Неизвестная ошибка');
+                    }
                 }
             });
         },
 
         update: function (login, password, email) {
-            this.save({login: login, password: password, email: email},{
+            this.save({login: login, password: password, email: email}, {
                 url: this.url + this.get('id'),
                 success: function (model, response) {
                     console.log(response);

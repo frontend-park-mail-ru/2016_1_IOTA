@@ -1,5 +1,11 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
-    <td><fest:value>json.count</fest:value></td>
-    <td><fest:value>json.name</fest:value></td>
-    <td><fest:value>json.score</fest:value></td>
+    <td>
+        <fest:value>json.count</fest:value>
+    </td>
+    <td>
+        <fest:value>json.name</fest:value>
+    </td>
+    <td>
+        <fest:value>json.score</fest:value>
+    </td>
 </fest:template>

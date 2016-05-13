@@ -6,10 +6,12 @@
                 <div class="js-alert"></div>
                 <h2 class="title__text title__text_block">Please sign in</h2>
                 <label for="inputLogin" class="sr-only">Login</label>
-                <input name="login" type="text" id="inputLogin" class="js-login form__control" placeholder="Login" required="" autofocus=""/>
+                <input name="login" type="text" id="inputLogin" class="js-login form__control" placeholder="Login"
+                       required="" autofocus=""/>
                 <br/>
                 <label for="inputPassword" class="sr-only">Password</label>
-                <input name="password" type="password" id="inputPassword" class="js-password form__control" placeholder="Password" required=""/>
+                <input name="password" type="password" id="inputPassword" class="js-password form__control"
+                       placeholder="Password" required=""/>
                 <div class="form__checkbox">
                     <label>
                         <input type="checkbox" value="remember-me"/>
