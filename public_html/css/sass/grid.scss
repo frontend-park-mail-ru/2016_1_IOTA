@@ -1,12 +1,13 @@
-for $col in (1..12) {
-.grid__col_$col {
-  width: 100% / 12 * $col;
-}
-  &__col-offset({$col}) {
-  margin-left: 100% / 12 * $col;
-}
-}
 .grid {
+  @for $col from 1 to 13 {
+    &__col_#{$col} {
+      width: 100% / 12 * $col;
+    }
+    &__col-offset_#{$col} {
+      margin-left: 100% / 12 * $col;
+    }
+  }
+
   &__container {
     &_fluid {
       padding-right: 15px;
