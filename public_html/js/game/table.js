@@ -2,7 +2,8 @@ define(function (require) {
 
     var __extends = require('./extends'),
         Renderer = require('./renderer'),
-        Tile = require('./tile');
+        Tile = require('./tile'),
+        Card = require('./card');
 
     //noinspection UnnecessaryLocalVariableJS
     var Table = (function (_super) {
@@ -11,9 +12,16 @@ define(function (require) {
 
         function Table(rows, columns, tileWidth, tileHeight) {
             _super.call(this);
+
+            var validNums = [1, 2, 3, 4];
+            var validColors = ['y', 'r', 'g', 'b'];
+            var validShapes = ['r', 't', 'c', 'x'];
+
             for (var i = 0; i < rows; i++) {
                 for (var j = 0; j < columns; j++) {
-                    this.drawables.push(new Tile(i * tileWidth, j * tileHeight, tileWidth, tileHeight));
+                    var tile = new Tile(i * tileWidth, j * tileHeight, tileWidth, tileHeight);
+                    tile.setValid(validNums, validColors, validShapes);
+                    this.drawables.push(tile);
                 }
             }
         }
@@ -35,6 +43,15 @@ define(function (require) {
             if (tile != null) {
                 tile.setContent(card);
                 card.setInHand(false);
+                return {
+                    x: tile.getX() / 100,
+                    y: tile.getY() / 100,
+                    card: {
+                        value: +card.getNumber(),
+                        color: card.getColor(),
+                        shape: card.getShape()
+                    }
+                };
             }
         };
 
@@ -60,6 +77,12 @@ define(function (require) {
 
         Table.prototype.getTile = function (index) {
             return this.drawables[index];
+        };
+
+        Table.prototype.update = function (cards) {
+            for (var i = 0; i < cards.length; i++) {
+                this.drawables[cards[i].x * 34 + cards[i].y].setContent(new Card(0, 0, 100, 100, cards[i].number, cards[i].color, cards[i].shape, false));
+            }
         };
 
         return Table;

@@ -5,7 +5,7 @@ define(function (require) {
     //noinspection UnnecessaryLocalVariableJS
     var UserModel = Backbone.Model.extend({
 
-        url: '/api/user/',
+        url: '/api/user',
 
         defaults: {
             id: -1
@@ -13,7 +13,7 @@ define(function (require) {
 
         read: function () {
             this.fetch({
-                url: this.url + this.get('id'),
+                url: this.url + '/' + this.get('id'),
                 success: function (model, response) {
                     console.log(response);
                 },
@@ -25,7 +25,7 @@ define(function (require) {
 
         delete: function (id) {
             this.destroy({
-                url: this.url + this.get('id'),
+                url: this.url + '/' + this.get('id'),
                 success: function (model, response) {
                     console.log(response);
                 },
@@ -36,25 +36,25 @@ define(function (require) {
         },
 
         create: function (login, password, email) {
-            this.save({login: login, password: password, email: email},{
+            this.save({login: login, password: password, email: email}, {
                 success: function (model, response) {
                     console.log(response);
-                    if (response.status === 0) {
-                        model.trigger('registerOk');
-                    } else {
-                        model.trigger('registerError', response.message);
-                    }
+                    model.trigger('registerOk');
                 },
                 error: function (model, response) {
                     console.log(response);
-                    model.trigger('registerError', 'Неизвестная ошибка');
+                    if (response.status === 222) {
+                        model.trigger('registerError', 'Приложение оффлайн!');
+                    } else {
+                        model.trigger('registerError', 'Ошибка регистрации');
+                    }
                 }
             });
         },
 
         update: function (login, password, email) {
             this.save({login: login, password: password, email: email},{
-                url: this.url + this.get('id'),
+                url: this.url + '/' + this.get('id'),
                 success: function (model, response) {
                     console.log(response);
                 },

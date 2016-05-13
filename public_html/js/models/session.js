@@ -5,7 +5,7 @@ define(function (require) {
     //noinspection UnnecessaryLocalVariableJS
     var SessionModel = Backbone.Model.extend({
 
-        url: '/api/session/',
+        url: '/api/session',
 
         defaults: {
             // Otherwise requests will be not sent
@@ -14,19 +14,19 @@ define(function (require) {
         },
 
         login: function (login, password) {
-            this.save({login: login, password: password},{
+            this.save({login: login, password: password}, {
                 success: function (model, response) {
                     console.log(response);
-                    if (response.status === 0) {
-                        model.set('isAuth', true);
-                        model.trigger('loginOk');
-                    } else {
-                        model.trigger('loginError', response.message);
-                    }
+                    model.set('isAuth', true);
+                    model.trigger('loginOk');
                 },
                 error: function (model, response) {
                     console.log(response);
-                    model.trigger('loginError', 'Неизвестная ошибка');
+                    if (response.status === 222) {
+                        model.trigger('loginError', 'Приложение оффлайн!');
+                    } else {
+                        model.trigger('loginError', 'Неизвестная ошибка');
+                    }
                 }
             });
         },
@@ -34,11 +34,11 @@ define(function (require) {
         logout: function () {
             this.destroy({
                 success: function (model, response) {
-                    model.set('isAuth', false);
                     console.log(response);
+                    model.set('isAuth', false);
                     model.trigger('logoutOk');
                 },
-                error: function(model, response) {
+                error: function (model, response) {
                     console.log(response);
                     model.trigger('logoutError');
                 }
@@ -54,7 +54,7 @@ define(function (require) {
                 },
                 error: function (model, response) {
                     console.log(response);
-                    model.trigger('authChecked', 'Необходимо выполненить вход');
+                    model.trigger('authChecked', 'Необходимо выполнить вход');
                 }
             });
         }
