@@ -18,8 +18,8 @@
                         Remember me
                     </label>
                 </div>
-                <button class="button button_success button-block" type="submit">Sign in</button>
-                <a type="button" class="button button_danger button-block" href="#">Back</a>
+                <button class="button button_success button_block" type="submit">Sign in</button>
+                <a type="button" class="button button_success button_block" href="#">Back</a>
             </form>
         </div>
     </div>
