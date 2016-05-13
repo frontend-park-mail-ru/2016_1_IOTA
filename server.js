@@ -25,7 +25,7 @@ app.listen(PORT, function () {
     console.log("Simple static server showing %s listening at http://%s:%s", PUBLIC_DIR, HOSTNAME, PORT);
 });
 
-app.use('/api', proxy('http://localhost:8081/', {
+app.use('/api', proxy('http://iota.ian.corp.cdecl.ru:8081/', {
     forwardPath: function (req, res) {
         var url = '/api' + require('url').parse(req.url).path;
         console.log('Proxy: ' + url);

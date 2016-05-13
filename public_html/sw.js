@@ -106,12 +106,14 @@ var urlsToCache = [
     '/js/collections/scores.test.js',
     '/js/game/camera.js',
     '/js/game/card.js',
+    '/js/game/card_response.js',
     '/js/game/extends.js',
     '/js/game/game.js',
     '/js/game/hand.js',
     '/js/game/off_screen_renderer.js',
     '/js/game/preloader.js',
     '/js/game/renderer.js',
+    '/js/game/score.js',
     '/js/game/screen_renderer.js',
     '/js/game/sprite.js',
     '/js/game/table.js',
@@ -121,6 +123,7 @@ var urlsToCache = [
     '/js/lib/require.js',
     '/js/lib/serviceworker-cache-polyfill.js',
     '/js/lib/underscore.js',
+    '/js/models/game.js',
     '/js/models/score.js',
     '/js/models/score.test.js',
     '/js/models/session.js',
@@ -174,7 +177,7 @@ self.addEventListener('fetch', function (event) {
         return;
     }
 
-    if (event.request.method === "GET" && event.request.url.endsWith('session/')) {
+    if (event.request.method === "GET" && event.request.url.endsWith('session')) {
         return;
     }
 

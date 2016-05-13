@@ -5,7 +5,7 @@ define(function (require) {
     //noinspection UnnecessaryLocalVariableJS
     var SessionModel = Backbone.Model.extend({
 
-        url: '/api/session/',
+        url: '/api/session',
 
         defaults: {
             // Otherwise requests will be not sent
@@ -17,12 +17,8 @@ define(function (require) {
             this.save({login: login, password: password}, {
                 success: function (model, response) {
                     console.log(response);
-                    if (response.status === 0) {
-                        model.set('isAuth', true);
-                        model.trigger('loginOk');
-                    } else {
-                        model.trigger('loginError', response.message);
-                    }
+                    model.set('isAuth', true);
+                    model.trigger('loginOk');
                 },
                 error: function (model, response) {
                     console.log(response);
@@ -38,8 +34,8 @@ define(function (require) {
         logout: function () {
             this.destroy({
                 success: function (model, response) {
-                    model.set('isAuth', false);
                     console.log(response);
+                    model.set('isAuth', false);
                     model.trigger('logoutOk');
                 },
                 error: function (model, response) {
@@ -58,7 +54,7 @@ define(function (require) {
                 },
                 error: function (model, response) {
                     console.log(response);
-                    model.trigger('authChecked', 'Необходимо выполненить вход');
+                    model.trigger('authChecked', 'Необходимо выполнить вход');
                 }
             });
         }

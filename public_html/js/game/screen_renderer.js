@@ -1,25 +1,22 @@
 define(function (require) {
 
     var __extends = require('./extends'),
-        Renderer = require('./renderer'),
-        Hand = require('./hand');
+        Renderer = require('./renderer');
 
     //noinspection UnnecessaryLocalVariableJS
     var ScreenRenderer = (function (_super) {
 
         __extends(ScreenRenderer, _super);
 
-        function ScreenRenderer(canvas, camera, table, offScreenRenderer, width, height) {
+        function ScreenRenderer(canvas, camera, table, offScreenRenderer, hand) {
             var _this = this;
             _super.call(this);
-            canvas.width = width;
-            canvas.height = height;
             this.table = table;
             this.offScreenRenderer = offScreenRenderer;
             this.canvas = canvas;
             this.drawables.push(camera);
             this.camera = camera;
-            this.hand = new Hand(canvas);
+            this.hand = hand;
             this.addDrawable(this.hand);
             canvas.onmousedown = function (event) {
                 _this.selectedCard = _this.hand.getCard(event.clientX, event.clientY);
@@ -37,11 +34,14 @@ define(function (require) {
                 _this.isScroll = false;
                 if (_this.isDrag) {
                     _this.isDrag = false;
-                    _this.table.placeCard(_this.selectedCard, _this.camera, _this.canvas);
+                    var update = _this.table.placeCard(_this.selectedCard, _this.camera, _this.canvas);
                     if (_this.selectedCard.getInHand()) {
                         _this.selectedCard.setX(_this.initX);
                         _this.selectedCard.setY(_this.initY);
                         _this.selectedCard.setHighlightColor("black");
+                    } else {
+                        console.log(update);
+                        document.dispatchEvent(new CustomEvent('cardPlaced', { detail: update}));
                     }
                     _this.offScreenRenderer.render();
                     _this.clear();
