@@ -17,8 +17,12 @@ define(function (require) {
             this.save({login: login, password: password}, {
                 success: function (model, response) {
                     console.log(response);
-                    model.set('isAuth', true);
-                    model.trigger('loginOk');
+                    if (response.__ok) {
+                        model.set('isAuth', true);
+                        model.trigger('loginOk');
+                    } else {
+                        model.trigger('loginError', 'Ошибка входа');
+                    }
                 },
                 error: function (model, response) {
                     console.log(response);
@@ -49,7 +53,9 @@ define(function (require) {
             this.fetch({
                 success: function (model, response) {
                     console.log(response);
-                    model.set('isAuth', true);
+                    if (response.__ok) {
+                        model.set('isAuth', true);
+                    }
                     model.trigger('authChecked', 'Вход выполнен');
                 },
                 error: function (model, response) {

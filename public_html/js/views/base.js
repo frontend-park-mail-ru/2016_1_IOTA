@@ -1,6 +1,7 @@
 define(function (require) {
 
-    var Backbone = require('backbone');
+    var Backbone = require('backbone'),
+        UserModel = require('models/user');
 
     //noinspection UnnecessaryLocalVariableJS
     var BaseView = Backbone.View.extend({
@@ -11,6 +12,7 @@ define(function (require) {
 
         render: function () {
             this.$el.html(this.template);
+            //this.$el.html(this.$el.html() + '<h1>Username</h1>');
         },
 
         show: function () {

@@ -4,7 +4,7 @@ var express = require('express'),
     proxy = require('express-http-proxy');
 
 var HOSTNAME = 'localhost',
-    PORT = 8080,
+    PORT = 8000,
     PUBLIC_DIR = __dirname + '/public_html';
 
 var count = 0;
@@ -25,7 +25,7 @@ app.listen(PORT, function () {
     console.log("Simple static server showing %s listening at http://%s:%s", PUBLIC_DIR, HOSTNAME, PORT);
 });
 
-app.use('/api', proxy('http://iota.ian.corp.cdecl.ru:8081/', {
+app.use('/api', proxy('http://127.0.0.1:8080/', {
     forwardPath: function (req, res) {
         var url = '/api' + require('url').parse(req.url).path;
         console.log('Proxy: ' + url);
