@@ -1,6 +1,7 @@
 define(function (require) {
 
-    var Backbone = require('backbone');
+    var Backbone = require('backbone'),
+        user = require('models/user');
 
     //noinspection UnnecessaryLocalVariableJS
     var SessionModel = Backbone.Model.extend({
@@ -55,6 +56,8 @@ define(function (require) {
                     console.log(response);
                     if (response.__ok) {
                         model.set('isAuth', true);
+                        user.setId(response.id);
+                        user.read();
                     }
                     model.trigger('authChecked', 'Вход выполнен');
                 },
