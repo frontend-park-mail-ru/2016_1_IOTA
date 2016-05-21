@@ -1,25 +1,26 @@
 define(function (require) {
 
     var BaseView = require('views/base'),
+        Backbone = require('backbone'),
         tmpl = require('tmpl/game_auth'),
         game = require('../game/game'),
-        gameModel = require('models/game');
+        gameModel = require('models/game'),
+        ws = require('/js/ws.js')
 
+    gameModel.initws(ws);
     //noinspection UnnecessaryLocalVariableJS
     var GameAuthView = BaseView.extend({
-
         template: tmpl,
 
         render: function () {
             this.$el.html(this.template);
             this.$el.css('overflow', 'hidden');
         },
-
         show: function () {
             this.trigger('show', this);
             this.$el.show();
 
-            this.listenToOnce(gameModel, 'sync', function () {
+            this.listenToOnce(Backbone.Events, 'sync', function () {
                 console.log('USERS CONNECTED');
                 game(gameModel);
             });

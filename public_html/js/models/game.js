@@ -1,11 +1,13 @@
 define(function (require) {
 
     var Backbone = require('backbone');
-
+    var ws;
     //noinspection UnnecessaryLocalVariableJS
     var GameModel = Backbone.Model.extend({
-
-        url: '/api/game',
+        initws: function(webs) {
+            ws = webs;
+        },
+        url: '/api/ws',
 
         read: function () {
             this.fetch({
@@ -17,7 +19,6 @@ define(function (require) {
                 }
             });
         },
-
         update: function () {
             this.save(null, {
                 success: function (collection, response) {
@@ -27,6 +28,9 @@ define(function (require) {
                     console.log(response);
                 }
             });
+        },
+        sync: function(method, model, options){
+            ws.send(JSON.stringify(model));
         }
 
     });

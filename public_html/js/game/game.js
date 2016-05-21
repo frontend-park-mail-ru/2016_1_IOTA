@@ -96,11 +96,5 @@ define(function (require) {
                 hand.update(h);
             }
         });
-
-        setInterval(function () {
-            gameModel.read();
-            offScreenRenderer.render();
-            screenRenderer.render();
-        }, 1000);
     };
 });

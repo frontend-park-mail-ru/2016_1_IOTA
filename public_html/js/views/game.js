@@ -5,7 +5,6 @@ define(function (require) {
 
     //noinspection UnnecessaryLocalVariableJS
     var GameView = BaseView.extend({
-
         template: tmpl
 
     });

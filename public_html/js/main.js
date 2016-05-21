@@ -20,11 +20,9 @@ define(function (require) {
 
     var Backbone = require('backbone'),
         Router = require('router'),
-        session = require('models/session'),
-        socket = require('ws');
+        session = require('models/session');
 
     session.read();
-    socket.send('hello');
 
     session.listenTo(session, 'authChecked', function () {
         var router = new Router();
