@@ -1,7 +1,8 @@
 define(function (require) {
 
     var Backbone = require('backbone'),
-        user = require('models/user');
+        user = require('models/user'),
+        socket = require('models/ws');
 
     //noinspection UnnecessaryLocalVariableJS
     var SessionModel = Backbone.Model.extend({
@@ -19,6 +20,7 @@ define(function (require) {
                 success: function (model, response) {
                     console.log(response);
                     if (response.__ok) {
+                        socket.connect();
                         model.set('isAuth', true);
                         model.trigger('loginOk');
                     } else {
@@ -40,6 +42,7 @@ define(function (require) {
             this.destroy({
                 success: function (model, response) {
                     console.log(response);
+                    socket.close();
                     model.set('isAuth', false);
                     model.trigger('logoutOk');
                 },
@@ -55,6 +58,7 @@ define(function (require) {
                 success: function (model, response) {
                     console.log(response);
                     if (response.__ok) {
+                        socket.connect();
                         model.set('isAuth', true);
                         user.setId(response.id);
                         user.read();
