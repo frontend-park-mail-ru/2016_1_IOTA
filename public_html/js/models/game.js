@@ -6,34 +6,28 @@ define(function (require) {
     //noinspection UnnecessaryLocalVariableJS
     var GameModel = Backbone.Model.extend({
 
-        url: '/api/ws',
-
-        read: function () {
-            this.fetch({
-                success: function (collection, response) {
-                    console.log(response);
-                },
-                error: function (collection, response) {
-                    console.log(response);
+        initialize: function () {
+            this.listenTo(socket, 'message', function (data) {
+                console.log(data);
+                data = JSON.parse(data);
+                if (!data.__ok || !data.payload) {
+                    return;
                 }
+                console.log('Обновление модели');
+                this.set(data.payload);
             });
         },
 
-        update: function () {
-            this.save(null, {
-                success: function (collection, response) {
-                    console.log(response);
-                },
-                error: function (collection, response) {
-                    console.log(response);
-                }
-            });
+        start: function () {
+            socket.send(JSON.stringify({ready: true}));
         },
 
-        sync: function(method, model, options){
-            socket.send(JSON.stringify(model));
+        sync: function(method, model, options) {
+            switch(method) {
+                case 'update':
+                    socket.send(model.toJSON());
+            }
         }
-
     });
 
     return new GameModel();
