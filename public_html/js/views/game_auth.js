@@ -24,7 +24,7 @@ define(function (require) {
                 console.log('USERS CONNECTED');
                 game(gameModel);
             });
-            gameModel.start();
+            gameModel.fetch();
         }
 
     });
