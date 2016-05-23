@@ -22,6 +22,14 @@ define(function (require) {
                 console.log('Обновление модели');
                 this.set(data.payload);
             });
+
+            this.listenToOnce(socket, 'message', function (data) {
+                data = JSON.parse(data);
+                if (data.__ok && data.payload) {
+                    console.log('Начало игры');
+                    this.trigger("sync");
+                }
+            });
         },
 
         start: function () {

@@ -20,7 +20,7 @@ define(function (require) {
             this.trigger('show', this);
             this.$el.show();
 
-            this.listenToOnce(Backbone.Events, 'sync', function () {
+            this.listenToOnce(gameModel, 'sync', function () {
                 console.log('USERS CONNECTED');
                 game(gameModel);
             });

@@ -7,9 +7,14 @@ define(function (require) {
         Hand = require('./hand'),
         CardResponse = require('./card_response'),
         user = require('models/session'),
-        Score = require('./score');
+        Score = require('./score'),
+        $ = require('jquery');
 
     return function (gameModel) {
+
+        $('#loader').hide();
+        $('#canvas').show();
+
         var TABLE_SIZE = 3400;
         var offScreenCanvas = document.createElement('canvas'), offScreenRenderer = new OffScreenRenderer(offScreenCanvas, TABLE_SIZE, TABLE_SIZE), screenCanvas = document.getElementById('canvas');
 
