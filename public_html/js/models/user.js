@@ -39,8 +39,8 @@ define(function (require) {
             });
         },
 
-        create: function (login, password, email) {
-            this.save({login: login, password: password, email: email}, {
+        create: function (login, password, email, bday) {
+            this.save({login: login, password: password, email: email, bday: bday}, {
                 success: function (model, response) {
                     console.log(response);
                     if (response.__ok) {

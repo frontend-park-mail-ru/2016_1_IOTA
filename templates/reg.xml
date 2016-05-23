@@ -15,6 +15,13 @@
                     </div>
                 </div>
                 <div class="form__group">
+                    <label class="grid__col grid__col_3 form__control_label" for="name">Birthday</label>
+                    <div class="grid__col grid__col_9">
+                        <input required="" type="date" class="js-bday form__control" name="bday" id="bday"
+                               placeholder="Birthday"/>
+                    </div>
+                </div>
+                <div class="form__group">
                     <label class="grid__col grid__col_3 form__control_label">Email</label>
                     <div class="grid__col grid__col_9">
                         <input required="" type="email" class="js-email form__control" name="email" id="email"

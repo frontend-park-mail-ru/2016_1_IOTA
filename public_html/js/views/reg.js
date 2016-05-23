@@ -27,6 +27,7 @@ define(function (require) {
             this.$email = this.$('.js-email');
             this.$password = this.$('.js-password');
             this.$password2 = this.$('.js-password2');
+            this.$bday = this.$('.js-bday');
         },
 
         register: function (event) {
@@ -50,7 +51,7 @@ define(function (require) {
                 return;
             }
 
-            user.create(this.$login.val(), this.$password.val(), this.$email.val());
+            user.create(this.$login.val(), this.$password.val(), this.$email.val(), this.$bday.val());
         },
 
         registerError: function (errorMsg) {
