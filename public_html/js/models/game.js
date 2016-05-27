@@ -1,15 +1,12 @@
 define(function (require) {
 
-    var Backbone = require('backbone');
+    var Backbone = require('backbone'),
+        socket = require('models/ws');
 
     //noinspection UnnecessaryLocalVariableJS
     var GameModel = Backbone.Model.extend({
         
         url: '/api/game',
-
-        // defaults: {
-        //     id: -1,
-        // },
 
         initialize: function () {
             this.listenTo(socket, 'message', function (data) {
