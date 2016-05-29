@@ -32,11 +32,12 @@ define(function (require) {
         };
 
         Hand.prototype.update = function (cards) {
+            var horizontalOffset = 110;
             var coord = [
-                [this.canvas.width / 2 - 230, this.canvas.height - 150],
-                [this.canvas.width / 2 - 110, this.canvas.height - 150],
-                [this.canvas.width / 2 + 130, this.canvas.height - 150],
-                [this.canvas.width / 2 + 10, this.canvas.height - 150]
+                [this.canvas.width / 2 - 230, this.canvas.height - horizontalOffset],
+                [this.canvas.width / 2 - 110, this.canvas.height - horizontalOffset],
+                [this.canvas.width / 2 + 130, this.canvas.height - horizontalOffset],
+                [this.canvas.width / 2 + 10, this.canvas.height - horizontalOffset]
             ];
             this.drawables = [];
             for (var i = 0; i < cards.length; i++) {
