@@ -1,7 +1,6 @@
 define(function (require) {
 
     var BaseView = require('views/base'),
-        Backbone = require('backbone'),
         tmpl = require('tmpl/game_auth'),
         game = require('../game/game'),
         gameModel = require('models/game');
@@ -10,21 +9,30 @@ define(function (require) {
     var GameAuthView = BaseView.extend({
 
         template: tmpl,
-
-        render: function () {
-            this.$el.html(this.template);
-            this.$el.css('overflow', 'hidden');
-        },
+        attributes: {class: "grid__str_10"},
 
         show: function () {
             this.trigger('show', this);
             this.$el.show();
 
-            this.listenToOnce(gameModel, 'sync', function () {
+            this.listenToOnce(gameModel, 'ready', function () {
                 console.log('USERS CONNECTED');
                 game(gameModel);
             });
-            gameModel.fetch();
+            gameModel.fetch({
+                success: function (model, response, options) {
+                    if(!response.__ok){
+                        console.log("Протухла кука");
+                        window.location.href = "./#logout";
+                    } else {
+                        gameModel.id = response.ref;
+                    }
+                },
+                error: function (model, response, options) {
+                    console.log("Сдох сервер");
+                    window.location.href = "./#logout";
+                }
+            });
         }
 
     });

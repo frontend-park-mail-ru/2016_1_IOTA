@@ -3,10 +3,11 @@
     <div class="grid__row">
         <div class="grid__col_4 grid__col-offset_4">
             <div class="button__group button__group_vertical" role="group">
-                <a type="button" class="button button_success button__menu button_lg" href="/#game">Start Game</a>
-                <a type="button" class="button button_primary button__menu button_lg" href="/#scoreboard">Score Board
-                </a>
-                <a type="button" class="button button_success button__menu button_lg" href="/#logout">Logout</a>
+                <a type="button" class="button button__check button__lg grid__col-offset_4" href="/#game">Старт</a>
+                <br/>
+                <a type="button" class="button button__check button__lg grid__col-offset_4" href="/#scoreboard">Рекорды</a>
+                <br/>
+                <a type="button" class="button button__check button__lg grid__col-offset_4" href="/#logout">Выход</a>
             </div>
         </div>
     </div>

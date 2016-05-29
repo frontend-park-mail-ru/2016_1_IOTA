@@ -12,25 +12,19 @@ define(function (require) {
             this.listenTo(socket, 'message', function (data) {
                 console.log(data);
                 data = JSON.parse(data);
-                if (!data.__ok || !data.payload) {
-                    return;
-                }
                 console.log('Обновление модели');
                 this.set(data.payload);
+                //this.trigger("sync");
             });
 
             this.listenToOnce(socket, 'message', function (data) {
-                data = JSON.parse(data);
-                if (data.__ok && data.payload) {
-                    console.log('Начало игры');
-                    this.trigger("sync");
-                }
+                    this.trigger("ready");
             });
         },
 
         start: function () {
             socket.send(JSON.stringify({ready: true}));
-        }
+        },
         
     });
 
