@@ -14,18 +14,20 @@ define(function (require) {
 
         $('#loader').hide();
         $('#canvas').show();
-
         var TABLE_SIZE = 3400;
-        var offScreenCanvas = document.createElement('canvas'), offScreenRenderer = new OffScreenRenderer(offScreenCanvas, TABLE_SIZE, TABLE_SIZE), screenCanvas = document.getElementById('canvas');
+        var offScreenCanvas = document.createElement('canvas'),
+            offScreenRenderer = new OffScreenRenderer(offScreenCanvas, TABLE_SIZE, TABLE_SIZE),
+            screenCanvas = document.getElementById('canvas');
 
-        screenCanvas.width = window.innerWidth;
-        screenCanvas.height = window.innerHeight;
+        screenCanvas.width = $('#canvas').width();
+        screenCanvas.height = $('#canvas').height();
 
-        var table = new Table(34, 34, 100, 100), hand = new Hand(screenCanvas);
+        var table = new Table(34, 34, 100, 100),
+            hand = new Hand(screenCanvas);
 
         //table.update([new CardResponse(16, 16, '4', 'r', 'x')]);
 
-        /*
+
         hand.update([
             new CardResponse(0, 0, '3', 'y', 't'),
             new CardResponse(0, 0, '1', 'r', 'x'),
@@ -41,18 +43,18 @@ define(function (require) {
         table.getTile(16 * 34 + 17).setValid(validNums, validColors, validShapes);
         table.getTile(15 * 34 + 16).setValid(validNums, validColors, validShapes);
         table.getTile(17 * 34 + 16).setValid(validNums, validColors, validShapes);
-        */
+
         offScreenRenderer.addDrawable(table);
         offScreenRenderer.render();
 
         var screenRenderer = new ScreenRenderer(screenCanvas, new Camera(offScreenCanvas, TABLE_SIZE / 2 - window.innerWidth / 2, TABLE_SIZE / 2 - window.innerHeight / 2, window.innerWidth, window.innerHeight), table, offScreenRenderer, hand);
 
-        var score1 = new Score(10, 30, 100, 100, "", 0),
+        /*var score1 = new Score(10, 30, 100, 100, "lol", 0),
             score2 = new Score(10, 60, 100, 100, "", 0),
-            scores = [0, 0];
+            scores = [0, 0];*/
 
-        screenRenderer.addDrawable(score1);
-        screenRenderer.addDrawable(score2);
+        //screenRenderer.addDrawable(score1);
+        //screenRenderer.addDrawable(score2);
 
         screenRenderer.render();
 
@@ -60,13 +62,13 @@ define(function (require) {
 
             //console.log('CARD PLACED');
             console.log(gameModel);
-            gameModel.get('table').push(event.detail);
+            console.log(JSON.stringify(event.detail));
+            //meModel.get('table').push(event.detail);
             //console.log(gameModel.get('table'));
-            gameModel.update();
+            //gameModel.update();
         });
-
         var prevHand = null;
-        gameModel.on('sync', function () {
+        /*gameModel.on('sync', function () {
             console.log('SYNC');
             var update = [];
             var tbl = gameModel.get('table');
@@ -100,6 +102,6 @@ define(function (require) {
                 prevHand = h;
                 hand.update(h);
             }
-        });
+        });*/
     };
 });
