@@ -12,7 +12,8 @@ define(function (require) {
         attributes: {class: "grid__str_10"},
         events: {
             'click .js-exit': 'exit',
-            'click .js-over': 'over'
+            'click .js-over': 'over',
+            'click .js-pass': 'pass'
         },
 
         exit: function (event) {
@@ -21,6 +22,10 @@ define(function (require) {
 
         over: function (event) {
             document.dispatchEvent(new CustomEvent('over'));
+        },
+
+        pass: function (event) {
+            document.dispatchEvent(new CustomEvent('pass'));
         },
 
         show: function () {

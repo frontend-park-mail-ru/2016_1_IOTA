@@ -8,6 +8,9 @@
   .block__border {
     border: 4px double black; }
 
+.hidden {
+  display: none; }
+
 .button {
   align-items: flex-start;
   text-align: center;

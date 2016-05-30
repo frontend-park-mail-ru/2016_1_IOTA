@@ -18,6 +18,7 @@ define(function (require) {
         var offScreenCanvas = document.createElement('canvas'),
             offScreenRenderer = new OffScreenRenderer(offScreenCanvas, TABLE_SIZE, TABLE_SIZE),
             screenCanvas = document.getElementById('canvas');
+        var prevPlayer = -1;
 
         screenCanvas.width = $('#canvas').width();
         screenCanvas.height = $('#canvas').height();
@@ -58,6 +59,18 @@ define(function (require) {
             body.__type = "PlayerPingMessage";
             xhr.send(JSON.stringify(body));
         });
+        document.addEventListener('cardPass', function (event) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", '/api/game', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            var body = {};
+            body.ephemeral = false;
+            body.endSequence = true;
+            body.goodbye = false;
+            body.__type = "PlayerPassCardMessage";
+            body.uuid = event.detail.card.uuid;
+            xhr.send(JSON.stringify(body));
+        });
         document.addEventListener('cardPlaced', function (event) {
 
             console.log('CARD PLACED');
@@ -82,12 +95,25 @@ define(function (require) {
         });
         var prevHand = null;
         gameModel.on('sync', function () {
+            if(prevPlayer != user.get('ref'))
+                $('.js-pass').removeAttr('disabled');
+            prevPlayer = gameModel.message.ref;
             //console.log('SYNC');
             table.setStep(user.get('ref') == gameModel.message.ref);
             var i = 0;
             var j = 0;
+            var player = 1;
             for(j = 0; j < gameModel.message.players.length; j++) {
                 tempPlayer = gameModel.message.players[j];
+                if(!$('div').is('#' + tempPlayer.ref)) {
+                    $('.js-gamer' + player).show();
+                    $('.js-gamer' + player).attr("id", tempPlayer.ref);
+                    $('.js-gamer' + player).find('.text__nick').text(tempPlayer.login);
+                    player++;
+                }
+                if(gameModel.message.ref == tempPlayer.ref) $('#' + tempPlayer.ref).addClass("text__temporary");
+                else $('#' + tempPlayer.ref).removeClass("text__temporary");
+                $('#' + tempPlayer.ref).find('.score').text(tempPlayer.score);
                 if(tempPlayer.ref == user.get('ref')) {
                     var cardHand = [];
                     for(i = 0; i < tempPlayer.hand.length; i++) {
@@ -125,38 +151,6 @@ define(function (require) {
                     table.update([new CardResponse(16 + cardPull.offx, 16 + cardPull.offy, "", "", "", "super", cardPull.item.uuid)]);
                 }
             }
-            /*var update = [];
-            var tbl = gameModel.get('table');
-            // number, color, shape
-            for (var i = 0; i < tbl.length; i++) {
-                update.push(new CardResponse(tbl[i].x, tbl[i].y, tbl[i].card.value, tbl[i].card.color, tbl[i].card.shape));
-            }
-            table.update(update);
-
-            var user_id = user.get('id');
-            var players = gameModel.get('players');
-
-            var h = [];
-            for (var k = 0; k < players.length; k++)
-            {
-                if (k == 0) {
-                    score1.update(players[k].name, scores[k]);
-                } else {
-                    score2.update(players[k].name, scores[k]);
-                }
-                console.log(user_id + ' ' + players[k].id);
-                if (players[k].id == user_id) {
-                    for (var j = 0; j < players[k]['cards'].length; j++) {
-                        h.push(new CardResponse(0, 0, players[k]['cards'][j].value, players[k]['cards'][j].color, players[k]['cards'][j].shape));
-                    }
-                }
-            }
-            console.log(h);
-            //console.log("HAND: " + prevHand.size() + ' ' + hand.size());
-            if (prevHand == null || prevHand.length != hand.size()) {
-                prevHand = h;
-                hand.update(h);
-            }*/
         });
         document.addEventListener('toRender', function (event) {
             console.log("Painted");

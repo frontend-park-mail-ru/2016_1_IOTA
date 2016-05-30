@@ -1,7 +1,8 @@
 define(function (require) {
 
     var __extends = require('./extends'),
-        Renderer = require('./renderer');
+        Renderer = require('./renderer'),
+        $ = require('jquery');
 
     //noinspection UnnecessaryLocalVariableJS
     var ScreenRenderer = (function (_super) {
@@ -22,9 +23,10 @@ define(function (require) {
                 if(table.getStep()) {
                     _this.selectedCard = _this.hand.getCard(event.clientX, event.clientY-window.innerHeight/10);
                     if (_this.selectedCard != null) {
+                        $('.js-pass').attr('disabled','');
                         _this.initX = _this.selectedCard.getX();
                         _this.initY = _this.selectedCard.getY();
-                        _this.isDrag = true;
+                        if(!_this.isPass) _this.isDrag = true;
                         return;
                     }
                     _this.isScroll = true;
@@ -49,6 +51,15 @@ define(function (require) {
                     _this.clear();
                     _this.render();
                 }
+                if(_this.isPass) {
+                    if (_this.selectedCard != null) {
+                        _this.isPass = false;
+                        var update = _this.table.passCard(_this.selectedCard, _this.camera, _this.canvas);
+                        document.dispatchEvent(new CustomEvent('cardPass', { detail: update}));
+                    }
+                    _this.clear();
+                    _this.render();
+                }
             };
             canvas.onmousemove = function (event) {
                 if (_this.isDrag) {
@@ -66,6 +77,11 @@ define(function (require) {
                     _this.render();
                 }
             };
+            document.addEventListener('pass', function (event) {
+                console.log("asasasa");
+                _this.isPass = true;
+                $('.js-pass').attr('disabled','');
+            });
         }
 
         ScreenRenderer.prototype.render = function () {
