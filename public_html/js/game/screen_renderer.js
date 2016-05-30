@@ -37,6 +37,7 @@ define(function (require) {
                 if (_this.isDrag) {
                     _this.isDrag = false;
                     var update = _this.table.placeCard(_this.selectedCard, _this.camera, _this.canvas);
+                    //console.log(JSON.stringify(update));
                     if (_this.selectedCard.getInHand()) {
                         _this.selectedCard.setX(_this.initX);
                         _this.selectedCard.setY(_this.initY);

@@ -43,6 +43,7 @@ define(function (require) {
                     x: tile.getX() / 100,
                     y: tile.getY() / 100,
                     card: {
+                        uuid: card.getUuid(),
                         value: card.getNumber(),
                         color: card.getColor(),
                         shape: card.getShape(),
@@ -87,8 +88,8 @@ define(function (require) {
 
         Table.prototype.update = function (cards) {
             for (var i = 0; i < cards.length; i++) {
-                console.log(JSON.stringify({n:cards[i].number, c:cards[i].color, s:cards[i].shape}));
-                this.drawables[cards[i].x * 34 + cards[i].y].setContent(new Card(0, 0, 100, 100, cards[i].number, cards[i].color, cards[i].shape, false, cards[i].concrete));
+                //console.log(JSON.stringify({n:cards[i].number, c:cards[i].color, s:cards[i].shape, id:cards[i].uuid}));
+                this.drawables[cards[i].x * 34 + cards[i].y].setContent(new Card(0, 0, 100, 100, cards[i].number, cards[i].color, cards[i].shape, false, cards[i].concrete, cards[i].uuid));
                 var validNums = [],
                     validColors = [],
                     validShapes = [];

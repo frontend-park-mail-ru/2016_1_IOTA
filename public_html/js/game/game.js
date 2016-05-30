@@ -43,12 +43,24 @@ define(function (require) {
         document.addEventListener('cardPlaced', function (event) {
 
             console.log('CARD PLACED');
-            console.log(gameModel);
-            console.log(JSON.stringify(event.detail));
-            table.update([new CardResponse(event.detail.x, event.detail.y, event.detail.card.value, event.detail.card.color, event.detail.card.shape, event.detail.card.concrete)]);
+            //console.log(gameModel);
+            //console.log(JSON.stringify(event.detail));
+            table.update([new CardResponse(event.detail.x, event.detail.y, event.detail.card.value, event.detail.card.color, event.detail.card.shape, event.detail.card.concrete, event.detail.card.uuid)]);
             //meModel.get('table').push(event.detail);
             //console.log(gameModel.get('table'));
-            //gameModel.update();
+            var xhr = new XMLHttpRequest();
+
+            xhr.open("POST", '/api/game', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            var body = {};
+            //console.log(JSON.stringify(event.detail));
+            body.uuid = event.detail.card.uuid;
+            body.__type = "PlayerPlaceCardMessage";
+            body.offX = event.detail.x - 16;
+            body.offY = event.detail.y - 16;
+            console.log(JSON.stringify(body));
+            xhr.send(JSON.stringify(body));
+            //gameModel.sync('create', {url:"/api/game", __type:"PlayerPlaceCardMessage", offX:event.detail.x, offY:event.detail.y, uuid:event.detail.uuid});
         });
         var prevHand = null;
         gameModel.on('sync', function () {
@@ -62,7 +74,7 @@ define(function (require) {
                     var cardHand = [];
                     for(i = 0; i < tempPlayer.hand.length; i++) {
                         cardPull = tempPlayer.hand[i];
-                        console.log(JSON.stringify(cardPull));
+                        //console.log(JSON.stringify(cardPull));
                         if(cardPull.concrete) {
                             cardPullNumber = "1";
                             switch (cardPull.number) {
@@ -71,9 +83,9 @@ define(function (require) {
                                 case "THREE": cardPullNumber = "3"; break;
                                 case "FOUR": cardPullNumber = "4"; break;
                             }
-                            cardHand.push(new CardResponse(0, 0, cardPullNumber, cardPull.color[0].toLowerCase(), cardPull.shape[0].toLowerCase(), ""));
+                            cardHand.push(new CardResponse(0, 0, cardPullNumber, cardPull.color[0].toLowerCase(), cardPull.shape[0].toLowerCase(), "", cardPull.uuid));
                         } else {
-                            cardHand.push(new CardResponse(0, 0, "", "", "", "super"));
+                            cardHand.push(new CardResponse(0, 0, "", "", "", "super", cardPull.uuid));
                         }
                     }
                     hand.update(cardHand);
@@ -90,9 +102,9 @@ define(function (require) {
                         case "THREE": cardPullNumber = "3"; break;
                         case "FOUR": cardPullNumber = "4"; break;
                     }
-                    table.update([new CardResponse(16 + cardPull.offx, 16 + cardPull.offy, cardPullNumber, cardPull.item.color[0].toLowerCase(), cardPull.item.shape[0].toLowerCase(), "")]);
+                    table.update([new CardResponse(16 + cardPull.offx, 16 + cardPull.offy, cardPullNumber, cardPull.item.color[0].toLowerCase(), cardPull.item.shape[0].toLowerCase(), "", cardPull.item.uuid)]);
                 } else {
-                    table.update([new CardResponse(16 + cardPull.offx, 16 + cardPull.offy, "", "", "", "super")]);
+                    table.update([new CardResponse(16 + cardPull.offx, 16 + cardPull.offy, "", "", "", "super", cardPull.item.uuid)]);
                 }
             }
             /*var update = [];

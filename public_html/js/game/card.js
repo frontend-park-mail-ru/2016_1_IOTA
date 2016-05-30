@@ -8,8 +8,9 @@ define(function (require) {
 
         __extends(Card, _super);
 
-        function Card(x, y, width, height, number, color, shape, inHand, concrete) {
+        function Card(x, y, width, height, number, color, shape, inHand, concrete, uuid) {
             _super.call(this, x, y, width, height);
+            //console.log(JSON.stringify(uuid));
             this.inHand = inHand;
             this.image = new Image();
             this.concrete = concrete;
@@ -17,6 +18,7 @@ define(function (require) {
             this.number = number;
             this.color = color;
             this.shape = shape;
+            this.uuid = uuid;
             this.highlightColor = "black";
         }
 
@@ -42,6 +44,10 @@ define(function (require) {
 
         Card.prototype.getShape = function () {
             return this.shape;
+        };
+
+        Card.prototype.getUuid = function () {
+            return this.uuid;
         };
 
         Card.prototype.draw = function (canvas) {

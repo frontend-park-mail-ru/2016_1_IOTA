@@ -13,7 +13,7 @@ define(function (require) {
                 this.trigger("ready");
             });
             this.listenTo(socket, 'message', function (data) {
-                console.log(data);
+                //console.log(data);
                 data = JSON.parse(data);
                 console.log('Обновление модели');
                 this.message = data;
