@@ -13,15 +13,11 @@ define(function (require) {
         function Table(rows, columns, tileWidth, tileHeight) {
             _super.call(this);
 
-            var validNums = [];
-            var validColors = [];
-            var validShapes = [];
             this.isMyStep = false;
 
             for (var i = 0; i < rows; i++) {
                 for (var j = 0; j < columns; j++) {
                     var tile = new Tile(i * tileWidth, j * tileHeight, tileWidth, tileHeight);
-                    tile.setValid(validNums, validColors, validShapes);
                     this.drawables.push(tile);
                 }
             }
@@ -67,7 +63,8 @@ define(function (require) {
             var x = camera.getX() + card.getX() * camera.getWidth() / canvas.width + card.getWidth() / 2,
                 y = camera.getY() + card.getY() * camera.getHeight() / canvas.height + card.getHeight() / 2;
             for (var i = 0; i < this.drawables.length; i++) {
-                if (this.drawables[i].contains(x, y) && this.drawables[i].canContain(card)) {
+                //console.log(this.drawables[i].canContain(card))
+                if (this.drawables[i].contains(x, y) && this.drawables[i].canContain()) {
                     return this.drawables[i];
                 }
             }
@@ -90,22 +87,10 @@ define(function (require) {
             for (var i = 0; i < cards.length; i++) {
                 //console.log(JSON.stringify({n:cards[i].number, c:cards[i].color, s:cards[i].shape, id:cards[i].uuid}));
                 this.drawables[cards[i].x * 34 + cards[i].y].setContent(new Card(0, 0, 100, 100, cards[i].number, cards[i].color, cards[i].shape, false, cards[i].concrete, cards[i].uuid));
-                var validNums = [],
-                    validColors = [],
-                    validShapes = [];
-                if(cards[i].concrete) {
-                    validNums = ['1', '2', '3', '4'];
-                    validColors = ['y', 'r', 'g', 'b'];
-                    validShapes = ['s', 't', 'c', 'x'];
-                } else {
-                    validNums.push(cards[i].number.toString());
-                    validColors.push(cards[i].color);
-                    validShapes.push(cards[i].shape);
-                }
-                this.getTile((cards[i].x) * 34 + cards[i].y + 1).setValid(validNums, validColors, validShapes);
-                this.getTile((cards[i].x) * 34 + cards[i].y - 1).setValid(validNums, validColors, validShapes);
-                this.getTile((cards[i].x + 1) * 34 + cards[i].y).setValid(validNums, validColors, validShapes);
-                this.getTile((cards[i].x - 1) * 34 + cards[i].y).setValid(validNums, validColors, validShapes);
+                this.getTile((cards[i].x) * 34 + cards[i].y + 1).setValid(true);
+                this.getTile((cards[i].x) * 34 + cards[i].y - 1).setValid(true);
+                this.getTile((cards[i].x + 1) * 34 + cards[i].y).setValid(true);
+                this.getTile((cards[i].x - 1) * 34 + cards[i].y).setValid(true);
             }
             document.dispatchEvent(new CustomEvent('toRender'));
         };

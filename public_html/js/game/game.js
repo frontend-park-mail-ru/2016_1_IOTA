@@ -1,6 +1,7 @@
 define(function (require) {
 
-    var OffScreenRenderer = require('./off_screen_renderer'),
+    var BaseView = require('views/base'),
+        OffScreenRenderer = require('./off_screen_renderer'),
         ScreenRenderer = require('./screen_renderer'),
         Camera = require('./camera'),
         Table = require('./table'),
@@ -39,13 +40,30 @@ define(function (require) {
         //screenRenderer.addDrawable(score2);
 
         screenRenderer.render();
-
+        document.addEventListener('exit', function (event) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", '/api/game', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            var body = {};
+            body.goodbye = true;
+            body.__type = "PlayerPingMessage";
+            xhr.send(JSON.stringify(body));
+        });
+        document.addEventListener('over', function (event) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", '/api/game', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            var body = {};
+            body.endSequence = true;
+            body.__type = "PlayerPingMessage";
+            xhr.send(JSON.stringify(body));
+        });
         document.addEventListener('cardPlaced', function (event) {
 
             console.log('CARD PLACED');
             //console.log(gameModel);
             //console.log(JSON.stringify(event.detail));
-            table.update([new CardResponse(event.detail.x, event.detail.y, event.detail.card.value, event.detail.card.color, event.detail.card.shape, event.detail.card.concrete, event.detail.card.uuid)]);
+            //table.update([new CardResponse(event.detail.x, event.detail.y, event.detail.card.value, event.detail.card.color, event.detail.card.shape, event.detail.card.concrete, event.detail.card.uuid)]);
             //meModel.get('table').push(event.detail);
             //console.log(gameModel.get('table'));
             var xhr = new XMLHttpRequest();

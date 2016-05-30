@@ -43,7 +43,7 @@ define(function (require) {
                         _this.selectedCard.setY(_this.initY);
                         _this.selectedCard.setHighlightColor("black");
                     } else {
-                        console.log(update);
+                        ///console.log(update);
                         document.dispatchEvent(new CustomEvent('cardPlaced', { detail: update}));
                     }
                     _this.clear();

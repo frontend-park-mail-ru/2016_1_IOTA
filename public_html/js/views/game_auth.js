@@ -10,6 +10,18 @@ define(function (require) {
 
         template: tmpl,
         attributes: {class: "grid__str_10"},
+        events: {
+            'click .js-exit': 'exit',
+            'click .js-over': 'over'
+        },
+
+        exit: function (event) {
+            document.dispatchEvent(new CustomEvent('exit'));
+        },
+
+        over: function (event) {
+            document.dispatchEvent(new CustomEvent('over'));
+        },
 
         show: function () {
             this.trigger('show', this);

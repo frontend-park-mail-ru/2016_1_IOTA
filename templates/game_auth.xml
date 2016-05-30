@@ -7,7 +7,7 @@
             <div class = "grid__str_8"></div>
             <div class = "grid__col_12 grid__str_2">
                 <div class = "grid__col_12 grid__str_9" style="border-top: 4px double black">
-                    cccc
+
                 </div>
             </div>
         </div>
@@ -28,6 +28,9 @@
                     <p class = "text text__nick">NickName</p>
                     <p class = "text">Очков:</p>
                 </div>
+                <button class="js-over" type="submit">Конец хода</button>
+                <br/>
+                <button class="js-exit" type="submit">Выход</button>
             </div>
         </div>
     </div>
