@@ -7,18 +7,17 @@ define(function (require) {
     var GameModel = Backbone.Model.extend({
         
         url: '/api/game',
-
+        message: "",
         initialize: function () {
+            this.listenToOnce(socket, 'message', function (data) {
+                this.trigger("ready");
+            });
             this.listenTo(socket, 'message', function (data) {
                 console.log(data);
                 data = JSON.parse(data);
                 console.log('Обновление модели');
-                this.set(data.payload);
-                //this.trigger("sync");
-            });
-
-            this.listenToOnce(socket, 'message', function (data) {
-                    this.trigger("ready");
+                this.message = data;
+                this.trigger("sync");
             });
         },
 

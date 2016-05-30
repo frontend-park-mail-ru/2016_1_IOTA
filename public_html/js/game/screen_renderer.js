@@ -19,16 +19,18 @@ define(function (require) {
             this.hand = hand;
             this.addDrawable(this.hand);
             canvas.onmousedown = function (event) {
-                _this.selectedCard = _this.hand.getCard(event.clientX, event.clientY);
-                if (_this.selectedCard != null) {
-                    _this.initX = _this.selectedCard.getX();
-                    _this.initY = _this.selectedCard.getY();
-                    _this.isDrag = true;
-                    return;
+                if(table.getStep()) {
+                    _this.selectedCard = _this.hand.getCard(event.clientX, event.clientY-window.innerHeight/10);
+                    if (_this.selectedCard != null) {
+                        _this.initX = _this.selectedCard.getX();
+                        _this.initY = _this.selectedCard.getY();
+                        _this.isDrag = true;
+                        return;
+                    }
+                    _this.isScroll = true;
+                    _this.prevX = event.clientX;
+                    _this.prevY = event.clientY-window.innerHeight/10;
                 }
-                _this.isScroll = true;
-                _this.prevX = event.clientX;
-                _this.prevY = event.clientY;
             };
             canvas.onmouseup = function (event) {
                 _this.isScroll = false;
@@ -43,7 +45,6 @@ define(function (require) {
                         console.log(update);
                         document.dispatchEvent(new CustomEvent('cardPlaced', { detail: update}));
                     }
-                    _this.offScreenRenderer.render();
                     _this.clear();
                     _this.render();
                 }
@@ -51,15 +52,15 @@ define(function (require) {
             canvas.onmousemove = function (event) {
                 if (_this.isDrag) {
                     _this.selectedCard.setX(event.clientX - _this.selectedCard.getWidth() / 2);
-                    _this.selectedCard.setY(event.clientY - _this.selectedCard.getHeight() / 2);
+                    _this.selectedCard.setY(event.clientY-window.innerHeight/10 - _this.selectedCard.getHeight() / 2);
                     _this.table.checkPlace(_this.selectedCard, _this.camera, _this.canvas);
                     _this.clear();
                     _this.render();
                 }
                 else if (_this.isScroll) {
-                    _this.camera.scroll(_this.prevX - event.clientX, _this.prevY - event.clientY);
+                    _this.camera.scroll(_this.prevX - event.clientX, _this.prevY - event.clientY+window.innerHeight/10);
                     _this.prevX = event.clientX;
-                    _this.prevY = event.clientY;
+                    _this.prevY = event.clientY-window.innerHeight/10;
                     _this.clear();
                     _this.render();
                 }

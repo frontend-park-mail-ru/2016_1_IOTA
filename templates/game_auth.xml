@@ -5,12 +5,30 @@
         <div class = "grid__col_9 grid__str_10">
             <canvas id="canvas" class="grid__str_10 grid__col_12" style="position:absolute;overflow: hidden;z-index: 1000;"></canvas>
             <div class = "grid__str_8"></div>
-            <div class = "grid__col_12 grid__str_2" style="border-top: 4px double black">
-                cccc
+            <div class = "grid__col_12 grid__str_2">
+                <div class = "grid__col_12 grid__str_9" style="border-top: 4px double black">
+                    cccc
+                </div>
             </div>
         </div>
-        <div class = "grid__col_2 grid__str_10" style="border-left: 4px double black; padding:10px">
-            trololol
+        <div class = "grid__col_3 grid__str_10">
+            <div class = "grid__col_11 grid__str_10" style="border-left: 4px double black; padding:10px">
+                <div class = "block" style="border-bottom: 4px double black">
+                    <p class = "text text__temporary">Игрок 1:</p>
+                    <p class = "text text__nick">NickName</p>
+                    <p class = "text">Очков:</p>
+                </div>
+                <div class = "block" style="border-bottom: 4px double black">
+                    <p class = "text">Игрок 1:</p>
+                    <p class = "text text__nick">NickName</p>
+                    <p class = "text">Очков:</p>
+                </div>
+                <div class = "block">
+                    <p class = "text">Игрок 1:</p>
+                    <p class = "text text__nick">NickName</p>
+                    <p class = "text">Очков:</p>
+                </div>
+            </div>
         </div>
     </div>
 

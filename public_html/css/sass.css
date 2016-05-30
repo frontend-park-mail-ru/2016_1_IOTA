@@ -1,6 +1,5 @@
 .block {
-  padding: 10px;
-  display: inline; }
+  padding: 10px; }
   .block__jumbotron {
     padding: 10px;
     margin-bottom: 30px;
@@ -551,5 +550,14 @@
     .boomark__div_notFirst {
       opacity: 0;
       transition: all 0.5s ease 0s; }
+
+.text {
+  font-size: 28px;
+  margin-top: 0;
+  margin-bottom: 5px; }
+  .text__nick {
+    margin-left: 30px; }
+  .text__temporary {
+    font-weight: bold; }
 
 /*# sourceMappingURL=sass.css.map */

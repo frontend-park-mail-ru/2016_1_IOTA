@@ -41,7 +41,7 @@ define(function (require) {
             ];
             this.drawables = [];
             for (var i = 0; i < cards.length; i++) {
-                this.drawables.push(new Card(coord[i][0], coord[i][1], 100, 100, cards[i].number, cards[i].color, cards[i].shape, true));
+                this.drawables.push(new Card(coord[i][0], coord[i][1], 100, 100, cards[i].number, cards[i].color, cards[i].shape, true, cards[i].concrete));
             }
         };
 

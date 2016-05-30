@@ -8,11 +8,12 @@ define(function (require) {
 
         __extends(Card, _super);
 
-        function Card(x, y, width, height, number, color, shape, inHand) {
+        function Card(x, y, width, height, number, color, shape, inHand, concrete) {
             _super.call(this, x, y, width, height);
             this.inHand = inHand;
             this.image = new Image();
-            this.image.src = '/images/' + color + shape + number + '.png';
+            this.concrete = concrete;
+            this.image.src = '/images/' + concrete + color + shape + number + '.png';
             this.number = number;
             this.color = color;
             this.shape = shape;
@@ -33,6 +34,10 @@ define(function (require) {
 
         Card.prototype.getColor = function () {
             return this.color;
+        };
+
+        Card.prototype.getConcrete = function () {
+            return this.concrete;
         };
 
         Card.prototype.getShape = function () {

@@ -13,9 +13,10 @@ define(function (require) {
         function Table(rows, columns, tileWidth, tileHeight) {
             _super.call(this);
 
-            var validNums = [1, 2, 3, 4];
-            var validColors = ['y', 'r', 'g', 'b'];
-            var validShapes = ['r', 't', 'c', 'x'];
+            var validNums = [];
+            var validColors = [];
+            var validShapes = [];
+            this.isMyStep = false;
 
             for (var i = 0; i < rows; i++) {
                 for (var j = 0; j < columns; j++) {
@@ -28,11 +29,6 @@ define(function (require) {
 
         Table.prototype.draw = function (canvas) {
             var context = canvas.getContext("2d");
-            //var gradient = context.createRadialGradient(canvas.width / 2, canvas.height / 2, canvas.height / 10, 0, canvas.height / 2, canvas.width);
-            //gradient.addColorStop(0, "white");
-           // gradient.addColorStop(1, "gray");
-            //context.fillStyle = gradient;
-            //context.fillRect(0, 0, canvas.width, canvas.height);
             for (var i = 0; i < this.drawables.length; i++) {
                 this.drawables[i].draw(canvas);
             }
@@ -47,9 +43,10 @@ define(function (require) {
                     x: tile.getX() / 100,
                     y: tile.getY() / 100,
                     card: {
-                        value: +card.getNumber(),
+                        value: card.getNumber(),
                         color: card.getColor(),
-                        shape: card.getShape()
+                        shape: card.getShape(),
+                        concrete: card.getConcrete()
                     }
                 };
             }
@@ -66,7 +63,8 @@ define(function (require) {
         };
 
         Table.prototype.getTileForCard = function (card, camera, canvas) {
-            var x = camera.getX() + card.getX() * camera.getWidth() / canvas.width + card.getWidth() / 2, y = camera.getY() + card.getY() * camera.getHeight() / canvas.height + card.getHeight() / 2;
+            var x = camera.getX() + card.getX() * camera.getWidth() / canvas.width + card.getWidth() / 2,
+                y = camera.getY() + card.getY() * camera.getHeight() / canvas.height + card.getHeight() / 2;
             for (var i = 0; i < this.drawables.length; i++) {
                 if (this.drawables[i].contains(x, y) && this.drawables[i].canContain(card)) {
                     return this.drawables[i];
@@ -79,10 +77,36 @@ define(function (require) {
             return this.drawables[index];
         };
 
+        Table.prototype.getStep = function () {
+            return this.isMyStep;
+        };
+
+        Table.prototype.setStep = function (step) {
+            this.isMyStep = step;
+        };
+
         Table.prototype.update = function (cards) {
             for (var i = 0; i < cards.length; i++) {
-                this.drawables[cards[i].x * 34 + cards[i].y].setContent(new Card(0, 0, 100, 100, cards[i].number, cards[i].color, cards[i].shape, false));
+                console.log(JSON.stringify({n:cards[i].number, c:cards[i].color, s:cards[i].shape}));
+                this.drawables[cards[i].x * 34 + cards[i].y].setContent(new Card(0, 0, 100, 100, cards[i].number, cards[i].color, cards[i].shape, false, cards[i].concrete));
+                var validNums = [],
+                    validColors = [],
+                    validShapes = [];
+                if(cards[i].concrete) {
+                    validNums = ['1', '2', '3', '4'];
+                    validColors = ['y', 'r', 'g', 'b'];
+                    validShapes = ['s', 't', 'c', 'x'];
+                } else {
+                    validNums.push(cards[i].number.toString());
+                    validColors.push(cards[i].color);
+                    validShapes.push(cards[i].shape);
+                }
+                this.getTile((cards[i].x) * 34 + cards[i].y + 1).setValid(validNums, validColors, validShapes);
+                this.getTile((cards[i].x) * 34 + cards[i].y - 1).setValid(validNums, validColors, validShapes);
+                this.getTile((cards[i].x + 1) * 34 + cards[i].y).setValid(validNums, validColors, validShapes);
+                this.getTile((cards[i].x - 1) * 34 + cards[i].y).setValid(validNums, validColors, validShapes);
             }
+            document.dispatchEvent(new CustomEvent('toRender'));
         };
 
         return Table;

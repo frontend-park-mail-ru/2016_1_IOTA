@@ -12,7 +12,8 @@ define(function (require) {
         defaults: {
             // Otherwise requests will be not sent
             id: -1,
-            isAuth: false
+            isAuth: false,
+            ref: -1
         },
 
         login: function (login, password) {
@@ -60,6 +61,7 @@ define(function (require) {
                     if (response.__ok) {
                         socket.connect();
                         model.set('isAuth', true);
+                        model.set('ref', response.ref);
                         user.setId(response.id);
                         user.read();
                     }
