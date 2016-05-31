@@ -113,7 +113,7 @@ define(function (require) {
             });
         });
         gameModel.on('mess', function () {
-            //hand.clear();
+            hand.clear();
             var message = gameModel.message;
             gameModel.message = null;
             var isChangePlayer = (true);//prevPlayer != message.ref)
@@ -157,7 +157,6 @@ define(function (require) {
                             cardHand.push(new CardResponse(0, 0, "", "", "", "super", cardPull.uuid));
                         }
                     }
-                    console.log("lolshto?");
                     hand.update(cardHand);
                 }
             }
@@ -177,11 +176,10 @@ define(function (require) {
                     table.update([new CardResponse(16 + cardPull.offx, 16 + cardPull.offy, "", "", "", "super", cardPull.item.uuid)]);
                 }
             }
-            document.dispatchEvent(new CustomEvent('toRender', {}));
         });
         document.addEventListener('toRender', function (event) {
             console.log("Painted");
-            //screenRenderer.clear();
+            screenRenderer.clear();
             offScreenRenderer.render();
             screenRenderer.render();
         });
