@@ -20,10 +20,11 @@ define(function (require) {
 
         screenCanvas.width = $('#canvas').width();
         screenCanvas.height = $('#canvas').height();
-        Hand.initSize();
 
         var table = new Table(34, 34, 100, 100),
             hand = new Hand(screenCanvas);
+
+        hand.reSize();
 
         offScreenRenderer.addDrawable(table);
         offScreenRenderer.render();
@@ -35,7 +36,7 @@ define(function (require) {
              screenCanvas.height = $('#canvas').height();
              delete screenRenderer;
              screenRenderer = new ScreenRenderer(screenCanvas, new Camera(offScreenCanvas, TABLE_SIZE / 2 - $('#canvas').width() / 2, TABLE_SIZE / 2 - $('#canvas').height() / 2, $('#canvas').width(), $('#canvas').height()), table, offScreenRenderer, hand);
-             Hand.initSize();
+             hand.reSize();
              document.dispatchEvent(new CustomEvent('toRender'));
          };
 
@@ -103,6 +104,7 @@ define(function (require) {
                 success: function(model, response, options) {
                     if(!response.__ok) {
                         event.detail.card.setInHand(true);
+                        event.detail.card.setHighlightColor("black");
                         document.dispatchEvent(new CustomEvent('toRender'));
                     } else {
                         $('.js-pass').attr('disabled','');
@@ -110,11 +112,11 @@ define(function (require) {
                 }
             });
         });
-        var prevHand = null;
         gameModel.on('mess', function () {
+            //hand.clear();
             var message = gameModel.message;
             gameModel.message = null;
-            var isChangePlayer = (prevPlayer != message.ref)
+            var isChangePlayer = (true);//prevPlayer != message.ref)
             prevPlayer = message.ref;
             table.setStep(user.get('ref') == message.ref);
             if(table.getStep() && isChangePlayer)
@@ -137,7 +139,7 @@ define(function (require) {
                 if(message.ref == tempPlayer.ref) $('#' + tempPlayer.ref).addClass("text__temporary");
                 else $('#' + tempPlayer.ref).removeClass("text__temporary");
                 $('#' + tempPlayer.ref).find('.score').text(tempPlayer.score);
-                if(tempPlayer.ref == user.get('ref') && isChangePlayer) {
+                if(tempPlayer.ref == user.get('ref')) {
                     var cardHand = [];
                     for(i = 0; i < tempPlayer.hand.length; i++) {
                         cardPull = tempPlayer.hand[i];
@@ -155,6 +157,7 @@ define(function (require) {
                             cardHand.push(new CardResponse(0, 0, "", "", "", "super", cardPull.uuid));
                         }
                     }
+                    console.log("lolshto?");
                     hand.update(cardHand);
                 }
             }
@@ -174,9 +177,11 @@ define(function (require) {
                     table.update([new CardResponse(16 + cardPull.offx, 16 + cardPull.offy, "", "", "", "super", cardPull.item.uuid)]);
                 }
             }
+            document.dispatchEvent(new CustomEvent('toRender', {}));
         });
         document.addEventListener('toRender', function (event) {
             console.log("Painted");
+            //screenRenderer.clear();
             offScreenRenderer.render();
             screenRenderer.render();
         });

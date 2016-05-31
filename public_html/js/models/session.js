@@ -24,6 +24,7 @@ define(function (require) {
                         socket.connect();
                         model.set('isAuth', true);
                         model.trigger('loginOk');
+                        model.set('ref', response.ref);
                     } else {
                         model.trigger('loginError', 'Ошибка входа');
                     }
@@ -64,6 +65,7 @@ define(function (require) {
                         model.set('ref', response.ref);
                         user.setId(response.id);
                         user.read();
+
                     }
                     model.trigger('authChecked', 'Вход выполнен');
                 },

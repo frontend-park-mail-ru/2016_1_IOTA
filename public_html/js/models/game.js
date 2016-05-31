@@ -17,6 +17,7 @@ define(function (require) {
                 data = JSON.parse(data);
                 console.log('Обновление модели');
                 this.message = data;
+                console.log();
                 this.trigger("mess");
             });
         },

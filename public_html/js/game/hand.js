@@ -14,6 +14,8 @@ define(function (require) {
             this.canvas = canvas;
         }
 
+        var heightCard = $('#canvas').height() / 6;
+
         Hand.prototype.getCard = function (x, y) {
             for (var i = 0; i < this.drawables.length; i++) {
                 if (this.drawables[i].contains(x, y) && this.drawables[i].getInHand()) {
@@ -31,15 +33,21 @@ define(function (require) {
             }
         };
 
+        Hand.prototype.clear = function() {
+            while(this.drawables.length) {
+                this.drawables.pop();
+            }
+        };
+
         Hand.prototype.update = function (cards) {
-            var heightCard = $('#canvas').height() / 10;
             var coord = [
-                [this.canvas.width - 10 - heightCard, this.canvas.height - heightCard - 10],
-                [this.canvas.width - 20 - 2 * heightCard, this.canvas.height - heightCard - 10],
-                [this.canvas.width - 30 - 3 * heightCard, this.canvas.height - heightCard - 10],
-                [this.canvas.width - 40 - 4 * heightCard, this.canvas.height - heightCard - 10]
+                [this.canvas.width - 15 - heightCard, this.canvas.height - heightCard - 10],
+                [this.canvas.width - 30 - 2 * heightCard, this.canvas.height - heightCard - 10],
+                [this.canvas.width - 45 - 3 * heightCard, this.canvas.height - heightCard - 10],
+                [this.canvas.width - 60 - 4 * heightCard, this.canvas.height - heightCard - 10]
             ];
-            this.drawables = [];
+            //delete this.drawables;
+            console.log(heightCard);
             for (var i = 0; i < cards.length; i++) {
                 this.drawables.push(new Card(coord[i][0], coord[i][1], heightCard, heightCard, cards[i].number, cards[i].color, cards[i].shape, true, cards[i].concrete, cards[i].uuid));
             }
@@ -56,9 +64,10 @@ define(function (require) {
             return count;
         };
 
-        Hand.prototype.initSize = function () {
-            var heightCard = $('#canvas').height() / 10;
-            console.log(heightCard);
+        Hand.prototype.reSize = function () {
+            heightCard = $('#canvas').height() / 6;
+            this.canvas.width = $('#canvas').width();
+            this.canvas.height = $('#canvas').height()
         };
 
         return Hand;
