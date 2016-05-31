@@ -32,16 +32,16 @@ define(function (require) {
         };
 
         Hand.prototype.update = function (cards) {
-            var horizontalOffset = 110;
+            var heightCard = $('#canvas').height() / 10;
             var coord = [
-                [this.canvas.width / 2 - 230, this.canvas.height - horizontalOffset],
-                [this.canvas.width / 2 - 110, this.canvas.height - horizontalOffset],
-                [this.canvas.width / 2 + 130, this.canvas.height - horizontalOffset],
-                [this.canvas.width / 2 + 10, this.canvas.height - horizontalOffset]
+                [this.canvas.width - 10 - heightCard, this.canvas.height - heightCard - 10],
+                [this.canvas.width - 20 - 2 * heightCard, this.canvas.height - heightCard - 10],
+                [this.canvas.width - 30 - 3 * heightCard, this.canvas.height - heightCard - 10],
+                [this.canvas.width - 40 - 4 * heightCard, this.canvas.height - heightCard - 10]
             ];
             this.drawables = [];
             for (var i = 0; i < cards.length; i++) {
-                this.drawables.push(new Card(coord[i][0], coord[i][1], 100, 100, cards[i].number, cards[i].color, cards[i].shape, true, cards[i].concrete, cards[i].uuid));
+                this.drawables.push(new Card(coord[i][0], coord[i][1], heightCard, heightCard, cards[i].number, cards[i].color, cards[i].shape, true, cards[i].concrete, cards[i].uuid));
             }
         };
 
@@ -54,6 +54,11 @@ define(function (require) {
 
             }
             return count;
+        };
+
+        Hand.prototype.initSize = function () {
+            var heightCard = $('#canvas').height() / 10;
+            console.log(heightCard);
         };
 
         return Hand;
