@@ -50,6 +50,15 @@ define(function (require) {
             body.__type = "PlayerPingMessage";
             xhr.send(JSON.stringify(body));
         });
+        document.addEventListener('debugConclude', function (event) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", '/api/game', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            var body = {};
+            body.debugConclude = true;
+            body.__type = "PlayerPingMessage";
+            xhr.send(JSON.stringify(body));
+        });
         document.addEventListener('over', function (event) {
             var xhr = new XMLHttpRequest();
             xhr.open("POST", '/api/game', true);

@@ -33,6 +33,8 @@
                 <button class="js-exit" type="submit">Выход</button>
                 <br/>
                 <button class="js-pass" type="submit">Пасс</button>
+                <br/>
+                <button class="js-debugConclude" type="submit">debug_conclude</button>
             </div>
         </div>
     </div>
