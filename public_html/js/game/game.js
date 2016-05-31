@@ -8,7 +8,6 @@ define(function (require) {
         Hand = require('./hand'),
         CardResponse = require('./card_response'),
         user = require('models/session'),
-        Score = require('./score'),
         $ = require('jquery');
 
     return function (gameModel) {
@@ -26,95 +25,109 @@ define(function (require) {
         var table = new Table(34, 34, 100, 100),
             hand = new Hand(screenCanvas);
 
-        //table.update([new CardResponse(16, 16, '4', 'r', 'x')]);
-
         offScreenRenderer.addDrawable(table);
         offScreenRenderer.render();
 
         var screenRenderer = new ScreenRenderer(screenCanvas, new Camera(offScreenCanvas, TABLE_SIZE / 2 - $('#canvas').width() / 2, TABLE_SIZE / 2 - $('#canvas').height() / 2, $('#canvas').width(), $('#canvas').height()), table, offScreenRenderer, hand);
 
-        /*var score1 = new Score(10, 30, 100, 100, "lol", 0),
-            score2 = new Score(10, 60, 100, 100, "", 0),
-            scores = [0, 0];*/
-
-        //screenRenderer.addDrawable(score1);
-        //screenRenderer.addDrawable(score2);
+         window.onresize = function(e) {
+             screenCanvas.width = $('#canvas').width();
+             screenCanvas.height = $('#canvas').height();
+             delete screenRenderer;
+             screenRenderer = new ScreenRenderer(screenCanvas, new Camera(offScreenCanvas, TABLE_SIZE / 2 - $('#canvas').width() / 2, TABLE_SIZE / 2 - $('#canvas').height() / 2, $('#canvas').width(), $('#canvas').height()), table, offScreenRenderer, hand);
+             document.dispatchEvent(new CustomEvent('toRender'));
+         };
 
         screenRenderer.render();
         document.addEventListener('exit', function (event) {
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", '/api/game', true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            var body = {};
-            body.goodbye = true;
-            body.__type = "PlayerPingMessage";
-            xhr.send(JSON.stringify(body));
+            gameModel.clear({silent: true});
+            gameModel.set('ephemeral', false, {silent: true});
+            gameModel.set('endSequence', true, {silent: true});
+            gameModel.set('goodbye', true, {silent: true});
+            gameModel.set('__type', "PlayerPingMessage", {silent: true});
+            gameModel.save([],{
+                success: function(model, response, options) {
+                    //console.log("success");
+                }
+            });
         });
         document.addEventListener('over', function (event) {
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", '/api/game', true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            var body = {};
-            body.endSequence = true;
-            body.__type = "PlayerPingMessage";
-            xhr.send(JSON.stringify(body));
+            gameModel.clear({silent: true});
+            gameModel.set('ephemeral', false, {silent: true});
+            gameModel.set('endSequence', true, {silent: true});
+            gameModel.set('goodbye', false, {silent: true});
+            gameModel.set('__type', "PlayerPingMessage", {silent: true});
+            gameModel.save([],{
+                success: function(model, response, options) {
+                    //console.log("success");
+                }
+            });
         });
         document.addEventListener('cardPass', function (event) {
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", '/api/game', true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            var body = {};
-            body.ephemeral = false;
-            body.endSequence = true;
-            body.goodbye = false;
-            body.__type = "PlayerPassCardMessage";
-            body.uuid = event.detail.card.uuid;
-            xhr.send(JSON.stringify(body));
+            gameModel.clear({silent: true});
+            gameModel.set('ephemeral', false, {silent: true});
+            gameModel.set('endSequence', false, {silent: true});
+            gameModel.set('goodbye', false, {silent: true});
+            gameModel.set('__type', "PlayerPassCardMessage", {silent: true});
+            gameModel.set('uuid', event.detail.uuid, {silent: true});
+            gameModel.save([],{
+                success: function(model, response, options) {
+                    if(!response.__ok) {
+                        event.detail.card.setInHand(true);
+                        document.dispatchEvent(new CustomEvent('toRender'));
+                        $('.js-pass').attr('disabled','');
+                    }
+                }
+            });
         });
         document.addEventListener('cardPlaced', function (event) {
-
-            console.log('CARD PLACED');
-            //console.log(gameModel);
-            //console.log(JSON.stringify(event.detail));
-            //table.update([new CardResponse(event.detail.x, event.detail.y, event.detail.card.value, event.detail.card.color, event.detail.card.shape, event.detail.card.concrete, event.detail.card.uuid)]);
-            //meModel.get('table').push(event.detail);
-            //console.log(gameModel.get('table'));
-            var xhr = new XMLHttpRequest();
-
-            xhr.open("POST", '/api/game', true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            var body = {};
-            //console.log(JSON.stringify(event.detail));
-            body.uuid = event.detail.card.uuid;
-            body.__type = "PlayerPlaceCardMessage";
-            body.offX = event.detail.x - 16;
-            body.offY = event.detail.y - 16;
-            console.log(JSON.stringify(body));
-            xhr.send(JSON.stringify(body));
-            //gameModel.sync('create', {url:"/api/game", __type:"PlayerPlaceCardMessage", offX:event.detail.x, offY:event.detail.y, uuid:event.detail.uuid});
+            gameModel.clear({silent: true});
+            gameModel.set('ephemeral', false, {silent: true});
+            gameModel.set('endSequence', false, {silent: true});
+            gameModel.set('goodbye', false, {silent: true});
+            gameModel.set('__type', "PlayerPlaceCardMessage", {silent: true});
+            gameModel.set('uuid', event.detail.uuid, {silent: true});
+            gameModel.set('offX', event.detail.x - 16, {silent: true});
+            gameModel.set('offY', event.detail.y - 16, {silent: true});
+            gameModel.save([],{
+                success: function(model, response, options) {
+                    if(!response.__ok) {
+                        event.detail.card.setInHand(true);
+                        document.dispatchEvent(new CustomEvent('toRender'));
+                    } else {
+                        $('.js-pass').attr('disabled','');
+                    }
+                }
+            });
         });
         var prevHand = null;
-        gameModel.on('sync', function () {
-            if(prevPlayer != user.get('ref'))
+        gameModel.on('mess', function () {
+            var message = gameModel.message;
+            gameModel.message = null;
+            var isChangePlayer = (prevPlayer != message.ref)
+            prevPlayer = message.ref;
+            table.setStep(user.get('ref') == message.ref);
+            if(table.getStep() && isChangePlayer)
                 $('.js-pass').removeAttr('disabled');
-            prevPlayer = gameModel.message.ref;
-            //console.log('SYNC');
-            table.setStep(user.get('ref') == gameModel.message.ref);
+            else
+                $('.js-pass').attr('disabled', '');
+            if(table.getStep()) $('.js-over').removeAttr('disabled');
+            else $('.js-over').attr('disabled', '');
             var i = 0;
             var j = 0;
             var player = 1;
-            for(j = 0; j < gameModel.message.players.length; j++) {
-                tempPlayer = gameModel.message.players[j];
+            for(j = 0; j < message.players.length; j++) {
+                tempPlayer = message.players[j];
                 if(!$('div').is('#' + tempPlayer.ref)) {
                     $('.js-gamer' + player).show();
                     $('.js-gamer' + player).attr("id", tempPlayer.ref);
                     $('.js-gamer' + player).find('.text__nick').text(tempPlayer.login);
                     player++;
                 }
-                if(gameModel.message.ref == tempPlayer.ref) $('#' + tempPlayer.ref).addClass("text__temporary");
+                if(message.ref == tempPlayer.ref) $('#' + tempPlayer.ref).addClass("text__temporary");
                 else $('#' + tempPlayer.ref).removeClass("text__temporary");
                 $('#' + tempPlayer.ref).find('.score').text(tempPlayer.score);
-                if(tempPlayer.ref == user.get('ref')) {
+                if(tempPlayer.ref == user.get('ref') && isChangePlayer) {
                     var cardHand = [];
                     for(i = 0; i < tempPlayer.hand.length; i++) {
                         cardPull = tempPlayer.hand[i];
@@ -135,8 +148,8 @@ define(function (require) {
                     hand.update(cardHand);
                 }
             }
-            for(i = 0; i < gameModel.message.field.length; i++) {
-                cardPull = gameModel.message.field[i];
+            for(i = 0; i < message.field.length; i++) {
+                cardPull = message.field[i];
                 //console.log(JSON.stringify(cardPull));
                 if(cardPull.item.concrete) {
                     cardPullNumber = "1";

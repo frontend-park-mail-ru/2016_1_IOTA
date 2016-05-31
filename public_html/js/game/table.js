@@ -33,37 +33,13 @@ define(function (require) {
         Table.prototype.placeCard = function (card, camera, canvas) {
             var tile = this.getTileForCard(card, camera, canvas);
             if (tile != null) {
-                tile.setContent(card);
+                //tile.setContent(card);
                 card.setInHand(false);
                 return {
                     x: tile.getX() / 100,
                     y: tile.getY() / 100,
-                    card: {
-                        uuid: card.getUuid(),
-                        value: card.getNumber(),
-                        color: card.getColor(),
-                        shape: card.getShape(),
-                        concrete: card.getConcrete()
-                    }
-                };
-            }
-        };
-
-        Table.prototype.passCard = function (card, camera, canvas) {
-            var tile = this.passTileForCard(card, camera, canvas);
-            if (tile != null) {
-                tile.setContent(card);
-                card.setInHand(false);
-                return {
-                    x: tile.getX() / 100,
-                    y: tile.getY() / 100,
-                    card: {
-                        uuid: card.getUuid(),
-                        value: card.getNumber(),
-                        color: card.getColor(),
-                        shape: card.getShape(),
-                        concrete: card.getConcrete()
-                    }
+                    uuid: card.getUuid(),
+                    card: card
                 };
             }
         };
@@ -82,20 +58,7 @@ define(function (require) {
             var x = camera.getX() + card.getX() * camera.getWidth() / canvas.width + card.getWidth() / 2,
                 y = camera.getY() + card.getY() * camera.getHeight() / canvas.height + card.getHeight() / 2;
             for (var i = 0; i < this.drawables.length; i++) {
-                //console.log(this.drawables[i].canContain(card))
                 if (this.drawables[i].contains(x, y) && this.drawables[i].canContain()) {
-                    return this.drawables[i];
-                }
-            }
-            return null;
-        };
-
-        Table.prototype.passTileForCard = function (card, camera, canvas) {
-            var x = camera.getX() + card.getX() * camera.getWidth() / canvas.width + card.getWidth() / 2,
-                y = camera.getY() + card.getY() * camera.getHeight() / canvas.height + card.getHeight() / 2;
-            for (var i = 0; i < this.drawables.length; i++) {
-                //console.log(this.drawables[i].canContain(card))
-                if (this.drawables[i].contains(x, y)) {
                     return this.drawables[i];
                 }
             }

@@ -23,12 +23,15 @@ define(function (require) {
                 if(table.getStep()) {
                     _this.selectedCard = _this.hand.getCard(event.clientX, event.clientY-window.innerHeight/10);
                     if (_this.selectedCard != null) {
-                        $('.js-pass').attr('disabled','');
                         _this.initX = _this.selectedCard.getX();
                         _this.initY = _this.selectedCard.getY();
                         if(!_this.isPass) _this.isDrag = true;
                         return;
                     }
+                    _this.isScroll = true;
+                    _this.prevX = event.clientX;
+                    _this.prevY = event.clientY-window.innerHeight/10;
+                } else {
                     _this.isScroll = true;
                     _this.prevX = event.clientX;
                     _this.prevY = event.clientY-window.innerHeight/10;
@@ -40,12 +43,11 @@ define(function (require) {
                     _this.isDrag = false;
                     var update = _this.table.placeCard(_this.selectedCard, _this.camera, _this.canvas);
                     //console.log(JSON.stringify(update));
+                    _this.selectedCard.setX(_this.initX);
+                    _this.selectedCard.setY(_this.initY);
                     if (_this.selectedCard.getInHand()) {
-                        _this.selectedCard.setX(_this.initX);
-                        _this.selectedCard.setY(_this.initY);
                         _this.selectedCard.setHighlightColor("black");
                     } else {
-                        ///console.log(update);
                         document.dispatchEvent(new CustomEvent('cardPlaced', { detail: update}));
                     }
                     _this.clear();
@@ -53,8 +55,8 @@ define(function (require) {
                 }
                 if(_this.isPass) {
                     if (_this.selectedCard != null) {
-                        _this.isPass = false;
-                        var update = _this.table.passCard(_this.selectedCard, _this.camera, _this.canvas);
+                        _this.selectedCard.setInHand(false);
+                        var update = {uuid: _this.selectedCard.getUuid(), card:_this.selectedCard};
                         document.dispatchEvent(new CustomEvent('cardPass', { detail: update}));
                     }
                     _this.clear();
@@ -78,9 +80,11 @@ define(function (require) {
                 }
             };
             document.addEventListener('pass', function (event) {
-                console.log("asasasa");
                 _this.isPass = true;
                 $('.js-pass').attr('disabled','');
+            });
+            document.addEventListener('over', function (event) {
+                _this.isPass = false;
             });
         }
 
