@@ -12,12 +12,17 @@ define(function (require) {
         attributes: {class: "grid__str_10"},
         events: {
             'click .js-exit': 'exit',
+            'click .js-debugConclude': 'debugConclude',
             'click .js-over': 'over',
             'click .js-pass': 'pass'
         },
 
         exit: function (event) {
             document.dispatchEvent(new CustomEvent('exit'));
+        },
+
+        debugConclude: function (event) {
+            document.dispatchEvent(new CustomEvent('debugConclude'));
         },
 
         over: function (event) {
