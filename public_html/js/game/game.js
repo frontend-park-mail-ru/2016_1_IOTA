@@ -1,7 +1,6 @@
 define(function (require) {
 
-    var BaseView = require('views/base'),
-        OffScreenRenderer = require('./off_screen_renderer'),
+    var OffScreenRenderer = require('./off_screen_renderer'),
         ScreenRenderer = require('./screen_renderer'),
         Camera = require('./camera'),
         Table = require('./table'),
@@ -21,6 +20,7 @@ define(function (require) {
 
         screenCanvas.width = $('#canvas').width();
         screenCanvas.height = $('#canvas').height();
+        Hand.initSize();
 
         var table = new Table(34, 34, 100, 100),
             hand = new Hand(screenCanvas);
@@ -35,6 +35,7 @@ define(function (require) {
              screenCanvas.height = $('#canvas').height();
              delete screenRenderer;
              screenRenderer = new ScreenRenderer(screenCanvas, new Camera(offScreenCanvas, TABLE_SIZE / 2 - $('#canvas').width() / 2, TABLE_SIZE / 2 - $('#canvas').height() / 2, $('#canvas').width(), $('#canvas').height()), table, offScreenRenderer, hand);
+             Hand.initSize();
              document.dispatchEvent(new CustomEvent('toRender'));
          };
 
