@@ -52,12 +52,6 @@ define(function (require) {
 
         Card.prototype.draw = function (canvas) {
             var context = canvas.getContext('2d');
-            /*
-             context.shadowBlur = 10;
-             if (this.inHand) {
-             context.shadowColor = this.highlightColor;
-             }
-             */
             if (this.inHand) {
                 context.shadowBlur = 10;
                 context.shadowColor = this.highlightColor;

@@ -7,11 +7,13 @@ define(function (require) {
         Hand = require('./hand'),
         CardResponse = require('./card_response'),
         user = require('models/session'),
+        Sprite = require('./sprite')
         $ = require('jquery');
 
     return function (gameModel) {
         $('#loader').hide();
         $('#canvas').show();
+        console.log(Sprite);
         var TABLE_SIZE = 3400;
         var offScreenCanvas = document.createElement('canvas'),
             offScreenRenderer = new OffScreenRenderer(offScreenCanvas, TABLE_SIZE, TABLE_SIZE),
@@ -49,7 +51,9 @@ define(function (require) {
             gameModel.set('__type', "PlayerPingMessage", {silent: true});
             gameModel.save([],{
                 success: function(model, response, options) {
-                    //console.log("success");
+                    if(response.__ok) {
+                        window.location.href = "./#";
+                    }
                 }
             });
         });
@@ -178,7 +182,6 @@ define(function (require) {
             }
         });
         document.addEventListener('toRender', function (event) {
-            console.log("Painted");
             screenRenderer.clear();
             offScreenRenderer.render();
             screenRenderer.render();

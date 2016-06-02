@@ -9,6 +9,7 @@ define(function (require) {
         __extends(Camera, _super);
 
         function Camera(world, x, y, width, height) {
+            console.log(JSON.stringify({X: x, Y:y, W: width, H: height}));
             _super.call(this, x, y, width, height);
             this.world = world;
         }
