@@ -13,7 +13,6 @@ define(function (require) {
     return function (gameModel) {
         $('#loader').hide();
         $('#canvas').show();
-        var isPass = false;
         var TABLE_SIZE = 3400;
         var offScreenCanvas = document.createElement('canvas'),
             offScreenRenderer = new OffScreenRenderer(offScreenCanvas, TABLE_SIZE, TABLE_SIZE),
@@ -75,7 +74,6 @@ define(function (require) {
             xhr.send(JSON.stringify(body));
         });
         document.addEventListener('over', function (event) {
-            isPass = false;
             gameModel.clear({silent: true});
             gameModel.set('ephemeral', false, {silent: true});
             gameModel.set('endSequence', true, {silent: true});
@@ -88,7 +86,6 @@ define(function (require) {
             });
         });
         document.addEventListener('cardPass', function (event) {
-            isPass = true;
             gameModel.clear({silent: true});
             gameModel.set('ephemeral', false, {silent: true});
             gameModel.set('endSequence', false, {silent: true});
@@ -100,10 +97,6 @@ define(function (require) {
                     if(response.__ok) {
                         document.dispatchEvent(new CustomEvent('toRender'));
                         $('.js-pass').attr('disabled','');
-                    }
-                    else {
-                        event.detail.card.roll(false);
-                        document.dispatchEvent(new CustomEvent('toRender'));
                     }
                 }
             });
@@ -130,7 +123,7 @@ define(function (require) {
             });
         });
         gameModel.on('mess', function () {
-            if(!isPass) hand.clear();
+            hand.clear();
             var message = gameModel.message;
             gameModel.message = null;
             var isChangePlayer = (true);//prevPlayer != message.ref)
@@ -156,7 +149,7 @@ define(function (require) {
                 if(message.ref == tempPlayer.ref) $('#' + tempPlayer.ref).addClass("text__temporary");
                 else $('#' + tempPlayer.ref).removeClass("text__temporary");
                 $('#' + tempPlayer.ref).find('.score').text(tempPlayer.score);
-                if(tempPlayer.ref == user.get('ref') && !isPass) {
+                if(tempPlayer.ref == user.get('ref')) {
                     var cardHand = [];
                     for(i = 0; i < tempPlayer.hand.length; i++) {
                         cardPull = tempPlayer.hand[i];
@@ -169,9 +162,9 @@ define(function (require) {
                                 case "THREE": cardPullNumber = "3"; break;
                                 case "FOUR": cardPullNumber = "4"; break;
                             }
-                            cardHand.push(new CardResponse(0, 0, cardPullNumber, cardPull.color[0].toLowerCase(), cardPull.shape[0].toLowerCase(), "", cardPull.uuid));
+                            cardHand.push(new CardResponse(0, 0, cardPullNumber, cardPull.color[0].toLowerCase(), cardPull.shape[0].toLowerCase(), "", cardPull.uuid, cardPull.passed));
                         } else {
-                            cardHand.push(new CardResponse(0, 0, "", "", "", "super", cardPull.uuid));
+                            cardHand.push(new CardResponse(0, 0, "", "", "", "super", cardPull.uuid, cardPull.passed));
                         }
                     }
                     hand.update(cardHand);
@@ -188,9 +181,9 @@ define(function (require) {
                         case "THREE": cardPullNumber = "3"; break;
                         case "FOUR": cardPullNumber = "4"; break;
                     }
-                    table.update([new CardResponse(16 + cardPull.offx, 16 + cardPull.offy, cardPullNumber, cardPull.item.color[0].toLowerCase(), cardPull.item.shape[0].toLowerCase(), "", cardPull.item.uuid)]);
+                    table.update([new CardResponse(16 + cardPull.offx, 16 + cardPull.offy, cardPullNumber, cardPull.item.color[0].toLowerCase(), cardPull.item.shape[0].toLowerCase(), "", cardPull.item.uuid, cardPull.item.passed)]);
                 } else {
-                    table.update([new CardResponse(16 + cardPull.offx, 16 + cardPull.offy, "", "", "", "super", cardPull.item.uuid)]);
+                    table.update([new CardResponse(16 + cardPull.offx, 16 + cardPull.offy, "", "", "", "super", cardPull.item.uuid, cardPull.item.passed)]);
                 }
             }
         });

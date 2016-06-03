@@ -60,7 +60,6 @@ define(function (require) {
                 }
                 if(_this.isPass) {
                     if (_this.selectedCard != null) {
-                        _this.selectedCard.roll(true);
                         var update = {uuid: _this.selectedCard.getUuid(), card:_this.selectedCard};
                         document.dispatchEvent(new CustomEvent('cardPass', { detail: update}));
                     }

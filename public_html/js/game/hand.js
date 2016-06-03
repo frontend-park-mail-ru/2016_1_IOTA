@@ -47,9 +47,9 @@ define(function (require) {
                 [this.canvas.width - 60 - 4 * heightCard, this.canvas.height - heightCard - 10]
             ];
             //delete this.drawables;
-            console.log(heightCard);
             for (var i = 0; i < cards.length; i++) {
-                this.drawables.push(new Card(coord[i][0], coord[i][1], heightCard, heightCard, cards[i].number, cards[i].color, cards[i].shape, true, cards[i].concrete, cards[i].uuid));
+                this.drawables.push(new Card(coord[i][0], coord[i][1], heightCard, heightCard, cards[i].number, cards[i].color, cards[i].shape, true, cards[i].concrete, cards[i].uuid, cards[i].passed));
+                console.log(this.drawables);
             }
         };
 
