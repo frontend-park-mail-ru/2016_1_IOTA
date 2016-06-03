@@ -25,6 +25,11 @@ define(function (require) {
 
         Table.prototype.draw = function (canvas) {
             var context = canvas.getContext("2d");
+            var gradient = context.createRadialGradient(canvas.width / 2, canvas.height / 2, canvas.height / 10, 0, canvas.height / 2, canvas.width);
+            gradient.addColorStop(0, "white");
+            gradient.addColorStop(1, "gray");
+            context.fillStyle = gradient;
+            context.fillRect(0, 0, canvas.width, canvas.height);
             for (var i = 0; i < this.drawables.length; i++) {
                 this.drawables[i].draw(canvas);
             }

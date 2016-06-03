@@ -7,10 +7,18 @@ define(function (require) {
         Hand = require('./hand'),
         CardResponse = require('./card_response'),
         user = require('models/session'),
-        Sprite = require('./sprite')
+        Sprite = require('./sprite'),
+        Score = require('./score'),
         $ = require('jquery');
 
     return function (gameModel) {
+
+        var scoreWidth = 150;
+        var score1 = new Score(10, 40, scoreWidth, 100, "", 0),
+            score2 = new Score(10, 80, scoreWidth, 100, "", 0),
+            score3 = new Score(10, 120, scoreWidth, 100, "", 0),
+            score4 = new Score(10, 160, scoreWidth, 100, "", 0);
+
         $('#loader').hide();
         $('#canvas').show();
         var TABLE_SIZE = 3400;
@@ -31,15 +39,25 @@ define(function (require) {
         offScreenRenderer.render();
 
         var screenRenderer = new ScreenRenderer(screenCanvas, new Camera(offScreenCanvas, TABLE_SIZE / 2 - $('#canvas').width() / 2, TABLE_SIZE / 2 - $('#canvas').height() / 2, $('#canvas').width(), $('#canvas').height()), table, offScreenRenderer, hand);
+        addScore(screenRenderer);
 
-         window.onresize = function(e) {
-             screenCanvas.width = $('#canvas').width();
-             screenCanvas.height = $('#canvas').height();
-             delete screenRenderer;
-             screenRenderer = new ScreenRenderer(screenCanvas, new Camera(offScreenCanvas, TABLE_SIZE / 2 - $('#canvas').width() / 2, TABLE_SIZE / 2 - $('#canvas').height() / 2, $('#canvas').width(), $('#canvas').height()), table, offScreenRenderer, hand);
-             hand.reSize();
-             document.dispatchEvent(new CustomEvent('toRender'));
-         };
+        window.onresize = function(e) {
+            screenCanvas.width = $('#canvas').width();
+            screenCanvas.height = $('#canvas').height();
+            delete screenRenderer;
+            screenRenderer = new ScreenRenderer(screenCanvas, new Camera(offScreenCanvas, TABLE_SIZE / 2 - $('#canvas').width() / 2, TABLE_SIZE / 2 - $('#canvas').height() / 2, $('#canvas').width(), $('#canvas').height()), table, offScreenRenderer, hand);
+            addScore(screenRenderer);
+            hand.reSize();
+            document.dispatchEvent(new CustomEvent('toRender'));
+        };
+
+        function addScore(screenRenderer) {
+            screenRenderer.addDrawable(score1);
+            screenRenderer.addDrawable(score2);
+            screenRenderer.addDrawable(score3);
+            screenRenderer.addDrawable(score4);
+            screenRenderer.render();
+        }
 
         screenRenderer.render();
         document.addEventListener('exit', function (event) {
@@ -138,8 +156,19 @@ define(function (require) {
             var i = 0;
             var j = 0;
             var player = 1;
+
+            if (message.players.length < 4) {
+                score4.update("", 0);
+            }
+
+            if (message.players.length < 3) {
+                score3.update("", 0);
+            }
+
             for(j = 0; j < message.players.length; j++) {
                 tempPlayer = message.players[j];
+
+                /*
                 if(!$('div').is('#' + tempPlayer.ref)) {
                     $('.js-gamer' + player).show();
                     $('.js-gamer' + player).attr("id", tempPlayer.ref);
@@ -148,7 +177,29 @@ define(function (require) {
                 }
                 if(message.ref == tempPlayer.ref) $('#' + tempPlayer.ref).addClass("text__temporary");
                 else $('#' + tempPlayer.ref).removeClass("text__temporary");
+
                 $('#' + tempPlayer.ref).find('.score').text(tempPlayer.score);
+                */
+
+
+                var isTurnPlayer = (message.ref === tempPlayer.ref);
+                var isCurrentPlayer = (user.get('ref') === tempPlayer.ref);
+
+                switch (j) {
+                    case 0:
+                        score1.update(tempPlayer.login, tempPlayer.score, isTurnPlayer, isCurrentPlayer);
+                        break;
+                    case 1:
+                        score2.update(tempPlayer.login, tempPlayer.score, isTurnPlayer, isCurrentPlayer);
+                        break;
+                    case 2:
+                        score3.update(tempPlayer.login, tempPlayer.score, isTurnPlayer, isCurrentPlayer);
+                        break;
+                    case 3:
+                        score4.update(tempPlayer.login, tempPlayer.score, isTurnPlayer, isCurrentPlayer);
+                        break;
+                }
+
                 if(tempPlayer.ref == user.get('ref')) {
                     var cardHand = [];
                     for(i = 0; i < tempPlayer.hand.length; i++) {
@@ -170,6 +221,7 @@ define(function (require) {
                     hand.update(cardHand);
                 }
             }
+
             for(i = 0; i < message.field.length; i++) {
                 cardPull = message.field[i];
                 //console.log(JSON.stringify(cardPull));
