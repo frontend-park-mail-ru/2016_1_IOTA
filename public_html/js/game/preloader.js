@@ -86,5 +86,6 @@ preload(
     "/images/yx3.png",
     "/images/yx4.png",
 
-    "/images/super.png"
+    "/images/super.png",
+    "/images/back.png"
 );

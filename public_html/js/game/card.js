@@ -7,6 +7,8 @@ define(function (require) {
     var Card = (function (_super) {
 
         __extends(Card, _super);
+        var back  = new Image();
+        back.src = '/images/back.png';
 
         function Card(x, y, width, height, number, color, shape, inHand, concrete, uuid) {
             _super.call(this, x, y, width, height);
@@ -19,6 +21,7 @@ define(function (require) {
             this.color = color;
             this.shape = shape;
             this.uuid = uuid;
+            this.isOver = false;
             this.highlightColor = "black";
         }
 
@@ -50,6 +53,10 @@ define(function (require) {
             return this.uuid;
         };
 
+        Card.prototype.roll = function (bool) {
+            this.isOver = bool;
+        };
+
         Card.prototype.draw = function (canvas) {
             var context = canvas.getContext('2d');
             if (this.inHand) {
@@ -60,7 +67,7 @@ define(function (require) {
                 context.shadowBlur = 1;
                 context.shadowColor = "black";
             }
-            context.drawImage(this.image, this.x, this.y, this.width, this.height);
+            context.drawImage(this.isOver ? back : this.image, this.x, this.y, this.width, this.height);
             context.shadowBlur = 0;
         };
 

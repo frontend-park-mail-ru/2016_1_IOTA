@@ -9,10 +9,14 @@ define(function (require) {
         __extends(Camera, _super);
 
         function Camera(world, x, y, width, height) {
-            console.log(JSON.stringify({X: x, Y:y, W: width, H: height}));
             _super.call(this, x, y, width, height);
             this.world = world;
         }
+
+        Camera.prototype.toCenter = function () {
+            this.x = this.world.width / 2 - $('#canvas').width() / 2;
+            this.y = this.world.height / 2 - $('#canvas').height() / 2;
+        };
 
         Camera.prototype.scale = function (scale, clientX, clientY) {
             var oldWidth = this.width, oldHeight = this.height;

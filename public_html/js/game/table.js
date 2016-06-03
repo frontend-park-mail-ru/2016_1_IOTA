@@ -77,6 +77,11 @@ define(function (require) {
             this.isMyStep = step;
         };
 
+        Table.prototype.clear = function () {
+            for(i = 0; i < 34 * 34; i++)
+                this.drawables[i].unsetContent();
+        };
+
         Table.prototype.update = function (cards) {
             for (var i = 0; i < cards.length; i++) {
                 //console.log(JSON.stringify({n:cards[i].number, c:cards[i].color, s:cards[i].shape, id:cards[i].uuid}));

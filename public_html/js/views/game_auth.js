@@ -46,8 +46,6 @@ define(function (require) {
                     if(!response.__ok){
                         console.log("Протухла кука");
                         window.location.href = "./#logout";
-                    } else {
-                        gameModel.id = response.ref;
                     }
                 },
                 error: function (model, response, options) {

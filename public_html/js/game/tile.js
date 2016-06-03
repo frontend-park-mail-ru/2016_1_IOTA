@@ -28,6 +28,10 @@ define(function (require) {
             this.content = card;
         };
 
+        Tile.prototype.unsetContent = function(card) {
+            delete this.content;
+        };
+
         Tile.prototype.canContain = function () {
             return (this.content == undefined && this.possible);
         };

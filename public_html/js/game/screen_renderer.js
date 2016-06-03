@@ -20,21 +20,26 @@ define(function (require) {
             this.hand = hand;
             this.addDrawable(this.hand);
             canvas.onmousedown = function (event) {
-                if(table.getStep()) {
-                    _this.selectedCard = _this.hand.getCard(event.clientX, event.clientY-window.innerHeight/10);
-                    if (_this.selectedCard != null) {
-                        _this.initX = _this.selectedCard.getX();
-                        _this.initY = _this.selectedCard.getY();
-                        if(!_this.isPass) _this.isDrag = true;
-                        return;
-                    }
-                    _this.isScroll = true;
-                    _this.prevX = event.clientX;
-                    _this.prevY = event.clientY-window.innerHeight/10;
+                if(event.which == 2) {
+                    _this.camera.toCenter();
+                    document.dispatchEvent(new CustomEvent('toRender'));
                 } else {
-                    _this.isScroll = true;
-                    _this.prevX = event.clientX;
-                    _this.prevY = event.clientY-window.innerHeight/10;
+                    if (table.getStep()) {
+                        _this.selectedCard = _this.hand.getCard(event.clientX, event.clientY - window.innerHeight / 10);
+                        if (_this.selectedCard != null) {
+                            _this.initX = _this.selectedCard.getX();
+                            _this.initY = _this.selectedCard.getY();
+                            if (!_this.isPass) _this.isDrag = true;
+                            return;
+                        }
+                        _this.isScroll = true;
+                        _this.prevX = event.clientX;
+                        _this.prevY = event.clientY - window.innerHeight / 10;
+                    } else {
+                        _this.isScroll = true;
+                        _this.prevX = event.clientX;
+                        _this.prevY = event.clientY - window.innerHeight / 10;
+                    }
                 }
             };
             canvas.onmouseup = function (event) {
@@ -55,7 +60,7 @@ define(function (require) {
                 }
                 if(_this.isPass) {
                     if (_this.selectedCard != null) {
-                        _this.selectedCard.setInHand(false);
+                        _this.selectedCard.roll(true);
                         var update = {uuid: _this.selectedCard.getUuid(), card:_this.selectedCard};
                         document.dispatchEvent(new CustomEvent('cardPass', { detail: update}));
                     }

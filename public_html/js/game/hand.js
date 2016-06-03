@@ -18,7 +18,7 @@ define(function (require) {
 
         Hand.prototype.getCard = function (x, y) {
             for (var i = 0; i < this.drawables.length; i++) {
-                if (this.drawables[i].contains(x, y) && this.drawables[i].getInHand()) {
+                if (this.drawables[i].contains(x, y) && this.drawables[i].getInHand() && !this.drawables[i].isOver) {
                     return this.drawables[i];
                 }
             }
