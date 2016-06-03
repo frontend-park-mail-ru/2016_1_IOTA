@@ -7,12 +7,11 @@ define(function (require) {
         Hand = require('./hand'),
         CardResponse = require('./card_response'),
         user = require('models/session'),
-        Sprite = require('./sprite')
+        Sprite = require('./sprite'),
         $ = require('jquery');
 
     return function (gameModel) {
-        $('#loader').hide();
-        $('#canvas').show();
+
         var TABLE_SIZE = 3400;
         var offScreenCanvas = document.createElement('canvas'),
             offScreenRenderer = new OffScreenRenderer(offScreenCanvas, TABLE_SIZE, TABLE_SIZE),
@@ -26,6 +25,8 @@ define(function (require) {
             hand = new Hand(screenCanvas);
 
         hand.reSize();
+
+        var isGameOver = false;
 
         offScreenRenderer.addDrawable(table);
         offScreenRenderer.render();
@@ -122,7 +123,35 @@ define(function (require) {
                 }
             });
         });
+        document.addEventListener('exitPrev', function (event) {
+            $('#myModal').modal('show');
+            $('.modal-header').text("Вы уверены?");
+            $('.modal-body').text("В случае выхода, вы проиграете...");
+        });
+        gameModel.on('endGame', function() {
+            $('#myModal').modal('show');
+            $('.modal-header').text("Игра окончена!");
+            $('.modal-body').find('.js-alert').text("");
+            var gamers = [];
+            var sortFun = function(a, b) {
+                if(a.score > b.score) return -1;
+                else return 1;
+            };
+            for(i = 0; i < gameModel.message.players.length; i++)
+                gamers.push({name: gameModel.message.players[i].login, score: gameModel.message.players[i].score, isMe: (gameModel.message.players[i].ref == user.get("ref"))});
+            console.log(gamers);
+            gamers.sort(sortFun);
+            console.log(gamers);
+            for(i = 1; i != gamers.length + 1; i++) {
+                var text = "" + i + ". " + gamers[i-1].name + ": " + gamers[i-1].score;
+                console.log(text);
+                $('.modal-body').find('.js-gamer' + i).text(text);
+                if(gamers[i-1].isMe) $('.modal-body').find('.js-gamer' + i).addClass("text__temporary");
+            }
+        });
         gameModel.on('mess', function () {
+            $('#loader').hide();
+            $('#canvas').show();
             hand.clear();
             var message = gameModel.message;
             gameModel.message = null;
