@@ -7,9 +7,8 @@ define(function (require) {
         Hand = require('./hand'),
         CardResponse = require('./card_response'),
         user = require('models/session'),
-        Sprite = require('./sprite'),
-        $ = require('jquery');
-
+        $ = require('jquery'),
+        Score = require('./score');
     return function (gameModel) {
 
         var scoreWidth = 150;
@@ -71,10 +70,6 @@ define(function (require) {
                         table.clear();
                         $('#loader').show();
                         $('#canvas').hide();
-                        $('.js-gamer1').hide();
-                        $('.js-gamer2').hide();
-                        $('.js-gamer3').hide();
-                        $('.js-gamer4').hide();
                         $('#myModal').modal('hide');
                         window.location.href = "./#";
                     } else {
@@ -145,7 +140,7 @@ define(function (require) {
             if(!isGameOver) {
                 $('#myModal').modal('show');
                 $('.modal-header').text("Вы уверены?");
-                $('.modal-body').text("В случае выхода, вы проиграете...");
+                $('.modal-body').find('.js-alert').text("В случае выхода, вы проиграете...");
             } else {
                 document.dispatchEvent(new CustomEvent('exit'));
             }
@@ -165,6 +160,7 @@ define(function (require) {
                 gamers.push({name: gameModel.message.players[i].login, score: gameModel.message.players[i].score, isMe: (gameModel.message.players[i].ref == user.get("ref"))});
             gamers.sort(sortFun);
             console.log(gamers);
+            $('.modal-body').find('.js-alert').text("");
             for(i = 1; i != gamers.length + 1; i++) {
                 var text = "" + i + ". " + gamers[i-1].name + ": " + gamers[i-1].score;
                 $('.modal-body').find('.js-gamer' + i).text(text);

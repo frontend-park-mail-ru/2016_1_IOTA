@@ -3,7 +3,6 @@ define(function (require) {
     var Backbone = require('backbone'),
         BaseView = require('views/base'),
         tmpl = require('tmpl/reg'),
-        user = require('models/user'),
         session = require('models/session');
 
     //noinspection UnnecessaryLocalVariableJS

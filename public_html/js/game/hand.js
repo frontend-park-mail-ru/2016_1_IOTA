@@ -41,10 +41,10 @@ define(function (require) {
 
         Hand.prototype.update = function (cards) {
             var coord = [
-                [this.canvas.width - 15 - heightCard, this.canvas.height - heightCard - 10],
-                [this.canvas.width - 30 - 2 * heightCard, this.canvas.height - heightCard - 10],
-                [this.canvas.width - 45 - 3 * heightCard, this.canvas.height - heightCard - 10],
-                [this.canvas.width - 60 - 4 * heightCard, this.canvas.height - heightCard - 10]
+                [this.canvas.width / 2 - 24 - 2 * heightCard, this.canvas.height - heightCard - 10],
+                [this.canvas.width / 2 - 8 - heightCard, this.canvas.height - heightCard - 10],
+                [this.canvas.width / 2 + 8, this.canvas.height - heightCard - 10],
+                [this.canvas.width / 2 + 24 + heightCard, this.canvas.height - heightCard - 10]
             ];
             //delete this.drawables;
             for (var i = 0; i < cards.length; i++) {

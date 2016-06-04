@@ -3,7 +3,6 @@ define(function (require) {
     var Backbone = require('backbone'),
         ScoreboardView = require('views/scoreboard'),
         GameAuthView = require('views/game_auth'),
-        RegView = require('views/reg'),
         MainView = require('views/main'),
         MainAuthView = require('views/main_auth'),
         ViewManager = require('views/manager'),
@@ -16,7 +15,6 @@ define(function (require) {
         views: {
             scoreboard: new ScoreboardView(),
             gameAuth: new GameAuthView(),
-            reg: new RegView(),
             main: new MainView(),
             mainAuth: new MainAuthView()
         },
@@ -24,7 +22,6 @@ define(function (require) {
         routes: {
             'scoreboard': 'scoreboardAction',
             'game': 'gameAction',
-            'registration': 'regAction',
             'logout': 'logoutAction',
             '*default': 'defaultActions'
         },
@@ -53,14 +50,6 @@ define(function (require) {
                 this.show('gameAuth');
             } else {
                 window.location.href = "./#";
-            }
-        },
-
-        regAction: function () {
-            if (session.get('isAuth')) {
-                window.location.href = "./#";
-            } else {
-                this.show('reg');
             }
         },
 
