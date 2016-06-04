@@ -28,10 +28,10 @@ define(function (require) {
 
         Camera.prototype.scroll = function (deltaX, deltaY) {
             var newX = this.x + deltaX, newY = this.y + deltaY;
-            if (newX > 0 && newX < this.world.width) {
+            if (newX > 0 && newX < this.world.width - $('#canvas').width()) {
                 this.x = newX;
             }
-            if (newY > 0 && newY < this.world.height) {
+            if (newY > 0 && newY < this.world.height - $('#canvas').height()) {
                 this.y = newY;
             }
         };
