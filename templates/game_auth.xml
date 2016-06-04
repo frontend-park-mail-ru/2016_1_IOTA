@@ -55,13 +55,13 @@
                         <div class="btn-group">
                             <button type="button" class="btn btn-md btn-success js-over">
                                 <i class="glyphicon glyphicon-ok"></i><fest:space/> Завершить ход
-                            </button>
-                            <button type="button" class="btn btn-md btn-primary">
-                                <i class="glyphicon glyphicon-transfer js-pass"></i><fest:space/> Заменить карты
-                            </button>
+                            </button><fest:space/>
+                            <button type="button" class="btn btn-md btn-primary js-pass">
+                                <i class="glyphicon glyphicon-transfer"></i><fest:space/> Заменить карты
+                            </button><fest:space/>
                             <button type="button" class="btn btn-md btn-warning js-debugConclude">
                                 <i class="glyphicon glyphicon glyphicon-hourglass"></i>
-                            </button>
+                            </button><fest:space/>
                         </div>
                     </div>
                     <div class="form-group">
