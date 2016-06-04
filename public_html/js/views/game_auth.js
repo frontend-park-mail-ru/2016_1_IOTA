@@ -10,15 +10,21 @@ define(function (require) {
 
         template: tmpl,
         attributes: {class: "grid__str_10"},
+        isFirst: true,
         events: {
             'click .js-exit': 'exit',
             'click .js-debugConclude': 'debugConclude',
             'click .js-over': 'over',
-            'click .js-pass': 'pass'
+            'click .js-pass': 'pass',
+            'click .js-exit-prev': 'exitPrev'
         },
 
         exit: function (event) {
             document.dispatchEvent(new CustomEvent('exit'));
+        },
+
+        exitPrev: function (event) {
+            document.dispatchEvent(new CustomEvent('exitPrev'));
         },
 
         debugConclude: function (event) {
@@ -37,10 +43,12 @@ define(function (require) {
             this.trigger('show', this);
             this.$el.show();
 
-            this.listenToOnce(gameModel, 'ready', function () {
-                console.log('USERS CONNECTED');
-                game(gameModel);
-            });
+            if(this.isFirst)
+                this.listenToOnce(gameModel, 'ready', function () {
+                    this.isFirst = false;
+                    console.log('USERS CONNECTED');
+                    game(gameModel);
+                });
             gameModel.fetch({
                 success: function (model, response, options) {
                     if(!response.__ok){

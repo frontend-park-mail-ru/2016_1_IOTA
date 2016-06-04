@@ -8,7 +8,6 @@ define(function (require) {
         CardResponse = require('./card_response'),
         user = require('models/session'),
         Sprite = require('./sprite'),
-        Score = require('./score'),
         $ = require('jquery');
 
     return function (gameModel) {
@@ -19,14 +18,12 @@ define(function (require) {
             score3 = new Score(10, 120, scoreWidth, 100, "", 0),
             score4 = new Score(10, 160, scoreWidth, 100, "", 0);
 
-        $('#loader').hide();
-        $('#canvas').show();
         var TABLE_SIZE = 3400;
         var offScreenCanvas = document.createElement('canvas'),
             offScreenRenderer = new OffScreenRenderer(offScreenCanvas, TABLE_SIZE, TABLE_SIZE),
             screenCanvas = document.getElementById('canvas');
         var prevPlayer = -1;
-
+        var isGameOver = false;
         screenCanvas.width = $('#canvas').width();
         screenCanvas.height = $('#canvas').height();
 
@@ -66,9 +63,10 @@ define(function (require) {
             gameModel.set('endSequence', true, {silent: true});
             gameModel.set('goodbye', true, {silent: true});
             gameModel.set('__type', "PlayerPingMessage", {silent: true});
-            gameModel.save([],{
-                success: function(model, response, options) {
-                    if(response.__ok) {
+            isGameOver = true;
+            gameModel.save([], {
+                success: function (model, response, options) {
+                    if (response.__ok) {
                         hand.clear();
                         table.clear();
                         $('#loader').show();
@@ -77,7 +75,10 @@ define(function (require) {
                         $('.js-gamer2').hide();
                         $('.js-gamer3').hide();
                         $('.js-gamer4').hide();
+                        $('#myModal').modal('hide');
                         window.location.href = "./#";
+                    } else {
+                        isGameOver = false;
                     }
                 }
             });
@@ -140,7 +141,41 @@ define(function (require) {
                 }
             });
         });
+        document.addEventListener('exitPrev', function (event) {
+            if(!isGameOver) {
+                $('#myModal').modal('show');
+                $('.modal-header').text("Вы уверены?");
+                $('.modal-body').text("В случае выхода, вы проиграете...");
+            } else {
+                document.dispatchEvent(new CustomEvent('exit'));
+            }
+        });
+        gameModel.on('endGame', function() {
+            if(isGameOver) return;
+            isGameOver = true;
+            $('#myModal').modal('show');
+            $('.modal-header').text("Игра окончена!");
+            $('.modal-body').find('.js-alert').text("");
+            var gamers = [];
+            var sortFun = function(a, b) {
+                if(a.score > b.score) return -1;
+                else return 1;
+            };
+            for(i = 0; i < gameModel.message.players.length; i++)
+                gamers.push({name: gameModel.message.players[i].login, score: gameModel.message.players[i].score, isMe: (gameModel.message.players[i].ref == user.get("ref"))});
+            gamers.sort(sortFun);
+            console.log(gamers);
+            for(i = 1; i != gamers.length + 1; i++) {
+                var text = "" + i + ". " + gamers[i-1].name + ": " + gamers[i-1].score;
+                $('.modal-body').find('.js-gamer' + i).text(text);
+                if(gamers[i-1].isMe) $('.modal-body').find('.js-gamer' + i).addClass("text__temporary");
+                $('.modal-body').find('.js-gamer' + i).show();
+            }
+        });
         gameModel.on('mess', function () {
+            if(gameModel.message.concluded) {return} else isGameOver = false;
+            $('#loader').hide();
+            $('#canvas').show();
             hand.clear();
             var message = gameModel.message;
             gameModel.message = null;
@@ -167,21 +202,6 @@ define(function (require) {
 
             for(j = 0; j < message.players.length; j++) {
                 tempPlayer = message.players[j];
-
-                /*
-                if(!$('div').is('#' + tempPlayer.ref)) {
-                    $('.js-gamer' + player).show();
-                    $('.js-gamer' + player).attr("id", tempPlayer.ref);
-                    $('.js-gamer' + player).find('.text__nick').text(tempPlayer.login);
-                    player++;
-                }
-                if(message.ref == tempPlayer.ref) $('#' + tempPlayer.ref).addClass("text__temporary");
-                else $('#' + tempPlayer.ref).removeClass("text__temporary");
-
-                $('#' + tempPlayer.ref).find('.score').text(tempPlayer.score);
-                */
-
-
                 var isTurnPlayer = (message.ref === tempPlayer.ref);
                 var isCurrentPlayer = (user.get('ref') === tempPlayer.ref);
 
