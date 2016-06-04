@@ -33,7 +33,7 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default" style="margin-bottom:0">
         <div class="container-fluid">
             <div class="container">
                 <div class="navbar-header">
