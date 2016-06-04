@@ -95,7 +95,6 @@ define(function (require) {
             gameModel.set('__type', "PlayerPingMessage", {silent: true});
             gameModel.save([],{
                 success: function(model, response, options) {
-                    //console.log("success");
                 }
             });
         });
@@ -175,13 +174,11 @@ define(function (require) {
             hand.clear();
             var message = gameModel.message;
             gameModel.message = null;
-            var isChangePlayer = (true);//prevPlayer != message.ref)
+            var isChangePlayer = (prevPlayer != message.ref);
             prevPlayer = message.ref;
             table.setStep(user.get('ref') == message.ref);
             if(table.getStep() && isChangePlayer)
                 $('.js-pass').removeAttr('disabled');
-            else
-                $('.js-pass').attr('disabled', '');
             if(table.getStep()) $('.js-over').removeAttr('disabled');
             else $('.js-over').attr('disabled', '');
             var i = 0;
