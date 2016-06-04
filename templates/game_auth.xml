@@ -55,8 +55,6 @@
                 <button class="js-pass" type="submit">Пасс</button>
                 <br/>
                 <button class="js-debugConclude" type="submit">debug_conclude</button>
-                <br/>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".js-modal">Small modal</button>
             </div>
         </div>
     </div>

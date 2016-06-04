@@ -40,7 +40,6 @@ define(function (require) {
         },
 
         show: function () {
-            console.log("showed!azaza");
             this.trigger('show', this);
             this.$el.show();
 

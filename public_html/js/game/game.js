@@ -17,7 +17,7 @@ define(function (require) {
             offScreenRenderer = new OffScreenRenderer(offScreenCanvas, TABLE_SIZE, TABLE_SIZE),
             screenCanvas = document.getElementById('canvas');
         var prevPlayer = -1;
-
+        var isGameOver = false;
         screenCanvas.width = $('#canvas').width();
         screenCanvas.height = $('#canvas').height();
 
@@ -25,8 +25,6 @@ define(function (require) {
             hand = new Hand(screenCanvas);
 
         hand.reSize();
-
-        var isGameOver = false;
 
         offScreenRenderer.addDrawable(table);
         offScreenRenderer.render();
@@ -49,9 +47,10 @@ define(function (require) {
             gameModel.set('endSequence', true, {silent: true});
             gameModel.set('goodbye', true, {silent: true});
             gameModel.set('__type', "PlayerPingMessage", {silent: true});
-            gameModel.save([],{
-                success: function(model, response, options) {
-                    if(response.__ok) {
+            isGameOver = true;
+            gameModel.save([], {
+                success: function (model, response, options) {
+                    if (response.__ok) {
                         hand.clear();
                         table.clear();
                         $('#loader').show();
@@ -60,7 +59,10 @@ define(function (require) {
                         $('.js-gamer2').hide();
                         $('.js-gamer3').hide();
                         $('.js-gamer4').hide();
+                        $('#myModal').modal('hide');
                         window.location.href = "./#";
+                    } else {
+                        isGameOver = false;
                     }
                 }
             });
@@ -124,11 +126,17 @@ define(function (require) {
             });
         });
         document.addEventListener('exitPrev', function (event) {
-            $('#myModal').modal('show');
-            $('.modal-header').text("Вы уверены?");
-            $('.modal-body').text("В случае выхода, вы проиграете...");
+            if(!isGameOver) {
+                $('#myModal').modal('show');
+                $('.modal-header').text("Вы уверены?");
+                $('.modal-body').text("В случае выхода, вы проиграете...");
+            } else {
+                document.dispatchEvent(new CustomEvent('exit'));
+            }
         });
         gameModel.on('endGame', function() {
+            if(isGameOver) return;
+            isGameOver = true;
             $('#myModal').modal('show');
             $('.modal-header').text("Игра окончена!");
             $('.modal-body').find('.js-alert').text("");
@@ -139,17 +147,17 @@ define(function (require) {
             };
             for(i = 0; i < gameModel.message.players.length; i++)
                 gamers.push({name: gameModel.message.players[i].login, score: gameModel.message.players[i].score, isMe: (gameModel.message.players[i].ref == user.get("ref"))});
-            console.log(gamers);
             gamers.sort(sortFun);
             console.log(gamers);
             for(i = 1; i != gamers.length + 1; i++) {
                 var text = "" + i + ". " + gamers[i-1].name + ": " + gamers[i-1].score;
-                console.log(text);
                 $('.modal-body').find('.js-gamer' + i).text(text);
                 if(gamers[i-1].isMe) $('.modal-body').find('.js-gamer' + i).addClass("text__temporary");
+                $('.modal-body').find('.js-gamer' + i).show();
             }
         });
         gameModel.on('mess', function () {
+            if(gameModel.message.concluded) {return} else isGameOver = false;
             $('#loader').hide();
             $('#canvas').show();
             hand.clear();
