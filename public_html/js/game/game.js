@@ -17,7 +17,7 @@ define(function (require) {
             score3 = new Score(10, 120, scoreWidth, 100, "", 0),
             score4 = new Score(10, 160, scoreWidth, 100, "", 0);
 
-        var TABLE_SIZE = 3400;
+        var TABLE_SIZE = 6500;
         var offScreenCanvas = document.createElement('canvas'),
             offScreenRenderer = new OffScreenRenderer(offScreenCanvas, TABLE_SIZE, TABLE_SIZE),
             screenCanvas = document.getElementById('canvas');
@@ -26,7 +26,7 @@ define(function (require) {
         screenCanvas.width = $('#canvas').width();
         screenCanvas.height = $('#canvas').height();
 
-        var table = new Table(34, 34, 100, 100),
+        var table = new Table(65, 65, 100, 100),
             hand = new Hand(screenCanvas);
 
         hand.reSize();
@@ -121,8 +121,8 @@ define(function (require) {
             gameModel.set('goodbye', false, {silent: true});
             gameModel.set('__type', "PlayerPlaceCardMessage", {silent: true});
             gameModel.set('uuid', event.detail.uuid, {silent: true});
-            gameModel.set('offX', event.detail.x - 16, {silent: true});
-            gameModel.set('offY', event.detail.y - 16, {silent: true});
+            gameModel.set('offX', event.detail.x - 32, {silent: true});
+            gameModel.set('offY', event.detail.y - 32, {silent: true});
             gameModel.save([],{
                 success: function(model, response, options) {
                     if(!response.__ok) {
@@ -146,7 +146,6 @@ define(function (require) {
         });
         gameModel.on('endGame', function() {
             if(isGameOver) return;
-            isGameOver = true;
             $('#myModal').modal('show');
             $('.modal-header').text("Игра окончена!");
             $('.modal-body').find('.js-alert').text("");
@@ -168,7 +167,7 @@ define(function (require) {
             }
         });
         gameModel.on('mess', function () {
-            if(gameModel.message.concluded) {return} else isGameOver = false;
+            if(gameModel.message.concluded) {return;} else isGameOver = false;
             $('#loader').hide();
             $('#canvas').show();
             hand.clear();
@@ -246,9 +245,9 @@ define(function (require) {
                         case "THREE": cardPullNumber = "3"; break;
                         case "FOUR": cardPullNumber = "4"; break;
                     }
-                    table.update([new CardResponse(16 + cardPull.offx, 16 + cardPull.offy, cardPullNumber, cardPull.item.color[0].toLowerCase(), cardPull.item.shape[0].toLowerCase(), "", cardPull.item.uuid, cardPull.item.passed)]);
+                    table.update([new CardResponse(32 + cardPull.offx, 32 + cardPull.offy, cardPullNumber, cardPull.item.color[0].toLowerCase(), cardPull.item.shape[0].toLowerCase(), "", cardPull.item.uuid, cardPull.item.passed)]);
                 } else {
-                    table.update([new CardResponse(16 + cardPull.offx, 16 + cardPull.offy, "", "", "", "super", cardPull.item.uuid, cardPull.item.passed)]);
+                    table.update([new CardResponse(32 + cardPull.offx, 32 + cardPull.offy, "", "", "", "super", cardPull.item.uuid, cardPull.item.passed)]);
                 }
             }
         });
