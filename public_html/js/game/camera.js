@@ -8,9 +8,10 @@ define(function (require) {
 
         __extends(Camera, _super);
 
-        function Camera(world, x, y, width, height) {
+        function Camera(world, background, x, y, width, height) {
             _super.call(this, x, y, width, height);
             this.world = world;
+            this.background = background;
         }
 
         Camera.prototype.toCenter = function () {
@@ -38,6 +39,7 @@ define(function (require) {
 
         Camera.prototype.draw = function (canvas) {
             var context = canvas.getContext('2d');
+            context.drawImage(this.background, this.x, this.y, this.width, this.height, 0, 0, canvas.width, canvas.height);
             context.drawImage(this.world, this.x, this.y, this.width, this.height, 0, 0, canvas.width, canvas.height);
         };
 

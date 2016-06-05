@@ -10,7 +10,6 @@ define(function (require) {
         $ = require('jquery'),
         Score = require('./score');
     return function (gameModel) {
-
         var scoreWidth = 150;
         var score1 = new Score(10, 40, scoreWidth, 100, "", 0),
             score2 = new Score(10, 80, scoreWidth, 100, "", 0),
@@ -19,12 +18,15 @@ define(function (require) {
 
         var TABLE_SIZE = 6500;
         var offScreenCanvas = document.createElement('canvas'),
-            offScreenRenderer = new OffScreenRenderer(offScreenCanvas, TABLE_SIZE, TABLE_SIZE),
-            screenCanvas = document.getElementById('canvas');
+            screenCanvas = document.getElementById('canvas'),
+            backgroundCanvas = document.createElement('canvas'),
+            offScreenRenderer = new OffScreenRenderer(offScreenCanvas, backgroundCanvas, TABLE_SIZE, TABLE_SIZE);
         var prevPlayer = -1;
         var isGameOver = false;
+
         screenCanvas.width = $('#canvas').width();
         screenCanvas.height = $('#canvas').height();
+
 
         var table = new Table(65, 65, 100, 100),
             hand = new Hand(screenCanvas);
@@ -34,14 +36,16 @@ define(function (require) {
         offScreenRenderer.addDrawable(table);
         offScreenRenderer.render();
 
-        var screenRenderer = new ScreenRenderer(screenCanvas, new Camera(offScreenCanvas, TABLE_SIZE / 2 - $('#canvas').width() / 2, TABLE_SIZE / 2 - $('#canvas').height() / 2, $('#canvas').width(), $('#canvas').height()), table, offScreenRenderer, hand);
+        var screenRenderer = new ScreenRenderer(screenCanvas, new Camera(offScreenCanvas, backgroundCanvas, TABLE_SIZE / 2 - screenCanvas.width / 2, TABLE_SIZE / 2 - screenCanvas.height / 2, screenCanvas.width, screenCanvas.height), table, offScreenRenderer, hand);
         addScore(screenRenderer);
 
         window.onresize = function(e) {
             screenCanvas.width = $('#canvas').width();
             screenCanvas.height = $('#canvas').height();
+            backgroundCanvas.width = screenCanvas.width;
+            backgroundCanvas.height = screenCanvas.height;
             delete screenRenderer;
-            screenRenderer = new ScreenRenderer(screenCanvas, new Camera(offScreenCanvas, TABLE_SIZE / 2 - $('#canvas').width() / 2, TABLE_SIZE / 2 - $('#canvas').height() / 2, $('#canvas').width(), $('#canvas').height()), table, offScreenRenderer, hand);
+            screenRenderer = new ScreenRenderer(screenCanvas, new Camera(offScreenCanvas, backgroundCanvas, TABLE_SIZE / 2 - screenCanvas.width / 2, TABLE_SIZE / 2 - screenCanvas.height / 2, screenCanvas.width, screenCanvas.height), table, offScreenRenderer, hand);
             addScore(screenRenderer);
             hand.reSize();
             document.dispatchEvent(new CustomEvent('toRender'));
