@@ -42,8 +42,6 @@ define(function (require) {
         window.onresize = function(e) {
             screenCanvas.width = $('#canvas').width();
             screenCanvas.height = $('#canvas').height();
-            backgroundCanvas.width = screenCanvas.width;
-            backgroundCanvas.height = screenCanvas.height;
             delete screenRenderer;
             screenRenderer = new ScreenRenderer(screenCanvas, new Camera(offScreenCanvas, backgroundCanvas, TABLE_SIZE / 2 - screenCanvas.width / 2, TABLE_SIZE / 2 - screenCanvas.height / 2, screenCanvas.width, screenCanvas.height), table, offScreenRenderer, hand);
             addScore(screenRenderer);
