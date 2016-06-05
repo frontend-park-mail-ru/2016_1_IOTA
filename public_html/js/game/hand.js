@@ -2,7 +2,8 @@ define(function (require) {
 
     var __extends = require('./extends'),
         Renderer = require( './renderer'),
-        Card = require('./card');
+        Card = require('./card'),
+        $ = require('jquery');
 
     //noinspection UnnecessaryLocalVariableJS
     var Hand = (function (_super) {
@@ -64,9 +65,10 @@ define(function (require) {
         };
 
         Hand.prototype.reSize = function () {
-            heightCard = $('#canvas').height() / 6;
-            this.canvas.width = $('#canvas').width();
-            this.canvas.height = $('#canvas').height()
+            var canvasEl = $('#canvas');
+            heightCard = canvasEl.height() / 6;
+            this.canvas.width = canvasEl.width();
+            this.canvas.height = canvasEl.height()
         };
 
         return Hand;
