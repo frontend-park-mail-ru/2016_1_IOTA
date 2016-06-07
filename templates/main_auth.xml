@@ -35,22 +35,20 @@
     </div>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">
-                        <i class="glyphicon glyphicon-knight"></i><fest:space/> iota game
-                    </a>
-                </div>
-                <form class="navbar-form navbar-left">
-                    <div class="form-group">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#ruleModal2">
-                                <i class="glyphicon glyphicon-paperclip"></i><fest:space/> Правила игры
-                            </button>
-                        </div>
-                    </div>
-                </form>
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <i class="glyphicon glyphicon-knight"></i><fest:space/> iota game
+                </a>
             </div>
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#ruleModal2">
+                            <i class="glyphicon glyphicon-paperclip"></i><fest:space/> Правила игры
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
     </nav>
     <div class="container">

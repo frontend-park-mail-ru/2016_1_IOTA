@@ -35,44 +35,44 @@
     </div>
     <nav class="navbar navbar-default" style="margin-bottom:0">
         <div class="container-fluid">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">
-                        <i class="glyphicon glyphicon-knight"></i><fest:space/> iota game
-                    </a>
-                </div>
-                <form class="navbar-form navbar-left">
-                    <div class="form-group">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#ruleModal1">
-                                <i class="glyphicon glyphicon-paperclip"></i><fest:space/> Правила игры
-                            </button>
-                        </div>
-                    </div>
-                </form>
-                <form class="navbar-form navbar-right">
-                    <div class="form-group">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-md btn-success js-over">
-                                <i class="glyphicon glyphicon-ok"></i><fest:space/> Завершить ход
-                            </button><fest:space/>
-                            <button type="button" class="btn btn-md btn-primary js-pass">
-                                <i class="glyphicon glyphicon-transfer"></i><fest:space/> Заменить карты
-                            </button><fest:space/>
-                            <button type="button" class="btn btn-md btn-warning js-debugConclude">
-                                <i class="glyphicon glyphicon glyphicon-hourglass"></i>
-                            </button><fest:space/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-md btn-danger js-exit-prev" data-toggle="button">
-                                <i class="glyphicon glyphicon-log-out"></i><fest:space/> Закончить игру
-                            </button>
-                        </div>
-                    </div>
-                </form>
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <i class="glyphicon glyphicon-knight"></i><fest:space/> iota game
+                </a>
             </div>
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#ruleModal1">
+                            <i class="glyphicon glyphicon-paperclip"></i><fest:space/> Правила игры
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <form class="navbar-form navbar-right">
+                <div class="form-group">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-md btn-danger js-exit-prev" data-toggle="button">
+                            <i class="glyphicon glyphicon-log-out"></i><fest:space/> Закончить игру
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <form class="navbar-form navbar-right">
+                <div class="form-group">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-md btn-success js-over">
+                            <i class="glyphicon glyphicon-ok"></i><fest:space/> Завершить ход
+                        </button><fest:space/>
+                        <button type="button" class="btn btn-md btn-primary js-pass">
+                            <i class="glyphicon glyphicon-transfer"></i><fest:space/> Заменить карты
+                        </button><fest:space/>
+                        <button type="button" class="btn btn-md btn-warning js-debugConclude">
+                            <i class="glyphicon glyphicon glyphicon-hourglass"></i>
+                        </button><fest:space/>
+                    </div>
+                </div>
+            </form>
         </div>
     </nav>
     <div class="grid__str_9">
