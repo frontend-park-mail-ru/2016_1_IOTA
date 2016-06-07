@@ -1,6 +1,7 @@
 define(function (require) {
 
-    var Backbone = require('backbone');
+    var Backbone = require('backbone'),
+        user = require('models/user');
 
     //noinspection UnnecessaryLocalVariableJS
     var BaseView = Backbone.View.extend({

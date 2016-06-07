@@ -11,6 +11,10 @@ define(function (require) {
             id: -1
         },
 
+        setId: function (id) {
+            this.set('id', id);
+        },
+
         read: function () {
             this.fetch({
                 url: this.url + '/' + this.get('id'),
@@ -39,7 +43,11 @@ define(function (require) {
             this.save({login: login, password: password, email: email}, {
                 success: function (model, response) {
                     console.log(response);
-                    model.trigger('registerOk');
+                    if (response.__ok) {
+                        model.trigger('registerOk');
+                    } else {
+                        model.trigger('registerError', 'Ошибка регистрации');
+                    }
                 },
                 error: function (model, response) {
                     console.log(response);
